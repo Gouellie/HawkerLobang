@@ -1,0 +1,51 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://src/ui/controls/datetime_control.gd" type="Script" id=1]
+
+[node name="DateTimeControl" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_right = -724.0
+margin_bottom = -580.0
+rect_min_size = Vector2( 280, 20 )
+script = ExtResource( 1 )
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+margin_right = 275.0
+margin_bottom = 20.0
+
+[node name="OptionButton_Day" type="OptionButton" parent="HBoxContainer"]
+margin_right = 160.0
+margin_bottom = 20.0
+rect_min_size = Vector2( 160, 0 )
+text = "Monday"
+
+[node name="Label_Separator_01" type="Label" parent="HBoxContainer"]
+margin_left = 164.0
+margin_top = 3.0
+margin_right = 169.0
+margin_bottom = 17.0
+text = "-"
+
+[node name="OptionButton_Hour" type="OptionButton" parent="HBoxContainer"]
+margin_left = 173.0
+margin_right = 218.0
+margin_bottom = 20.0
+text = "00"
+
+[node name="Label_Separator_02" type="Label" parent="HBoxContainer"]
+margin_left = 222.0
+margin_top = 3.0
+margin_right = 226.0
+margin_bottom = 17.0
+text = ":"
+
+[node name="OptionButton_Minute" type="OptionButton" parent="HBoxContainer"]
+margin_left = 230.0
+margin_right = 275.0
+margin_bottom = 20.0
+text = "00"
+
+[connection signal="item_selected" from="HBoxContainer/OptionButton_Day" to="." method="_on_OptionButton_Day_item_selected"]
+[connection signal="item_selected" from="HBoxContainer/OptionButton_Hour" to="." method="_on_OptionButton_Hour_item_selected"]
+[connection signal="item_selected" from="HBoxContainer/OptionButton_Minute" to="." method="_on_OptionButton_Minute_item_selected"]
