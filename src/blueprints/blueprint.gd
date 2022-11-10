@@ -4,12 +4,19 @@ class_name Blueprint
 export (String, MULTILINE) var description := ""
 export (PackedScene) var entity_scene
 
-var is_drag := false
+onready var _outline := $StallShape_Outline
+onready var _owner := owner
 
-onready var _origin := position
+
+func _ready() -> void:
+	_outline.visible = false
+	
+
+func set_selected(selected : bool) -> void:
+	_outline.visible = selected	
 
 
-func _input(event: InputEvent) -> void:
-	if event is InputEventMouseButton and event.is_action_pressed("select"):
-		Events.emit_signal("placement_requested", entity_scene, event.position)
-		position = _origin
+func place_entity(in_owner : Node2D) -> void:
+	var new_entity = entity_scene.instance() as Node2D
+	new_entity.position = position
+	in_owner.add_child(new_entity)

@@ -10,4 +10,7 @@ signal speed_changed(new_speed)
 signal save_game()
 
 #warning-ignore: unused_signal
+signal blueprint_selected(blueprint_scene)
+
+#warning-ignore: unused_signal
 signal placement_requested(entity_scene, position)

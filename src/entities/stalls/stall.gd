@@ -10,6 +10,7 @@ onready var stall_name_label : Label = $Control/VBoxContainer/Label_StallName
 onready var stall_type_label : Label = $Control/VBoxContainer/Label_StallType
 onready var state_machine : StateMachine = $States
 
+
 func _ready() -> void:
 	dish_name = resource.dish_name if resource else "$"
 	stall_name_label.text = stall_name
@@ -21,7 +22,9 @@ func on_tick(_datetime : DateTime) -> void:
 
 
 func _on_Area2D_input_event(_viewport: Node, event: InputEvent, _shape_idx: int) -> void:
-	if event is InputEventMouse	and event.is_action_pressed("select"):
+	if Global.builder_mode_on:
+		return
+	if event is InputEventMouse	and event.is_action_pressed("left_click"):
 		state_machine.select(event)
 
 

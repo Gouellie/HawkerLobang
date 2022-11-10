@@ -9,10 +9,8 @@ description = "Place a new Hawker Stall"
 entity_scene = ExtResource( 2 )
 
 [node name="StallShape_Outline" type="Polygon2D" parent="."]
-position = Vector2( -66, 66 )
-scale = Vector2( 1.08163, 1.07143 )
 color = Color( 0.941176, 0.827451, 0.0941176, 0.341176 )
-polygon = PoolVector2Array( 30.5094, -92.4, 30.5094, -30.8, 91.5283, -30.8, 91.5283, -92.4 )
+polygon = PoolVector2Array( -40, -40, -40, 40, 40, 40, 40, -40 )
 
 [node name="StallShape" type="Polygon2D" parent="."]
 position = Vector2( -32, 32 )
