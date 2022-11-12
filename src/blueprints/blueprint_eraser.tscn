@@ -1,0 +1,20 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://src/blueprints/blueprint_eraser.gd" type="Script" id=1]
+[ext_resource path="res://assets/sprites/invalid.png" type="Texture" id=3]
+
+[node name="Blueprint_eraser" type="Node2D"]
+z_index = 10
+script = ExtResource( 1 )
+
+[node name="StallShape_Outline" type="Polygon2D" parent="."]
+color = Color( 0.941176, 0.827451, 0.0941176, 0.341176 )
+polygon = PoolVector2Array( -40, -40, -40, 40, 40, 40, 40, -40 )
+
+[node name="StallShape" type="Polygon2D" parent="."]
+position = Vector2( -32, 32 )
+color = Color( 0.137255, 0.556863, 0.556863, 1 )
+polygon = PoolVector2Array( 0, -64, 0, 0, 64, 0, 64, -64 )
+
+[node name="Invalid" type="Sprite" parent="."]
+texture = ExtResource( 3 )

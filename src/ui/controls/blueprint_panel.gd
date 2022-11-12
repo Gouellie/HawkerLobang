@@ -6,13 +6,13 @@ export (PackedScene) var blueprint_scene
 onready var center_position : Control = $CenterContainer/Blueprint_position
 
 var _selected : bool
-var _blueprint : Blueprint
+var _blueprint : BlueprintBase
 var _is_mouse_over : bool
 
 func _ready() -> void:
 	Log.log_error(Events.connect("blueprint_selected", self, "_on_blueprint_selected"), "blueprint.gd")
 	if blueprint_scene:
-		_blueprint = blueprint_scene.instance() as Blueprint
+		_blueprint = blueprint_scene.instance() as BlueprintBase
 		_blueprint.position = center_position.rect_position
 		add_child(_blueprint)
 

@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://src/ui/button_save.gd" type="Script" id=1]
 [ext_resource path="res://src/ui/controls/time_of_day_control.tscn" type="PackedScene" id=2]
@@ -6,6 +6,7 @@
 [ext_resource path="res://src/ui/gui.gd" type="Script" id=4]
 [ext_resource path="res://src/blueprints/stalls/blueprint_stall.tscn" type="PackedScene" id=5]
 [ext_resource path="res://src/ui/controls/blueprint_panel.tscn" type="PackedScene" id=6]
+[ext_resource path="res://src/blueprints/blueprint_eraser.tscn" type="PackedScene" id=7]
 
 [node name="GUI" type="Control"]
 anchor_right = 1.0
@@ -42,8 +43,14 @@ margin_top = -40.0
 margin_right = 40.0
 grow_vertical = 0
 
-[node name="BlueprintPanel" parent="VBoxContainer" instance=ExtResource( 6 )]
+[node name="BlueprintPanel_Stall" parent="VBoxContainer" instance=ExtResource( 6 )]
 grow_vertical = 0
 blueprint_scene = ExtResource( 5 )
+
+[node name="BlueprintPanel_Eraser" parent="VBoxContainer" instance=ExtResource( 6 )]
+margin_left = 104.0
+margin_right = 204.0
+grow_vertical = 0
+blueprint_scene = ExtResource( 7 )
 
 [connection signal="pressed" from="HBoxContainer/Button_Save" to="HBoxContainer/Button_Save" method="_on_Button_Save_pressed"]

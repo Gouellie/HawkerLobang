@@ -9,15 +9,30 @@
 config_version=4
 
 _global_script_classes=[ {
-"base": "Node2D",
+"base": "BlueprintBase",
 "class": "Blueprint",
 "language": "GDScript",
 "path": "res://src/blueprints/blueprint.gd"
+}, {
+"base": "Node2D",
+"class": "BlueprintBase",
+"language": "GDScript",
+"path": "res://src/blueprints/blueprint_base.gd"
+}, {
+"base": "BlueprintBase",
+"class": "BlueprintEraser",
+"language": "GDScript",
+"path": "res://src/blueprints/blueprint_eraser.gd"
 }, {
 "base": "Panel",
 "class": "BlueprintPanel",
 "language": "GDScript",
 "path": "res://src/ui/controls/blueprint_panel.gd"
+}, {
+"base": "Node2D",
+"class": "ClearanceTile",
+"language": "GDScript",
+"path": "res://src/blueprints/clearance_tile.gd"
 }, {
 "base": "Reference",
 "class": "DateTime",
@@ -33,6 +48,11 @@ _global_script_classes=[ {
 "class": "EntityManager",
 "language": "GDScript",
 "path": "res://src/libraries/managers/entity_manager.gd"
+}, {
+"base": "Reference",
+"class": "EntityTracker",
+"language": "GDScript",
+"path": "res://src/libraries/managers/entity_tracker.gd"
 }, {
 "base": "Resource",
 "class": "StallResource",
@@ -61,10 +81,14 @@ _global_script_classes=[ {
 } ]
 _global_script_class_icons={
 "Blueprint": "",
+"BlueprintBase": "",
+"BlueprintEraser": "",
 "BlueprintPanel": "",
+"ClearanceTile": "",
 "DateTime": "",
 "DateTimeResource": "",
 "EntityManager": "",
+"EntityTracker": "",
 "StallResource": "",
 "State": "res://assets/icons/state.svg",
 "StateMachine": "res://assets/icons/state_machine.svg",
@@ -118,6 +142,30 @@ left_click={
 camera_pan={
 "deadzone": 0.5,
 "events": [ Object(InputEventMouseButton,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"button_mask":0,"position":Vector2( 0, 0 ),"global_position":Vector2( 0, 0 ),"factor":1.0,"button_index":3,"pressed":false,"doubleclick":false,"script":null)
+ ]
+}
+set_facing_left={
+"deadzone": 0.5,
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":16777231,"physical_scancode":0,"unicode":0,"echo":false,"script":null)
+, Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":65,"physical_scancode":0,"unicode":0,"echo":false,"script":null)
+ ]
+}
+set_facing_right={
+"deadzone": 0.5,
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":16777233,"physical_scancode":0,"unicode":0,"echo":false,"script":null)
+, Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":68,"physical_scancode":0,"unicode":0,"echo":false,"script":null)
+ ]
+}
+set_facing_up={
+"deadzone": 0.5,
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":16777232,"physical_scancode":0,"unicode":0,"echo":false,"script":null)
+, Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":87,"physical_scancode":0,"unicode":0,"echo":false,"script":null)
+ ]
+}
+set_facing_down={
+"deadzone": 0.5,
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":16777234,"physical_scancode":0,"unicode":0,"echo":false,"script":null)
+, Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":83,"physical_scancode":0,"unicode":0,"echo":false,"script":null)
  ]
 }
 
