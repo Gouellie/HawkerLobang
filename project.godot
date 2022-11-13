@@ -111,6 +111,7 @@ SaveFile="*res://src/autoload/savegame.gd"
 Events="*res://src/autoload/events.gd"
 Log="*res://src/autoload/log.gd"
 Global="*res://src/autoload/global.gd"
+NameDispatcher="*res://src/autoload/name_dispatcher.gd"
 
 [debug]
 

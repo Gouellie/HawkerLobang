@@ -14,30 +14,43 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 
 [node name="ColorRect2" type="ColorRect" parent="CanvasLayer/CenterContainer"]
-margin_left = 412.0
-margin_top = 237.0
-margin_right = 612.0
-margin_bottom = 362.0
+margin_left = 540.0
+margin_top = 297.0
+margin_right = 740.0
+margin_bottom = 422.0
 rect_min_size = Vector2( 200, 125 )
 color = Color( 0.384314, 0.678431, 0.372549, 1 )
 
-[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/CenterContainer"]
-margin_left = 432.0
-margin_top = 246.0
-margin_right = 592.0
-margin_bottom = 354.0
+[node name="Container" type="VBoxContainer" parent="CanvasLayer/CenterContainer"]
+margin_left = 560.0
+margin_top = 306.0
+margin_right = 720.0
+margin_bottom = 414.0
 rect_min_size = Vector2( 160, 0 )
 
-[node name="Label_EnterSLallName" type="Label" parent="CanvasLayer/CenterContainer/VBoxContainer"]
+[node name="Label_SelectStallType" type="Label" parent="CanvasLayer/CenterContainer/Container"]
 margin_right = 160.0
 margin_bottom = 14.0
+text = "Select Stall Type"
+align = 1
+
+[node name="OptionButton" type="OptionButton" parent="CanvasLayer/CenterContainer/Container"]
+margin_top = 18.0
+margin_right = 160.0
+margin_bottom = 38.0
+
+[node name="Label_EnterStallName" type="Label" parent="CanvasLayer/CenterContainer/Container"]
+margin_top = 42.0
+margin_right = 160.0
+margin_bottom = 56.0
 text = "Stall Name"
 align = 1
 
-[node name="LineEdit_StallName" type="LineEdit" parent="CanvasLayer/CenterContainer/VBoxContainer"]
-margin_top = 18.0
+[node name="LineEdit_StallName" type="LineEdit" parent="CanvasLayer/CenterContainer/Container"]
+margin_top = 60.0
 margin_right = 160.0
-margin_bottom = 42.0
+margin_bottom = 84.0
+rect_min_size = Vector2( 130, 0 )
 align = 1
 max_length = 20
 context_menu_enabled = false
@@ -45,35 +58,24 @@ virtual_keyboard_enabled = false
 middle_mouse_paste_enabled = false
 placeholder_text = "Enter a name"
 
-[node name="Label_SelectStallType" type="Label" parent="CanvasLayer/CenterContainer/VBoxContainer"]
-margin_top = 46.0
-margin_right = 160.0
-margin_bottom = 60.0
-text = "Select Stall Type"
-align = 1
-
-[node name="OptionButton" type="OptionButton" parent="CanvasLayer/CenterContainer/VBoxContainer"]
-margin_top = 64.0
-margin_right = 160.0
-margin_bottom = 84.0
-
-[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/CenterContainer/VBoxContainer"]
+[node name="HBoxContainer_UserChoice" type="HBoxContainer" parent="CanvasLayer/CenterContainer/Container"]
 margin_top = 88.0
 margin_right = 160.0
 margin_bottom = 108.0
 alignment = 2
 
-[node name="ButtonAccept" type="Button" parent="CanvasLayer/CenterContainer/VBoxContainer/HBoxContainer"]
+[node name="ButtonAccept" type="Button" parent="CanvasLayer/CenterContainer/Container/HBoxContainer_UserChoice"]
 margin_left = 46.0
 margin_right = 102.0
 margin_bottom = 20.0
 text = "Accept"
 
-[node name="ButtonCancel" type="Button" parent="CanvasLayer/CenterContainer/VBoxContainer/HBoxContainer"]
+[node name="ButtonCancel" type="Button" parent="CanvasLayer/CenterContainer/Container/HBoxContainer_UserChoice"]
 margin_left = 106.0
 margin_right = 160.0
 margin_bottom = 20.0
 text = "Cancel"
 
-[connection signal="pressed" from="CanvasLayer/CenterContainer/VBoxContainer/HBoxContainer/ButtonAccept" to="." method="_on_ButtonAccept_pressed"]
-[connection signal="pressed" from="CanvasLayer/CenterContainer/VBoxContainer/HBoxContainer/ButtonCancel" to="." method="_on_ButtonCancel_pressed"]
+[connection signal="item_selected" from="CanvasLayer/CenterContainer/Container/OptionButton" to="." method="_on_OptionButton_item_selected"]
+[connection signal="pressed" from="CanvasLayer/CenterContainer/Container/HBoxContainer_UserChoice/ButtonAccept" to="." method="_on_ButtonAccept_pressed"]
+[connection signal="pressed" from="CanvasLayer/CenterContainer/Container/HBoxContainer_UserChoice/ButtonCancel" to="." method="_on_ButtonCancel_pressed"]
