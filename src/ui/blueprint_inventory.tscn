@@ -1,0 +1,26 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://src/ui/controls/blueprint_panel.tscn" type="PackedScene" id=2]
+[ext_resource path="res://src/blueprints/stalls/blueprint_stall.tscn" type="PackedScene" id=3]
+[ext_resource path="res://src/blueprints/blueprint_eraser.tscn" type="PackedScene" id=4]
+
+[node name="BlueprintInventory" type="MarginContainer"]
+anchor_top = 1.0
+anchor_bottom = 1.0
+margin_left = 10.0
+margin_bottom = -10.0
+grow_vertical = 0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+margin_right = 204.0
+margin_bottom = 100.0
+
+[node name="BlueprintPanel_Stall" parent="HBoxContainer" instance=ExtResource( 2 )]
+grow_vertical = 0
+blueprint_scene = ExtResource( 3 )
+
+[node name="BlueprintPanel_Eraser" parent="HBoxContainer" instance=ExtResource( 2 )]
+margin_left = 104.0
+margin_right = 204.0
+grow_vertical = 0
+blueprint_scene = ExtResource( 4 )
