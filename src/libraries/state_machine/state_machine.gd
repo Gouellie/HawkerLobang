@@ -30,10 +30,6 @@ func _physics_process(delta: float) -> void:
 	state.physics_process(delta)
 
 
-func select(event: InputEventMouse) -> void:
-	state.select(event)
-
-
 func transition_to(target_state_path: String, msg: Dictionary = {}) -> void:
 	if not has_node(target_state_path):
 		return

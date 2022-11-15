@@ -17,10 +17,6 @@ func on_time_ellapsed(_dateTime : DateTime) -> void:
 	pass
 
 
-func select(_event: InputEventMouse) -> void:
-	pass
-
-
 func unhandled_input(_event: InputEvent) -> void:
 	pass
 

@@ -5,7 +5,7 @@
 [ext_resource path="res://src/ui/controls/time_control.tscn" type="PackedScene" id=3]
 
 [node name="TimeSpanItem" type="Control"]
-margin_right = 712.0
+margin_right = 660.0
 margin_bottom = 40.0
 rect_min_size = Vector2( 0, 40 )
 script = ExtResource( 1 )
