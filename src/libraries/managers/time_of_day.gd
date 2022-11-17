@@ -2,7 +2,7 @@ extends Node
 
 const TOD_DEFAULT_TICK : float = 1.0
 
-var datetime : DateTime
+var datetime : DateTime = DateTime.new()
 var _current_speed : int = 1
 var _skip_ticker : bool
 
@@ -10,9 +10,9 @@ onready var ticker : Timer = $Ticker
 
 
 func _ready() -> void:
+	_load()
 	Log.log_error(Events.connect("speed_changed", self, "_on_speed_changed"), "time_of_day.gd")
-	Log.log_error(Events.connect("save_game", self, "_save_pressed"), "time_of_day.gd")
-	datetime = Dates.from_dictionary(SaveFile.game_data[SaveFile.DATE_KEY])
+	Events.emit_signal("time_ellapsed", datetime)
 	ticker.start()
 
 
@@ -44,6 +44,20 @@ func _on_speed_changed(p_speed : int) -> void:
 		_skip_ticker = true
 
 
-func _save_pressed() -> void:
-	SaveFile.game_data[SaveFile.DATE_KEY] = Dates.to_dictionary(datetime)
+func _load() -> void:
+	if SaveFile.game_data.has("date"):
+		var ticks = SaveFile.game_data["date"]
+		datetime.from_ticks(ticks)
 
+
+func save() -> Dictionary:
+	return {
+		"date" : datetime.ticks
+	}
+
+
+func reload(data : Dictionary) -> void:
+	if data.has("date"):
+		var ticks = data["date"]
+		datetime.from_ticks(ticks)
+		Events.emit_signal("time_ellapsed", datetime)	

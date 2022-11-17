@@ -1,8 +1,8 @@
 [gd_scene load_steps=2 format=2]
 
-[ext_resource path="res://src/libraries/managers/time_of_day.gd" type="Script" id=1]
+[ext_resource path="res://src/ui/controls/time_of_day_control.gd" type="Script" id=1]
 
-[node name="TimeOfDay" type="Control"]
+[node name="TimeOfDayControl" type="Control"]
 margin_right = 180.0
 margin_bottom = 56.0
 rect_min_size = Vector2( 180, 60 )

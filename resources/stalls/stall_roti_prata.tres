@@ -3,6 +3,7 @@
 [ext_resource path="res://src/resources/stall_resource.gd" type="Script" id=1]
 
 [resource]
+resource_name = "Roti Prata"
 script = ExtResource( 1 )
 dish_name = "Roti Prata"
 stall_type = 3

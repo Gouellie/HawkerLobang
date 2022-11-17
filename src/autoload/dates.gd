@@ -103,8 +103,8 @@ static func get_timespan(from : DateTime, to : DateTime, copy_datetimes : bool =
 		timespan.from_datetime = from
 		timespan.to_datetime = to
 	return timespan
-	
-	
+
+
 static func generate_timespan(
 		from_day : int = 0,
 		from_hour : int = 0,
@@ -115,6 +115,15 @@ static func generate_timespan(
 	var timespan = TIMESPAN.new()
 	timespan.from_datetime = generate_date(from_day, from_hour, from_minute)
 	timespan.to_datetime = generate_date(to_day, to_hour, to_minute)
+	return timespan
+
+	
+static func generate_timespan_from_ticks(
+		from_ticks : int = 0,
+		to_ticks : int = 0) -> TimeSpan:
+	var timespan = TIMESPAN.new()
+	timespan.from_datetime = get_date_from_ticks(from_ticks)
+	timespan.to_datetime = get_date_from_ticks(to_ticks)
 	return timespan
 
 

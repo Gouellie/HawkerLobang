@@ -34,9 +34,7 @@ func create_stall(p_stall_name : String, p_resource : Resource) -> void:
 
 func close_stall() -> void:
 	_set_stall_name("")
-	dish_name = "$"	
-	stall_type_label.text = dish_name
-	resource = null	
+	_set_resource(null)
 	state_machine.transition_to("Vacant")
 	is_stall_vacant = true
 	# update the Toolbox
@@ -63,11 +61,21 @@ func _set_stall_is_open(open : bool) -> void:
 
 func _set_resource(p_resource : Resource) -> void:
 	resource = p_resource
-	dish_name = resource.dish_name	
-	stall_type_label.text = dish_name
+	dish_name = resource.dish_name if resource else "$"
+	if stall_type_label:
+		stall_type_label.text = dish_name
 
 
 func _set_stall_name(p_name : String) -> void:
 	stall_name = p_name
-	stall_name_label.text = stall_name
+	if stall_name_label:
+		stall_name_label.text = stall_name
 
+
+func save_entity() -> Dictionary:
+	return {
+		"sn" : stall_name,
+		"or" : orientation,
+		"rs" : resource.resource_name if resource else "",
+		"bh" : business_hours.serialize(),
+	}

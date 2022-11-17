@@ -9,6 +9,7 @@ var _selected_entity : Entity
 
 
 func load_setup(p_selected_entity : Entity) -> void:
+	var current_tab = _tab_container.current_tab
 	if _selected_entity :
 		_unload_entity()
 	_selected_entity = p_selected_entity
@@ -19,6 +20,8 @@ func load_setup(p_selected_entity : Entity) -> void:
 	var business_hours_active = _business_hours_editor.load_entity(_selected_entity)
 	_tab_container.set_tab_hidden(2, not business_hours_active)
 	_set_label_text(_selected_entity)
+	if not _tab_container.get_tab_hidden(current_tab):
+		_tab_container.current_tab = current_tab
 
 
 func _set_label_text(_entity : Entity) -> void:

@@ -18,11 +18,11 @@ var _placeable_blueprint : bool
 var _valid_eraser : bool
 
 func _ready() -> void:
-	_tracker = EntityTracker.new()
 	_ground = get_node(ground_path) as TileMap
+	_tracker = EntityTracker.new()
 	tile_offset = _ground.cell_size / 2
 	Log.log_error(Events.connect("blueprint_selected", self, "_on_blueprint_selected"), NAMEOF_SELF)
-	_register_children()
+	_load()
 
 
 func _process(_delta: float) -> void:
@@ -56,11 +56,11 @@ func _mark_ground(cellv: Vector2, tile_index : int, rotation_in_degrees : int = 
 	var flip_x = false
 	var flip_y = false
 	var transpose = false
-	if rotation_in_degrees == 90: # facing down
+	if rotation_in_degrees == Enums.ORIENTATION.DOWN:
 		transpose = true	
-	elif rotation_in_degrees == 180:
+	elif rotation_in_degrees == Enums.ORIENTATION.LEFT:
 		flip_x = true
-	elif rotation_in_degrees == 270: # facing up
+	elif rotation_in_degrees == Enums.ORIENTATION.UP:
 		flip_y = true
 		transpose = true
 	_ground.set_cellv(cellv, tile_index, flip_x, flip_y, transpose)
@@ -102,13 +102,13 @@ func _validate_eraser_position(cellv: Vector2) -> void:
 
 func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("set_facing_left"):
-		_blueprint.set_facing(180)
+		_blueprint.set_facing(Enums.ORIENTATION.LEFT)
 	if event.is_action_pressed("set_facing_right"):
-		_blueprint.set_facing(0)
+		_blueprint.set_facing(Enums.ORIENTATION.RIGHT)
 	if event.is_action_pressed("set_facing_up"):
-		_blueprint.set_facing(270)
+		_blueprint.set_facing(Enums.ORIENTATION.UP)
 	if event.is_action_pressed("set_facing_down"):
-		_blueprint.set_facing(90)
+		_blueprint.set_facing(Enums.ORIENTATION.DOWN)
 	if event is InputEventMouseButton and event.is_action_pressed("ui_select"):
 		if _placeable_blueprint:
 			_place_entity()
@@ -117,8 +117,9 @@ func _unhandled_input(event: InputEvent) -> void:
 
 
 func _place_entity() -> void:
-	var new_entity = _blueprint.entity_scene.instance() as Node2D
+	var new_entity = _blueprint.entity_scene.instance() as Entity
 	new_entity.position = _blueprint.position
+	new_entity.orientation = _blueprint.facing_rotation
 	var cellv = _ground.world_to_map(new_entity.position)
 	_mark_ground(cellv, STALL_TILE_INDEX, _blueprint.facing_rotation)
 	_tracker.place_entity(new_entity, cellv)
@@ -130,3 +131,52 @@ func _remove_entity() -> void:
 	_tracker.remove_entity(cellv)
 	_mark_ground(cellv, EMPTY_TILE_INDEX)
 
+
+func save() -> Dictionary:
+	var entities = {
+		"stalls" : {},
+		"tables" : {}
+	}
+	if _tracker.entities is Dictionary:
+		for key in _tracker.entities:
+			var entity = _tracker.entities[key]
+			if entity is Stall:
+				entities["stalls"][var2str(key)] = entity.save_entity()
+	return {
+		"entities" : entities
+	}
+
+
+func _load() -> void:
+	if not SaveFile.game_data.has("entities"):
+		_register_children()
+		return
+	_delete_all_children()
+	var entities = SaveFile.game_data["entities"]
+	for type in entities:
+		if type == "stalls":
+			for cellv_string in entities[type]:
+				var cellv = str2var(cellv_string)
+				_load_stall(cellv, entities[type][cellv_string])
+
+
+func _delete_all_children() -> void:
+	for child in get_children():
+		child.queue_free()
+
+
+func _load_stall(cellv : Vector2, stall_data : Dictionary) -> void:
+	var stall_scene = Resources.ENTITIES["stalls"]
+	var stall = stall_scene.instance() as Stall
+	var stall_position = _ground.map_to_world(cellv)
+	stall.position = stall_position + tile_offset
+	stall.orientation = stall_data["or"]
+	var stall_key = stall_data["rs"]
+
+	_mark_ground(cellv, STALL_TILE_INDEX, stall_data["or"])
+	_tracker.place_entity(stall, cellv)
+	add_child(stall)	
+	
+	if Resources.STALLS.has(stall_key) :
+		stall.create_stall(stall_data["sn"], Resources.STALLS[stall_key])
+		stall.business_hours.deserialize(stall_data["bh"])

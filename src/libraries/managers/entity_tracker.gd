@@ -3,7 +3,6 @@ extends Reference
 
 var entities := {}
 
-
 func place_entity(entity, cellv: Vector2) -> void:
 	if entities.has(cellv):
 		return

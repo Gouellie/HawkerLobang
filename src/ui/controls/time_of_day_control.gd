@@ -3,6 +3,7 @@ extends Control
 var _datetime : DateTime
 var _current_speed : int = 1
 
+
 onready var time_of_day_speed_label : Label = $VBoxContainer/TimeOfDaySpeedLabel
 onready var date_label : Label = $VBoxContainer/DateLabel
 

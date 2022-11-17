@@ -3,6 +3,7 @@
 [ext_resource path="res://src/resources/stall_resource.gd" type="Script" id=1]
 
 [resource]
+resource_name = "Nasi Lemak"
 script = ExtResource( 1 )
 dish_name = "Nasi lemak"
 stall_type = 2

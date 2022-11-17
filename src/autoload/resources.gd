@@ -7,3 +7,7 @@ var STALLS = {
 	"Nasi Lemak" : preload("res://resources/stalls/stall_nasi_lemak.tres"),
 	"Roti Prata" : preload("res://resources/stalls/stall_roti_prata.tres"),
 }
+
+var ENTITIES = {
+	"stalls" : preload("res://src/entities/stalls/stall.tscn")
+}

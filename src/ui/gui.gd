@@ -2,7 +2,7 @@ extends Control
 
 
 onready var toolbox : Control = $Toolbox_Container/Toolbox
-
+onready var save_file_dialog : FileDialog = $SaveFileDialog
 
 func _ready() -> void:
 	Log.log_error(Events.connect("entity_selected", self, "_on_entity_selected"), "gui.gd")
@@ -10,6 +10,12 @@ func _ready() -> void:
 
 func _on_Button_Save_pressed() -> void:
 	SaveFile.save_game()
+
+
+func _on_Button_SaveAs_pressed() -> void:
+	save_file_dialog.current_dir = SaveFile.SAVE_FILE_DIR
+	save_file_dialog.current_file = "SaveFile.save"
+	save_file_dialog.popup_centered()
 
 
 func _on_Button_Exit_pressed() -> void:
@@ -23,3 +29,7 @@ func _on_entity_selected(_selected_entity : Node2D) -> void:
 		return
 	toolbox.load_setup(_selected_entity)
 	toolbox.visible = true
+
+
+func _on_SaveFileDialog_file_selected(path: String) -> void:
+	SaveFile.save_game(path)

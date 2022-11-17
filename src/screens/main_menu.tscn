@@ -10,10 +10,10 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-margin_left = -20.0
-margin_top = -20.0
-margin_right = 20.0
-margin_bottom = 20.0
+margin_left = -32.5
+margin_top = -46.0
+margin_right = 32.5
+margin_bottom = 46.0
 
 [node name="Button_New" type="Button" parent="VBoxContainer"]
 margin_right = 65.0
@@ -38,7 +38,16 @@ margin_right = 65.0
 margin_bottom = 92.0
 text = "Quit"
 
+[node name="FileDialog" type="FileDialog" parent="."]
+margin_right = 534.0
+margin_bottom = 406.0
+window_title = "Open a File"
+mode = 0
+access = 1
+filters = PoolStringArray( "*.save ; Save Files" )
+
 [connection signal="pressed" from="VBoxContainer/Button_New" to="." method="_on_Button_New_pressed"]
 [connection signal="pressed" from="VBoxContainer/Button_Load" to="." method="_on_Button_Load_pressed"]
 [connection signal="pressed" from="VBoxContainer/Button_Sandbox" to="." method="_on_Button_Sandbox_pressed"]
 [connection signal="pressed" from="VBoxContainer/Button_Quit" to="." method="_on_Button_Quit_pressed"]
+[connection signal="file_selected" from="FileDialog" to="." method="_on_FileDialog_file_selected"]

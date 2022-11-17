@@ -42,3 +42,10 @@ func update_time(other_datetime : DateTime) -> void:
 	hour = other_datetime.hour
 	minute = other_datetime.minute
 	ticks = Dates.get_ticks(day, hour, minute)
+
+
+func from_ticks(p_ticks : int) -> void:
+	# setting date back to start
+	ticks = 0
+	increment(p_ticks)
+
