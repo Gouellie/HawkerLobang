@@ -39,6 +39,7 @@ func close_stall() -> void:
 	_set_resource(null)
 	state_machine.transition_to("Vacant")
 	is_stall_vacant = true
+	date_of_opening = null
 	# update the Toolbox
 	Events.emit_signal("entity_selected", self)	
 
