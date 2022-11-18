@@ -39,9 +39,9 @@ func update_date(other_datetime : DateTime) -> void:
 
 
 func update_time(other_datetime : DateTime) -> void:
+	ticks = Dates.get_ticks(day, hour, minute)
 	hour = other_datetime.hour
 	minute = other_datetime.minute
-	ticks = Dates.get_ticks(day, hour, minute)
 
 
 func from_ticks(p_ticks : int) -> void:

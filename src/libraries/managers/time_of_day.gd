@@ -12,6 +12,7 @@ onready var ticker : Timer = $Ticker
 func _ready() -> void:
 	_load()
 	Log.log_error(Events.connect("speed_changed", self, "_on_speed_changed"), "time_of_day.gd")
+	Global.current_datetime = datetime
 	Events.emit_signal("time_ellapsed", datetime)
 	ticker.start()
 

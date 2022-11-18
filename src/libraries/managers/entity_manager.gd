@@ -141,7 +141,7 @@ func save() -> Dictionary:
 		for key in _tracker.entities:
 			var entity = _tracker.entities[key]
 			if entity is Stall:
-				entities["stalls"][var2str(key)] = entity.save_entity()
+				entities["stalls"][var2str(key)] = entity.serialize()
 	return {
 		"entities" : entities
 	}
@@ -170,13 +170,8 @@ func _load_stall(cellv : Vector2, stall_data : Dictionary) -> void:
 	var stall = stall_scene.instance() as Stall
 	var stall_position = _ground.map_to_world(cellv)
 	stall.position = stall_position + tile_offset
-	stall.orientation = stall_data["or"]
-	var stall_key = stall_data["rs"]
-
 	_mark_ground(cellv, STALL_TILE_INDEX, stall_data["or"])
 	_tracker.place_entity(stall, cellv)
 	add_child(stall)	
+	stall.deserialize(stall_data)
 	
-	if Resources.STALLS.has(stall_key) :
-		stall.create_stall(stall_data["sn"], Resources.STALLS[stall_key])
-		stall.business_hours.deserialize(stall_data["bh"])

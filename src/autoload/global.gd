@@ -16,3 +16,16 @@ func _on_blueprint_selected(sender)-> void:
 	
 func _get_builder_mode_on() -> bool:
 	return builder_mode_on
+	
+
+var current_datetime : DateTime setget set_curent_datetime,get_curent_datetime
+
+
+func set_curent_datetime(date : DateTime) -> void:
+	current_datetime = date
+	
+
+func get_curent_datetime() -> DateTime:
+	if current_datetime:
+		return Dates.copy_datetime(current_datetime) 
+	return Dates.get_new_date()

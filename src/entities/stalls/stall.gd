@@ -4,6 +4,7 @@ class_name Stall
 export(Resource) var resource setget _set_resource
 
 var stall_name : String setget _set_stall_name
+var date_of_opening : DateTime
 var dish_name : String
 
 onready var business_hours : BusinessHours = $BusinessHours
@@ -20,9 +21,10 @@ func _ready() -> void:
 	stall_type_label.text = dish_name
 
 
-func create_stall(p_stall_name : String, p_resource : Resource) -> void:
+func create_stall(p_stall_name : String, p_resource : Resource, date : DateTime) -> void:
 	stall_name = p_stall_name
 	resource = p_resource
+	date_of_opening = date
 	dish_name = resource.dish_name if resource else "$"
 	stall_name_label.text = stall_name
 	stall_type_label.text = dish_name
@@ -72,10 +74,22 @@ func _set_stall_name(p_name : String) -> void:
 		stall_name_label.text = stall_name
 
 
-func save_entity() -> Dictionary:
+func serialize() -> Dictionary:
 	return {
-		"sn" : stall_name,
 		"or" : orientation,
+		"sn" : stall_name,
+		"do" : date_of_opening.ticks,
 		"rs" : resource.resource_name if resource else "",
 		"bh" : business_hours.serialize(),
 	}
+	
+	
+func deserialize(data : Dictionary) -> void:
+	var stall_key = data["rs"]
+	orientation = data["or"]
+	if Resources.STALLS.has(stall_key) :
+		create_stall(
+				data["sn"], 
+				Resources.STALLS[stall_key], 
+				Dates.get_date_from_ticks(data["do"]))
+		business_hours.deserialize(data["bh"])

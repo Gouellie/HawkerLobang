@@ -41,7 +41,7 @@ func _update_generated_name() -> void:
 func _on_ButtonAccept_pressed() -> void:
 	var stall_key = drop_down.get_item_text(drop_down.selected)
 	if _selected_stall is Stall:
-		_selected_stall.create_stall(stall_name.text, Resources.STALLS[stall_key])
+		_selected_stall.create_stall(stall_name.text, Resources.STALLS[stall_key], Global.current_datetime)
 
 
 func _on_OptionButton_item_selected(index: int) -> void:
