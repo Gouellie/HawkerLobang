@@ -2,9 +2,10 @@ extends Node2D
 
 class_name ClearanceTile
 
+
+export (PoolIntArray) var allowed_tiles
 onready var clearance_shape = $Clearance_Shape
 
-# todo add tiles filter
 
 func set_has_clearance(has_clearance : bool) -> void:
 	if has_clearance:

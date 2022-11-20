@@ -9,8 +9,8 @@ var facing_rotation : int = 0
 
 onready var _outline := $StallShape_Outline
 onready var _invalid : Sprite = $Invalid
-onready var _facing := $Facing
-onready var _clearance_positions := $Facing/ClearancesPositions
+onready var _clearances := $Clearances
+onready var _clearance_positions := $Clearances/ClearancesPositions
 
 
 func _ready() -> void:
@@ -22,7 +22,7 @@ func set_selected(selected : bool) -> void:
 
 
 func show_debug(p_show : bool) -> void:
-	_facing.visible = p_show
+	_clearances.visible = p_show
 
 
 func set_valid(valid : bool) -> void:
@@ -31,7 +31,7 @@ func set_valid(valid : bool) -> void:
 
 func set_facing(rotation_in_degrees : int) -> void:
 	facing_rotation = rotation_in_degrees
-	_facing.rotation_degrees = rotation_in_degrees
+	_clearances.rotation_degrees = rotation_in_degrees
 	
 
 func _get_clearance_positions() -> Array:
@@ -40,4 +40,3 @@ func _get_clearance_positions() -> Array:
 		if clearance is ClearanceTile:
 			array.push_back(clearance)
 	return array
-

@@ -32,10 +32,15 @@ func _process(_delta: float) -> void:
 
 func _register_children() -> void:
 	for child in get_children():
-		if child is Node2D:
-			var cellv = _ground.world_to_map(child.global_position)
-			_mark_ground(cellv, STALL_TILE_INDEX)
-			_tracker.place_entity(child, cellv)
+		if not child is Node2D:
+			continue
+		var cellv = _ground.world_to_map(child.global_position)
+		_mark_ground(cellv, STALL_TILE_INDEX)
+		_tracker.place_entity(child, cellv)
+		if not child is Stall:
+			continue
+		var front_cellv = _ground.world_to_map(child.queue_position)		
+		_mark_ground(front_cellv, STALL_FRONT_TILE_INDEX, child.orientation)
 
 
 func _on_blueprint_selected(sender : Object) -> void:
@@ -57,9 +62,11 @@ func _mark_ground(cellv: Vector2, tile_index : int, rotation_in_degrees : int = 
 	var flip_y = false
 	var transpose = false
 	if rotation_in_degrees == Enums.ORIENTATION.DOWN:
+		flip_x = true
 		transpose = true	
 	elif rotation_in_degrees == Enums.ORIENTATION.LEFT:
 		flip_x = true
+		flip_y = true
 	elif rotation_in_degrees == Enums.ORIENTATION.UP:
 		flip_y = true
 		transpose = true
@@ -89,7 +96,8 @@ func _validate_blueprint_position(cellv: Vector2) -> void:
 func _check_clearance(clearance_tile : ClearanceTile) -> bool:
 		var cellv = _ground.world_to_map(clearance_tile.global_position)
 		var tile_index_facing = _ground.get_cellv(cellv)
-		var has_clearance = tile_index_facing == EMPTY_TILE_INDEX
+		var has_clearance = clearance_tile.allowed_tiles.has(tile_index_facing)
+#		var has_clearance = tile_index_facing == EMPTY_TILE_INDEX
 		clearance_tile.set_has_clearance(has_clearance)
 		return has_clearance
 
@@ -122,8 +130,13 @@ func _place_entity() -> void:
 	new_entity.orientation = _blueprint.facing_rotation
 	var cellv = _ground.world_to_map(new_entity.position)
 	_mark_ground(cellv, STALL_TILE_INDEX, _blueprint.facing_rotation)
+	
 	_tracker.place_entity(new_entity, cellv)
 	add_child(new_entity)
+
+	if new_entity is Stall:
+		var front_cellv = _ground.world_to_map(new_entity.queue_position)		
+		_mark_ground(front_cellv, STALL_FRONT_TILE_INDEX, _blueprint.facing_rotation)
 
 
 func _remove_entity() -> void:
@@ -174,4 +187,8 @@ func _load_stall(cellv : Vector2, stall_data : Dictionary) -> void:
 	_tracker.place_entity(stall, cellv)
 	add_child(stall)	
 	stall.deserialize(stall_data)
+	
+	if stall is Stall:
+		var front_cellv = _ground.world_to_map(stall.queue_position)		
+		_mark_ground(front_cellv, STALL_FRONT_TILE_INDEX, stall_data["or"])
 	
