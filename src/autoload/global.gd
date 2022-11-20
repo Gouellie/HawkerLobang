@@ -29,3 +29,15 @@ func get_curent_datetime() -> DateTime:
 	if current_datetime:
 		return Dates.copy_datetime(current_datetime) 
 	return Dates.get_new_date()
+	
+
+var entity_tracker : EntityTracker setget set_entity_tracker,get_entity_tracker
+
+
+func set_entity_tracker(tracker : EntityTracker) -> void:
+	entity_tracker = tracker
+	
+
+func get_entity_tracker() -> EntityTracker:
+	return entity_tracker
+

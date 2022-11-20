@@ -20,8 +20,8 @@ func _add_items() -> void:
 
 func load_entity(entity : Entity) -> bool:
 	if entity is Stall:
-		_selected_stall = entity as Stall
 		_update_generated_name()
+		_selected_stall = entity as Stall
 		return entity.is_stall_vacant
 	return false
 

@@ -15,7 +15,7 @@ func enter(_msg: Dictionary = {}) -> void:
 	
 
 func on_time_ellapsed(dateTime : DateTime) -> void:
-	is_in_business_hour = check_if_operational(dateTime)
+	is_in_business_hour = _check_if_operational(dateTime)
 	_owner.stall_shape.color = Color.olivedrab if is_in_business_hour else Color.sandybrown
 
 
@@ -29,7 +29,7 @@ func _get_business_hours() -> BusinessHours:
 	return _business_hours
 	
 
-func check_if_operational(datetime : DateTime)-> bool:
+func _check_if_operational(datetime : DateTime)-> bool:
 	if _get_business_hours() is BusinessHours:
 		return _business_hours.in_business_hour(datetime)
 	return false

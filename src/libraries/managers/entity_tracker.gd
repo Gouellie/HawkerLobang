@@ -3,6 +3,10 @@ extends Reference
 
 var entities := {}
 
+func _init() -> void:
+	Global.entity_tracker = self
+	
+
 func place_entity(entity, cellv: Vector2) -> void:
 	if entities.has(cellv):
 		return

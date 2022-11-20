@@ -19,12 +19,12 @@ script = ExtResource( 2 )
 visible = false
 position = Vector2( -34, 34 )
 color = Color( 0.941176, 0.827451, 0.0941176, 1 )
-polygon = PoolVector2Array( 0, -68, 0, 0, 68, 0, 68, -68 )
+polygon = PoolVector2Array( -6, -74, -6, 6, 74, 6, 74, -74 )
 
 [node name="StallShape" type="Polygon2D" parent="."]
 position = Vector2( -32, 32 )
 color = Color( 0.419608, 0.556863, 0.137255, 1 )
-polygon = PoolVector2Array( 0, -64, 0, 0, 64, 0, 64, -64 )
+polygon = PoolVector2Array( -6, -70, -6, 6, 70, 6, 70, -70 )
 
 [node name="Control" type="Control" parent="."]
 margin_left = -24.0
@@ -66,6 +66,16 @@ script = ExtResource( 5 )
 
 [node name="Open" type="Node2D" parent="States"]
 script = ExtResource( 4 )
+
+[node name="Queue" type="Node2D" parent="."]
+
+[node name="QueuePosition" type="Node2D" parent="Queue"]
+position = Vector2( 56, 16 )
+
+[node name="Polygon2D" type="Polygon2D" parent="Queue"]
+position = Vector2( 56, 16 )
+color = Color( 0.329412, 0.0392157, 0.0392157, 0.419608 )
+polygon = PoolVector2Array( -8, 0, 0, -8, 8, 0, 0, 8 )
 
 [connection signal="input_event" from="Area2D" to="." method="_on_Area2D_input_event"]
 [connection signal="mouse_entered" from="Area2D" to="." method="_on_Area2D_mouse_entered" binds= [ true ]]

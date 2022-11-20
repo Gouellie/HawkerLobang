@@ -16,4 +16,7 @@ signal blueprint_selected(blueprint_scene)
 signal entity_selected(selected_entity)
 
 #warning-ignore: unused_signal
+signal entity_debug_selected(selected_entity)
+
+#warning-ignore: unused_signal
 signal placement_requested(entity_scene, position)

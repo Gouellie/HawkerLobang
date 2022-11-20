@@ -27,6 +27,11 @@ func _on_Button_Exit_pressed() -> void:
 func _on_entity_selected(_selected_entity : Node2D) -> void:
 	if _selected_entity == null:
 		return
+	
+	# todo, remove
+	if _selected_entity is Patron:
+		return
+		
 	toolbox.load_setup(_selected_entity)
 	toolbox.visible = true
 

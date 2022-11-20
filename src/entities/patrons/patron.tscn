@@ -1,0 +1,41 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://src/entities/patrons/patron.gd" type="Script" id=1]
+[ext_resource path="res://src/entities/patrons/states/browsing.gd" type="Script" id=2]
+[ext_resource path="res://src/libraries/state_machine/state_machine.gd" type="Script" id=3]
+[ext_resource path="res://assets/sprites/patron.png" type="Texture" id=4]
+[ext_resource path="res://src/entities/patrons/states/moving.gd" type="Script" id=5]
+
+[sub_resource type="CircleShape2D" id=1]
+radius = 5.0
+
+[node name="Patron" type="KinematicBody2D"]
+collision_mask = 0
+script = ExtResource( 1 )
+
+[node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
+neighbor_dist = 20.0
+max_neighbors = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource( 1 )
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource( 1 )
+
+[node name="Patron" type="Sprite" parent="."]
+texture = ExtResource( 4 )
+
+[node name="States" type="Node2D" parent="."]
+script = ExtResource( 3 )
+initial_state = NodePath("Moving/Browsing")
+
+[node name="Moving" type="Node2D" parent="States"]
+script = ExtResource( 5 )
+
+[node name="Browsing" type="Node2D" parent="States/Moving"]
+script = ExtResource( 2 )
+
+[connection signal="input_event" from="Area2D" to="." method="_on_Area2D_input_event"]

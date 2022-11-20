@@ -15,6 +15,9 @@ func _ready() -> void:
 
 func on_time_ellapsed(_dateTime : DateTime) -> void:
 	pass
+	
+func on_speed_changed(_speed : int) -> void:
+	pass
 
 
 func unhandled_input(_event: InputEvent) -> void:

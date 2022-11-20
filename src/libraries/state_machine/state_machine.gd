@@ -15,11 +15,16 @@ func _init() -> void:
 func _ready() -> void:
 	yield(owner, "ready")
 	Log.log_error(Events.connect("time_ellapsed", self, "_on_time_ellapsed"), "state_machine.gd")
+	Log.log_error(Events.connect("speed_changed", self, "_on_speed_changed"), "state_machine.gd")
 	state.enter()
 
 
 func _on_time_ellapsed(dateTime : DateTime) -> void:
 	state.on_time_ellapsed(dateTime)
+	
+	
+func _on_speed_changed(speed : int) -> void:
+	state.on_speed_changed(speed)
 
 
 func _unhandled_input(event: InputEvent) -> void:
