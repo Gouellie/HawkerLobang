@@ -6,7 +6,6 @@ var _ground: TileMap
 
 var tile_offset : Vector2
 
-const NAMEOF_SELF := "entity_manager.gd"
 
 const EMPTY_TILE_INDEX : int = 0
 const STALL_TILE_INDEX : int = 1
@@ -21,7 +20,7 @@ func _ready() -> void:
 	_ground = get_node(ground_path) as TileMap
 	_tracker = EntityTracker.new()
 	tile_offset = _ground.cell_size / 2
-	Log.log_error(Events.connect("blueprint_selected", self, "_on_blueprint_selected"), NAMEOF_SELF)
+	Log.log_error(Events.connect("blueprint_selected", self, "_on_blueprint_selected"), "entity_manager.gd")
 	_load()
 
 

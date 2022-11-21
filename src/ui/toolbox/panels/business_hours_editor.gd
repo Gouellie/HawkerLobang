@@ -1,6 +1,6 @@
 extends ToolboxPanel
 
-const timespan_control = preload("res://src/UI/Controls/timespan_control.tscn")
+const timespan_control = preload("res://src/ui/controls/timespan_control.tscn")
 
 const MAX_COUNT : int = 8
 

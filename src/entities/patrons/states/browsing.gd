@@ -1,7 +1,7 @@
 extends State
 
 func enter(_msg: Dictionary = {}) -> void:
-	Log.log_error(Events.connect("entity_debug_selected", self, "_on_entity_selected"))
+	Log.log_error(Events.connect("entity_debug_selected", self, "_on_entity_selected"), "browsing.gd")
 
 
 func exit() -> void:

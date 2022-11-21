@@ -6,7 +6,7 @@ onready var skin : Sprite = $Patron
 
 
 func _ready() -> void:
-	Log.log_error(Events.connect("entity_selected", self, "_on_entity_selected"))
+	Log.log_error(Events.connect("entity_selected", self, "_on_entity_selected"), "patron.gd")
 	
 
 func _draw() -> void:

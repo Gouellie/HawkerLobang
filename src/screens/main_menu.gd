@@ -11,8 +11,7 @@ func _ready() -> void:
 func _on_Button_New_pressed() -> void:
 	SaveFile.new_game()
 	var err = get_tree().change_scene("res://src/scenes/hawker_scene.tscn")
-	if err != OK:
-		Log.log_error(err)
+	Log.log_error(err, "main_menu.gd")
 
 
 func _on_Button_Load_pressed() -> void:
@@ -23,8 +22,7 @@ func _on_Button_Load_pressed() -> void:
 
 func _on_Button_Sandbox_pressed() -> void:
 	var err = get_tree().change_scene("res://src/scenes/sandbox.tscn")
-	if err != OK:
-		Log.log_error(err)
+	Log.log_error(err, "main_menu.gd")
 
 
 func _on_Button_Quit_pressed() -> void:
@@ -34,5 +32,4 @@ func _on_Button_Quit_pressed() -> void:
 func _on_FileDialog_file_selected(path: String) -> void:
 	SaveFile.load_game(path)
 	var err = get_tree().change_scene("res://src/scenes/hawker_scene.tscn")
-	if err != OK:
-		Log.log_error(err)
+	Log.log_error(err, "main_menu.gd")
