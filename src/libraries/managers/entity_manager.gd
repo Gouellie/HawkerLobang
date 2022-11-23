@@ -2,10 +2,11 @@ extends TileMap
 class_name EntityManager
 
 export (NodePath) var ground_path
+
 var _ground: TileMap
 
 var tile_offset : Vector2
-
+var prop_tile_offset : Vector2
 
 const EMPTY_TILE_INDEX : int = 0
 const STALL_TILE_INDEX : int = 1
@@ -35,12 +36,8 @@ func _register_children() -> void:
 			continue
 		var cellv = _ground.world_to_map(child.global_position)
 		_mark_ground(cellv, STALL_TILE_INDEX)
-		_tracker.place_entity(child, cellv)
-		if not child is Stall:
-			continue
-		var front_cellv = _ground.world_to_map(child.queue_position)		
-		_mark_ground(front_cellv, STALL_FRONT_TILE_INDEX, child.orientation)
-
+		_tracker.place_entity(child, cellv)	
+		
 
 func _on_blueprint_selected(sender : Object) -> void:
 	if _blueprint:
@@ -53,7 +50,7 @@ func _on_blueprint_selected(sender : Object) -> void:
 			_blueprint = sender.blueprint_scene.instance() as BlueprintBase
 			add_child(_blueprint)
 			_blueprint.show_debug(true)
-	_ground.visible = _blueprint != null
+	#_ground.visible = _blueprint != null
 
 
 func _mark_ground(cellv: Vector2, tile_index : int, rotation_in_degrees : int = 0) -> void:
@@ -76,11 +73,20 @@ func _move_blueprint(mouse_position: Vector2) -> void:
 	var cellv = _ground.world_to_map(mouse_position)
 	var snap_position = _ground.map_to_world(cellv)
 	_blueprint.position = snap_position + tile_offset
+
 	if _blueprint is Blueprint:
-		_validate_blueprint_position(cellv)
+		if _blueprint.is_prop:
+			_validate_blueprint_prop_position()
+		else:
+			_validate_blueprint_position(cellv)
 	elif _blueprint is BlueprintEraser:
 		_validate_eraser_position(cellv)
 
+
+func _validate_blueprint_prop_position() -> void:
+	_placeable_blueprint = true
+	_blueprint.set_valid(true)
+	
 
 func _validate_blueprint_position(cellv: Vector2) -> void:
 	var tile_index = _ground.get_cellv(cellv)
@@ -96,7 +102,6 @@ func _check_clearance(clearance_tile : ClearanceTile) -> bool:
 		var cellv = _ground.world_to_map(clearance_tile.global_position)
 		var tile_index_facing = _ground.get_cellv(cellv)
 		var has_clearance = clearance_tile.allowed_tiles.has(tile_index_facing)
-#		var has_clearance = tile_index_facing == EMPTY_TILE_INDEX
 		clearance_tile.set_has_clearance(has_clearance)
 		return has_clearance
 
@@ -124,18 +129,19 @@ func _unhandled_input(event: InputEvent) -> void:
 
 
 func _place_entity() -> void:
+	if not _blueprint is Blueprint:
+		return
+		
 	var new_entity = _blueprint.entity_scene.instance() as Entity
 	new_entity.position = _blueprint.position
-	new_entity.orientation = _blueprint.facing_rotation
-	var cellv = _ground.world_to_map(new_entity.position)
-	_mark_ground(cellv, STALL_TILE_INDEX, _blueprint.facing_rotation)
-	
-	_tracker.place_entity(new_entity, cellv)
-	add_child(new_entity)
+	new_entity.rotation_degrees = _blueprint.rotation_degrees
 
-	if new_entity is Stall:
-		var front_cellv = _ground.world_to_map(new_entity.queue_position)		
-		_mark_ground(front_cellv, STALL_FRONT_TILE_INDEX, _blueprint.facing_rotation)
+	var cellv = _ground.world_to_map(new_entity.position)
+	# warning-ignore:narrowing_conversion
+	_mark_ground(cellv, STALL_TILE_INDEX, _blueprint.rotation_degrees)
+	_tracker.place_entity(new_entity, cellv)
+	
+	add_child(new_entity)
 
 
 func _remove_entity() -> void:
@@ -145,15 +151,17 @@ func _remove_entity() -> void:
 
 
 func save() -> Dictionary:
-	var entities = {
-		"stalls" : {},
-		"tables" : {}
-	}
+	var entities = {}
+	
 	if _tracker.entities is Dictionary:
 		for key in _tracker.entities:
 			var entity = _tracker.entities[key]
-			if entity is Stall:
-				entities["stalls"][var2str(key)] = entity.serialize()
+			var file_name = entity.scene_key
+			if not entities.has(file_name):
+				entities.merge({
+					file_name : {}
+				})
+			entities[file_name][var2str(key)] = entity.serialize()
 	return {
 		"entities" : entities
 	}
@@ -165,29 +173,23 @@ func _load() -> void:
 		return
 	_delete_all_children()
 	var entities = SaveFile.game_data["entities"]
-	for type in entities:
-		if type == "stalls":
-			for cellv_string in entities[type]:
-				var cellv = str2var(cellv_string)
-				_load_stall(cellv, entities[type][cellv_string])
-
+	for file_name in entities:
+		for cellv_string in entities[file_name]:
+			var cellv = str2var(cellv_string)
+			_load_entity(file_name, cellv, entities[file_name][cellv_string])
+		
 
 func _delete_all_children() -> void:
 	for child in get_children():
 		child.queue_free()
 
 
-func _load_stall(cellv : Vector2, stall_data : Dictionary) -> void:
-	var stall_scene = Resources.ENTITIES["stalls"]
-	var stall = stall_scene.instance() as Stall
-	var stall_position = _ground.map_to_world(cellv)
-	stall.position = stall_position + tile_offset
-	_mark_ground(cellv, STALL_TILE_INDEX, stall_data["or"])
-	_tracker.place_entity(stall, cellv)
-	add_child(stall)	
-	stall.deserialize(stall_data)
-	
-	if stall is Stall:
-		var front_cellv = _ground.world_to_map(stall.queue_position)		
-		_mark_ground(front_cellv, STALL_FRONT_TILE_INDEX, stall_data["or"])
-	
+func _load_entity(file_name: String, cellv : Vector2, data : Dictionary) -> void:
+	var entity_scene = Resources.ENTITIES[file_name]
+	var entity = entity_scene.instance() as Entity
+	var entity_position = _ground.map_to_world(cellv)
+	entity.position = entity_position + tile_offset
+	_mark_ground(cellv, STALL_TILE_INDEX)
+	_tracker.place_entity(entity, cellv)
+	add_child(entity)	
+	entity.deserialize(data)

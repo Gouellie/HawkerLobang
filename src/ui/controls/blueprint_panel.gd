@@ -13,6 +13,7 @@ func _ready() -> void:
 	Log.log_error(Events.connect("blueprint_selected", self, "_on_blueprint_selected"), "blueprint.gd")
 	if blueprint_scene:
 		_blueprint = blueprint_scene.instance() as BlueprintBase
+#		assert(_blueprint == null, "Scene is not of type BlueprintBase %s" % blueprint_scene.resource_path)
 		_blueprint.position = center_position.rect_position
 		add_child(_blueprint)
 

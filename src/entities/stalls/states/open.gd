@@ -11,12 +11,16 @@ func _ready() -> void:
 
 
 func enter(_msg: Dictionary = {}) -> void:
-	_owner.stall_shape.color = Color.olivedrab
+	_set_business_state(Global.current_datetime)
 	
 
-func on_time_ellapsed(dateTime : DateTime) -> void:
-	is_in_business_hour = _check_if_operational(dateTime)
-	_owner.stall_shape.color = Color.olivedrab if is_in_business_hour else Color.sandybrown
+func on_time_ellapsed(date_time : DateTime) -> void:
+	_set_business_state(date_time)
+	
+
+func _set_business_state(date_time : DateTime) -> void:
+	is_in_business_hour = _check_if_operational(date_time)
+	_owner.set_stall_is_open(is_in_business_hour)
 
 
 func select(_event: InputEventMouse) -> void:

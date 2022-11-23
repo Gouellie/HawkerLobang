@@ -9,5 +9,6 @@ var STALLS = {
 }
 
 var ENTITIES = {
-	"stalls" : preload("res://src/entities/stalls/stall.tscn")
+	"stall" : preload("res://src/entities/stalls/stall.tscn"),
+	"table_2pax" : preload("res://src/entities/props/tables/table_2pax.tscn")
 }

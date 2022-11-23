@@ -2,12 +2,14 @@ extends Node2D
 
 class_name Entity
 
-var orientation : int = 0
-
+export (String) var scene_key
 
 func serialize() -> Dictionary:
-	return {}
+	return {
+		"or" : rotation_degrees,		
+	}
 
 
-func deserialize(_data : Dictionary) -> void:
-	pass
+func deserialize(data : Dictionary) -> void:
+	if data and data.has("or"):
+		rotation_degrees = data["or"]

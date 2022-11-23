@@ -1,7 +1,8 @@
 extends State
 
 func enter(_msg: Dictionary = {}) -> void:
-	owner.stall_shape.color = Color.gray
+	if owner.sprite_stall is Sprite:
+		owner.sprite_stall.frame = 0
 
 
 func select(_event : InputEventMouse) -> void:

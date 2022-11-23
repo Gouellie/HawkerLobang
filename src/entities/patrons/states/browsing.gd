@@ -43,4 +43,5 @@ func character_target_reached() -> void:
 		
 
 func _visit_stall(stall : Stall) -> void:
-	_parent.set_navigation_position(stall.queue_position)
+	if stall :
+		_parent.set_navigation_position(stall.queue_position)
