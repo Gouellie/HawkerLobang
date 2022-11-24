@@ -17,11 +17,14 @@ var _blueprint : BlueprintBase
 var _placeable_blueprint : bool
 var _valid_eraser : bool
 
+var _check_for_clearance : bool = true
+
 func _ready() -> void:
 	_ground = get_node(ground_path) as TileMap
 	_tracker = EntityTracker.new()
 	tile_offset = _ground.cell_size / 2
 	Log.log_error(Events.connect("blueprint_selected", self, "_on_blueprint_selected"), "entity_manager.gd")
+	Log.log_error(Events.connect("check_clearance_changed", self, "_on_check_clearance_changed"), "entity_manager.gd")
 	_load()
 
 
@@ -93,6 +96,8 @@ func _validate_blueprint_position(cellv: Vector2) -> void:
 	_placeable_blueprint = tile_index == EMPTY_TILE_INDEX
 	for clearance_tile in _blueprint.clearance_positions:
 		if not clearance_tile is ClearanceTile:
+			continue
+		if not _check_for_clearance:
 			continue
 		_placeable_blueprint =  _check_clearance(clearance_tile) and _placeable_blueprint
 	_blueprint.set_valid(_placeable_blueprint)
@@ -193,3 +198,7 @@ func _load_entity(file_name: String, cellv : Vector2, data : Dictionary) -> void
 	_tracker.place_entity(entity, cellv)
 	add_child(entity)	
 	entity.deserialize(data)
+
+
+func _on_check_clearance_changed(value : bool) -> void:
+	_check_for_clearance = value

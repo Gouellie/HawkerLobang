@@ -13,6 +13,9 @@ signal save_game()
 signal blueprint_selected(blueprint_scene)
 
 #warning-ignore: unused_signal
+signal check_clearance_changed(value)
+
+#warning-ignore: unused_signal
 signal entity_selected(selected_entity)
 
 #warning-ignore: unused_signal
