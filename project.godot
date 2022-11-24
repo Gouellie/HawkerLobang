@@ -69,7 +69,7 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://src/libraries/entities/entity.gd"
 }, {
-"base": "TileMap",
+"base": "Node2D",
 "class": "EntityManager",
 "language": "GDScript",
 "path": "res://src/libraries/managers/entity_manager.gd"

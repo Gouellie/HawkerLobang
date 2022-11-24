@@ -65,6 +65,8 @@ func load_game(filepath : String) -> void:
 	current_save_file = filepath
 	save_game.open(filepath, File.READ)
 	var data = parse_json(save_game.get_as_text())
+	# the content of the savefile is cached in game_data
+	# interested nodes can retrieve the data 
 	game_data = data if data is Dictionary else {}
 	save_game.close()
 

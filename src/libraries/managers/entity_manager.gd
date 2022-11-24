@@ -1,4 +1,4 @@
-extends TileMap
+extends Node2D
 class_name EntityManager
 
 export (NodePath) var ground_path
