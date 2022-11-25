@@ -2,6 +2,8 @@ extends Control
 
 signal date_changed(datetime)
 
+export (bool) var edit_day = true
+
 const MINUTES_INCREMENTS : int = 15
 
 onready var option_day : OptionButton = $HBoxContainer/OptionButton_Day
@@ -13,6 +15,9 @@ var datetime : DateTime setget _set_datetime
 func _ready() -> void:
 	if owner:
 		yield(owner, "ready")
+	if not edit_day:
+		option_day.visible = false
+		$HBoxContainer/Label_Separator_01.visible = false
 	if datetime == null:
 		datetime = Dates.get_new_date()
 	_add_items()
@@ -40,16 +45,19 @@ func _add_items() -> void:
 
 func _on_OptionButton_Day_item_selected(day: int) -> void:
 	datetime.day = day
+	datetime.ticks = Dates.get_ticks_from_date(datetime)
 	emit_signal("date_changed", datetime)
 
 
 func _on_OptionButton_Hour_item_selected(hour: int) -> void:
 	datetime.hour = hour
+	datetime.ticks = Dates.get_ticks_from_date(datetime)
 	emit_signal("date_changed", datetime)
 
 
 func _on_OptionButton_Minute_item_selected(index: int) -> void:
 	datetime.minute = _to_minutes_from_index(index)
+	datetime.ticks = Dates.get_ticks_from_date(datetime)
 	emit_signal("date_changed", datetime)
 
 

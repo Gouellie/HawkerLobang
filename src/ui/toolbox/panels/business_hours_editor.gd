@@ -6,8 +6,8 @@ const MAX_COUNT : int = 8
 
 var _business_hours : BusinessHours
 
-onready var timespans : VBoxContainer = $Control/Timespans
-onready var timespan_bulk := $CenterContainer/HBoxContainer/TimeSpanItem_Bulk
+onready var timespans : VBoxContainer = $Control/CenterContainer/VBoxContainer/Timespans
+onready var timespan_bulk := $Control/CenterContainer_Bulk/VBoxContainer/TimeSpanItem_Bulk 
 
 
 func _ready() -> void:

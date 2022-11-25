@@ -15,7 +15,7 @@ grow_vertical = 0
 script = ExtResource( 5 )
 
 [node name="HBoxContainer" type="HBoxContainer" parent="."]
-margin_right = 386.0
+margin_right = 74.0
 margin_bottom = 100.0
 
 [node name="Control" type="VBoxContainer" parent="HBoxContainer"]
@@ -43,6 +43,7 @@ enabled_focus_mode = 0
 text = "Collapse"
 
 [node name="HBoxContainer_Collapsable" type="HBoxContainer" parent="HBoxContainer"]
+visible = false
 margin_left = 78.0
 margin_right = 386.0
 margin_bottom = 100.0

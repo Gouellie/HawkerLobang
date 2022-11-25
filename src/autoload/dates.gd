@@ -71,6 +71,13 @@ static func get_date_today() -> DateTime:
 static func get_ticks(day : int, hour : int, minute : int) -> int:
 	return day * MINUTES_PER_DAY + hour * MINUTES_PER_HOUR + minute
 
+
+static func get_ticks_from_date(datetime : DateTime) -> int:
+	var day : int  = datetime.day
+	var hour : int = datetime.hour
+	var minute : int = datetime.minute
+	return get_ticks(day, hour, minute)
+
 	
 static func to_dictionary(datetime : DateTime) -> Dictionary:
 	return {

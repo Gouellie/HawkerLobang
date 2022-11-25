@@ -23,6 +23,9 @@ func _ready() -> void:
 	else:
 		timespan = Dates.generate_timespan(0, 8, 0, 0, 21, 0)
 
+	# warning-ignore:return_value_discarded
+	datetimecontrol_from.connect("date_changed", self, "_on_date_changed")
+
 	if edit_datetime == false:
 		datetimecontrol_from.visible = false
 		timecontrol_from.visible = true
@@ -44,6 +47,10 @@ func _on_ButtonDelete_pressed() -> void:
 
 func _on_ButtonApply_pressed() -> void:
 	emit_signal("apply_changes", timespan)
+
+
+func _on_date_changed(date : DateTime) -> void:
+	datetimecontrol_to.datetime.day = date.day
 
 
 func _set_timespan(p_timespan : TimeSpan) -> void:

@@ -12,6 +12,7 @@ onready var ticker : Timer = $Ticker
 func _ready() -> void:
 	_load()
 	Log.log_error(Events.connect("speed_changed", self, "_on_speed_changed"), "time_of_day.gd")
+	Log.log_error(Events.connect("update_current_datetime", self, "_on_update_current_datetime"), "time_of_day.gd")
 	Global.current_datetime = datetime
 	Events.emit_signal("time_ellapsed", datetime)
 	ticker.start()
@@ -43,6 +44,11 @@ func _on_speed_changed(p_speed : int) -> void:
 		ticker.stop()		
 		# updating with _process instead of timer
 		_skip_ticker = true
+
+
+func _on_update_current_datetime(p_current : DateTime) -> void:
+	datetime.update_date(p_current)
+	Events.emit_signal("time_ellapsed", datetime)	
 
 
 func _load() -> void:
