@@ -25,6 +25,7 @@ func _ready() -> void:
 	tile_offset = _ground.cell_size / 2
 	Log.log_error(Events.connect("blueprint_selected", self, "_on_blueprint_selected"), "entity_manager.gd")
 	Log.log_error(Events.connect("check_clearance_changed", self, "_on_check_clearance_changed"), "entity_manager.gd")
+	Log.log_error(Events.connect("open_close_all_stalls", self, "_on_open_close_all_stalls"))
 	_load()
 
 
@@ -206,3 +207,9 @@ func _load_entity(file_name: String, cellv : Vector2, data : Dictionary) -> void
 
 func _on_check_clearance_changed(value : bool) -> void:
 	_check_for_clearance = value
+
+
+func _on_open_close_all_stalls(open : bool) -> void:
+	for entity in _tracker.entities.values():
+		if entity is Stall:
+			entity.set_is_open(open)

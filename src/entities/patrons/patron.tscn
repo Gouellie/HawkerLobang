@@ -52,6 +52,7 @@ initial_state = NodePath("Moving")
 
 [node name="Moving" type="Node2D" parent="States"]
 script = ExtResource( 5 )
+nav_avoidance_enabled = false
 
 [node name="Browsing" type="Node2D" parent="States/Moving"]
 script = ExtResource( 2 )

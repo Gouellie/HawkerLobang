@@ -26,13 +26,13 @@ func _show_control_button(toggle : bool) -> void:
 
 func _on_Button_AlwaysOpen_pressed() -> void:
 	if selected_entity is Stall:
-		selected_entity.always_open(true)
+		selected_entity.set_is_open(true)
 		_show_control_button(true)
 		
 
 func _on_Button_CloseStall_pressed() -> void:
 	if selected_entity is Stall:
-		selected_entity.close_stall()
+		selected_entity.set_is_open(false)
 		_show_control_button(false)		
 
 

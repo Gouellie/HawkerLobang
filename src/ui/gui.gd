@@ -63,3 +63,16 @@ func _on_Button_ClearPatrons_pressed() -> void:
 
 func _on_Button_InvokePatron_pressed() -> void:
 	Events.emit_signal("patron_invoked")
+
+
+func _on_Button_OpenAllStalls_pressed() -> void:
+	Events.emit_signal("open_close_all_stalls", true)
+
+
+func _on_Button_CloseAllStalls_pressed() -> void:
+	Events.emit_signal("open_close_all_stalls", false)
+
+
+func _on_Button_OpenCenter_toggled(open: bool) -> void:
+	Events.emit_signal("hawker_center_changed", open)
+	$HBoxContainer/Button_OpenCloseCenter.text = "Close Center" if open else "Open Center"

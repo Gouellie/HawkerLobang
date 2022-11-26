@@ -1,11 +1,11 @@
 extends State
 
 
-
 func enter(_msg: Dictionary = {}) -> void:
 	if owner.label_state :
 		owner.label_state.text = "leaving"
-	_parent.set_navigation_position(Vector2(16,16))
+	var unspawn_pos = Global.entrance_manager.get_entrance()
+	_parent.set_navigation_position(unspawn_pos)
 
 
 func on_time_ellapsed(time : DateTime) -> void:

@@ -6,6 +6,7 @@ onready var button_load : Button = $VBoxContainer/Button_Load
 
 func _ready() -> void:
 	button_load.disabled = not SaveFile.save_file_found()
+	Global.reset()
 	
 
 func _on_Button_New_pressed() -> void:

@@ -38,8 +38,9 @@ func _delete_all_children() -> void:
 
 
 func _on_patron_invoked() -> void:
+	var spawn_pos = Global.entrance_manager.get_entrance()
 	var patron = patron_scene.instance()
-	patron.global_position = Vector2(16,16)
+	patron.global_position = spawn_pos
 	patrons.push_back(patron)
 	add_child(patron)
 	Global.set_patrons_count(patrons.size())		

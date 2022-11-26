@@ -13,6 +13,9 @@ signal update_current_datetime(datetime)
 signal save_game()
 
 #warning-ignore: unused_signal
+signal hawker_center_changed(opened)
+
+#warning-ignore: unused_signal
 signal blueprint_selected(blueprint_scene)
 
 #warning-ignore: unused_signal
@@ -38,3 +41,6 @@ signal placement_requested(entity_scene, position)
 
 #warning-ignore: unused_signal
 signal patron_leaving(patron)
+
+#warning-ignore: unused_signal
+signal open_close_all_stalls(open)

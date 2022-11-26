@@ -50,17 +50,17 @@ func create_stall(p_stall_name : String, p_resource : Resource, date : DateTime)
 	Events.emit_signal("entity_selected", self)	
 
 
-func always_open(open : bool) -> void:
+func set_is_open(open : bool) -> void:
+	if is_stall_vacant:
+		return
 	if open :
 		is_always_open = true
 		is_manually_closed = false
 		state_machine.transition_to("Rented/Open")
-
-
-func close_stall() -> void:
-	is_always_open = false
-	is_manually_closed = true
-	state_machine.transition_to("Rented/Close")
+	else:
+		is_always_open = false
+		is_manually_closed = true
+		state_machine.transition_to("Rented/Close")
 
 
 func vacate_stall() -> void:
@@ -69,6 +69,8 @@ func vacate_stall() -> void:
 	state_machine.transition_to("Vacant")
 	is_stall_vacant = true
 	date_of_opening = null
+	is_always_open = false
+	is_manually_closed = false	
 	# update the Toolbox
 	Events.emit_signal("entity_selected", self)	
 

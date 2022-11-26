@@ -12,6 +12,7 @@ var queue_positions : PoolVector2Array
 
 func _ready() -> void:
 	Log.log_error(owner.connect("loaded", self, "on_owner_loaded"))
+	Log.log_error(Events.connect("clear_patrons_requested", self, "_on_clear_patrons_requested"))		
 
 
 func set_stall_open(open : bool) -> void:
@@ -81,11 +82,15 @@ func break_queue() -> void:
 			continue
 		if patron is Patron:
 			patron.break_queue()
-
+	queue.clear()
+	
 
 func notify_patron_queue_changed(from_index : int = 0) -> void:
 	var queue_range = from_index if from_index > 0 else queue.size()
 	for i in range(queue_range):
 		if queue[i] is Patron:
 			queue[i].update_position_in_queue(queue_positions[i])
-	
+
+
+func _on_clear_patrons_requested() -> void:
+	queue.clear()

@@ -69,6 +69,33 @@ focus_mode = 0
 enabled_focus_mode = 0
 text = "invoke"
 
+[node name="Button_OpenCloseCenter" type="Button" parent="HBoxContainer"]
+margin_left = 489.0
+margin_right = 589.0
+margin_bottom = 56.0
+rect_min_size = Vector2( 100, 0 )
+focus_mode = 0
+toggle_mode = true
+pressed = true
+enabled_focus_mode = 0
+text = "Close Center"
+
+[node name="Button_OpenAllStalls" type="Button" parent="HBoxContainer"]
+margin_left = 593.0
+margin_right = 699.0
+margin_bottom = 56.0
+focus_mode = 0
+enabled_focus_mode = 0
+text = "Open All Stalls"
+
+[node name="Button_CloseAllStalls" type="Button" parent="HBoxContainer"]
+margin_left = 703.0
+margin_right = 809.0
+margin_bottom = 56.0
+focus_mode = 0
+enabled_focus_mode = 0
+text = "Close All Stalls"
+
 [node name="HBoxContainer_Options" type="HBoxContainer" parent="."]
 anchor_left = 1.0
 anchor_right = 1.0
@@ -142,6 +169,9 @@ filters = PoolStringArray( "*.save ; Save Files" )
 
 [connection signal="pressed" from="HBoxContainer/Button_ClearPatrons" to="." method="_on_Button_ClearPatrons_pressed"]
 [connection signal="pressed" from="HBoxContainer/Button_InvokePatron" to="." method="_on_Button_InvokePatron_pressed"]
+[connection signal="toggled" from="HBoxContainer/Button_OpenCloseCenter" to="." method="_on_Button_OpenCenter_toggled"]
+[connection signal="pressed" from="HBoxContainer/Button_OpenAllStalls" to="." method="_on_Button_OpenAllStalls_pressed"]
+[connection signal="pressed" from="HBoxContainer/Button_CloseAllStalls" to="." method="_on_Button_CloseAllStalls_pressed"]
 [connection signal="pressed" from="HBoxContainer_Options/VBoxContainer/Button_Options" to="." method="_on_Button_Options_pressed"]
 [connection signal="pressed" from="HBoxContainer_Options/VBoxContainer/Container_Options/Button_Save" to="." method="_on_Button_Save_pressed"]
 [connection signal="pressed" from="HBoxContainer_Options/VBoxContainer/Container_Options/Button_SaveAs" to="." method="_on_Button_SaveAs_pressed"]
