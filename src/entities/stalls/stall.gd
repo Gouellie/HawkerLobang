@@ -19,6 +19,9 @@ onready var queue_manager :  = $Queue
 
 onready var label_state : Label = $Label_State
 
+# debug
+var is_always_open : bool
+var is_manually_closed : bool
 
 var is_open_for_business : bool
 var queue_position : Vector2 setget ,get_queue_position
@@ -47,7 +50,20 @@ func create_stall(p_stall_name : String, p_resource : Resource, date : DateTime)
 	Events.emit_signal("entity_selected", self)	
 
 
+func always_open(open : bool) -> void:
+	if open :
+		is_always_open = true
+		is_manually_closed = false
+		state_machine.transition_to("Rented/Open")
+
+
 func close_stall() -> void:
+	is_always_open = false
+	is_manually_closed = true
+	state_machine.transition_to("Rented/Close")
+
+
+func vacate_stall() -> void:
 	_set_stall_name("")
 	_set_resource(null)
 	state_machine.transition_to("Vacant")

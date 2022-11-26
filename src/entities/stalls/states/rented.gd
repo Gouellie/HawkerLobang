@@ -38,6 +38,11 @@ func _get_business_hours() -> BusinessHours:
 	
 
 func get_is_open_for_business(datetime : DateTime)-> bool:
+	if owner.is_always_open:
+		return true
+	if owner.is_manually_closed:
+		return false
+	
 	if _get_business_hours() is BusinessHours:
 		return _business_hours.in_business_hour(datetime)
 	return false

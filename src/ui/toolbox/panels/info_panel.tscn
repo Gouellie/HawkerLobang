@@ -18,23 +18,37 @@ margin_right = 250.0
 margin_bottom = 7.0
 align = 1
 
-[node name="Control" type="Control" parent="."]
+[node name="MarginContainer" type="MarginContainer" parent="."]
 anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_left = -40.0
-margin_top = -40.0
-margin_right = -20.0
-margin_bottom = -20.0
+margin_left = -115.0
+margin_top = -88.0
+custom_constants/margin_right = 20
+custom_constants/margin_bottom = 20
 
-[node name="Button_CloseStall" type="Button" parent="Control"]
-anchor_left = 1.0
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_left = -78.0
-margin_top = -20.0
+[node name="Control" type="VBoxContainer" parent="MarginContainer"]
+margin_right = 95.0
+margin_bottom = 68.0
+
+[node name="Button_AlwaysOpen" type="Button" parent="MarginContainer/Control"]
+margin_right = 95.0
+margin_bottom = 20.0
+text = "Always Open"
+
+[node name="Button_Close" type="Button" parent="MarginContainer/Control"]
+margin_top = 24.0
+margin_right = 95.0
+margin_bottom = 44.0
 text = "Close Stall"
 
-[connection signal="pressed" from="Control/Button_CloseStall" to="." method="_on_Button_CloseStall_pressed"]
+[node name="Button_Vacate" type="Button" parent="MarginContainer/Control"]
+margin_top = 48.0
+margin_right = 95.0
+margin_bottom = 68.0
+text = "Vacate Stall"
+
+[connection signal="pressed" from="MarginContainer/Control/Button_AlwaysOpen" to="." method="_on_Button_AlwaysOpen_pressed"]
+[connection signal="pressed" from="MarginContainer/Control/Button_Close" to="." method="_on_Button_CloseStall_pressed"]
+[connection signal="pressed" from="MarginContainer/Control/Button_Vacate" to="." method="_on_Button_Vacate_pressed"]
