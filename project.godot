@@ -84,6 +84,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://src/entities/patrons/patron.gd"
 }, {
+"base": "Node2D",
+"class": "QueueManager",
+"language": "GDScript",
+"path": "res://src/entities/stalls/queue_manager.gd"
+}, {
 "base": "Entity",
 "class": "Stall",
 "language": "GDScript",
@@ -140,6 +145,7 @@ _global_script_class_icons={
 "EntityManager": "",
 "EntityTracker": "",
 "Patron": "",
+"QueueManager": "",
 "Stall": "",
 "StallResource": "",
 "State": "res://assets/icons/state.svg",
@@ -231,6 +237,9 @@ set_facing_down={
 
 [layer_names]
 
+2d_physics/layer_1="Stall"
+2d_physics/layer_2="Queue"
+2d_physics/layer_3="Patron"
 2d_navigation/layer_1="Floor"
 
 [navigation]

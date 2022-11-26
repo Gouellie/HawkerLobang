@@ -3,7 +3,7 @@ extends State
 var nav_agent : NavigationAgent2D
 var velocity : Vector2
 
-export var nav_agent_radius : float = 2.0
+export var nav_agent_radius : float = 5.0
 export var nav_optimize_path : bool = false
 export var nav_avoidance_enabled : bool = true
 export var character_speed_multiplier : float = 6
@@ -46,7 +46,9 @@ func _ready() -> void:
 
 
 func enter(_msg: Dictionary = {}) -> void:
-	pass
+	on_speed_changed(Global.current_speed)
+#	yield(get_tree().create_timer(1), "timeout")
+	_state_machine.transition_to("Moving/Browsing")
 
 
 func exit() -> void:
@@ -92,6 +94,8 @@ func character_path_changed() -> void:
 	
 	
 func character_target_reached() -> void:
+	if _state_machine.state == self:
+		return
 	if _state_machine.state.has_method("character_target_reached"):
 		_state_machine.state.character_target_reached()
 

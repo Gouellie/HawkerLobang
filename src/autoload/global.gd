@@ -5,6 +5,7 @@ var entity_tracker : EntityTracker setget set_entity_tracker,get_entity_tracker
 var builder_mode_on : bool setget ,_get_builder_mode_on
 var patrons_count : int = 0
 
+var current_speed : int = 1
 
 func _ready() -> void:
 	Log.log_error(Events.connect("blueprint_selected", self, "_on_blueprint_selected"), "global.gd")
@@ -15,6 +16,7 @@ func _reset() -> void:
 	entity_tracker = null
 	builder_mode_on = false
 	patrons_count = 0
+	current_speed = 1
 
 
 func set_curent_datetime(date : DateTime) -> void:
@@ -45,7 +47,7 @@ func _get_builder_mode_on() -> bool:
 
 func set_patrons_count(count : int) -> void:
 	patrons_count = count
-	Events.emit_signal("patron_count_changed", get_child_count())		
+	Events.emit_signal("patron_count_changed", count)		
 	
 	
 func get_patrons_count() -> int:

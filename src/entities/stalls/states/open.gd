@@ -4,36 +4,31 @@ var _business_hours : BusinessHours
 
 var is_in_business_hour : bool
 
-var _owner
+var queue_manager : QueueManager
+
+const idle_node_path : String = "Rented/Open/Idle"
+const cooking_node_path : String = "Rented/Open/Cooking"
+
 
 func _ready() -> void:
-	_owner = owner
+	yield(owner, "ready")
+	queue_manager = owner.queue_manager
 
 
 func enter(_msg: Dictionary = {}) -> void:
-	_set_business_state(Global.current_datetime)
-	
+	queue_manager.set_stall_open(true)	
+	owner.sprite_stall.frame = 1
+	owner.label_state.text = "open"
+	_state_machine.transition_to(idle_node_path)
+		
 
-func on_time_ellapsed(date_time : DateTime) -> void:
-	_set_business_state(date_time)
-	
-
-func _set_business_state(date_time : DateTime) -> void:
-	is_in_business_hour = _check_if_operational(date_time)
-	_owner.set_stall_is_open(is_in_business_hour)
+func update_business_state(date_time : DateTime, init : bool) -> bool:
+	return _parent.update_business_state(date_time, init)
 
 
-func select(_event: InputEventMouse) -> void:
-	pass
+func set_to_idle() -> void:
+	_state_machine.transition_to(idle_node_path)
 
 
-func _get_business_hours() -> BusinessHours:
-	if _business_hours == null:
-		_business_hours = _owner.business_hours
-	return _business_hours
-	
-
-func _check_if_operational(datetime : DateTime)-> bool:
-	if _get_business_hours() is BusinessHours:
-		return _business_hours.in_business_hour(datetime)
-	return false
+func serve_patron(patron : Patron) -> void:
+	_state_machine.transition_to(cooking_node_path, {"patron" : patron})

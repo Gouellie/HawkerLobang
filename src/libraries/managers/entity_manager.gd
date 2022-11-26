@@ -39,7 +39,9 @@ func _register_children() -> void:
 			continue
 		var cellv = _ground.world_to_map(child.global_position)
 		_mark_ground(cellv, STALL_TILE_INDEX)
-		_tracker.place_entity(child, cellv)	
+		_tracker.place_entity(child, cellv)
+		if child is Stall:
+			child.emit_signal("loaded")		
 		
 
 func _on_blueprint_selected(sender : Object) -> void:
@@ -147,6 +149,8 @@ func _place_entity() -> void:
 	_tracker.place_entity(new_entity, cellv)
 	
 	add_child(new_entity)
+	if new_entity is Stall:
+		new_entity.emit_signal("loaded")
 
 
 func _remove_entity() -> void:

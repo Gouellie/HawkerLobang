@@ -19,6 +19,9 @@ signal blueprint_selected(blueprint_scene)
 signal check_clearance_changed(value)
 
 #warning-ignore: unused_signal
+signal patron_invoked()
+
+#warning-ignore: unused_signal
 signal clear_patrons_requested()
 
 #warning-ignore: unused_signal
@@ -32,3 +35,6 @@ signal entity_debug_selected(selected_entity)
 
 #warning-ignore: unused_signal
 signal placement_requested(entity_scene, position)
+
+#warning-ignore: unused_signal
+signal patron_leaving(patron)

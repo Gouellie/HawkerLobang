@@ -24,6 +24,7 @@ func _on_Button_Speed_pressed(speed: int) -> void:
 		return
 	_current_speed = speed
 	Events.emit_signal("speed_changed", speed)
+	Global.current_speed = speed
 	_update_speed_text()
 
 
@@ -41,7 +42,7 @@ func _display_date() -> void:
 
 func _on_Button_SetDate_pressed() -> void:
 	panel_set_date.visible = true
-	datetime_control.update_time(Global.current_datetime)
+	datetime_control.update_datetime(Global.current_datetime)
 
 
 func _on_Button_SetDate_User_pressed(accept : bool) -> void:

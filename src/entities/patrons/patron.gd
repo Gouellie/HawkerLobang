@@ -3,7 +3,9 @@ class_name Patron
 
 var selected : bool setget set_selected,get_selected
 onready var skin : Sprite = $Patron
-
+onready var state_machine : StateMachine = $States
+onready var label_state : Label = $Label_State 
+onready var stall_detector : Area2D = $Stall_Dectection
 
 func _ready() -> void:
 	Log.log_error(Events.connect("entity_selected", self, "_on_entity_selected"), "patron.gd")
@@ -33,3 +35,34 @@ func set_selected(p_selected : bool) -> void:
 
 func get_selected() -> bool:
 	return selected
+
+
+func break_queue() -> void:
+	if state_machine.state.has_method("break_queue"):
+		state_machine.state.break_queue()
+
+
+func is_patron_in_queue() -> bool:
+	if state_machine.state.has_method("is_patron_in_queue"):
+		return state_machine.state.is_patron_in_queue()
+	return false
+	
+
+func taking_patron_order() -> void:
+	if state_machine.state.has_method("taking_patron_order"):
+		state_machine.state.taking_patron_order()
+
+
+func serving_patron() -> void:
+	if state_machine.state.has_method("serving_patron"):
+		state_machine.state.serving_patron()
+
+
+func update_position_in_queue(pos : Vector2) -> void:
+	if state_machine.state.has_method("update_position_in_queue"):
+		state_machine.state.update_position_in_queue(pos)
+
+
+func _on_Area2D_area_shape_entered(_area_rid: RID, area: Area2D, _area_shape_index: int, _local_shape_index: int) -> void:
+	if state_machine.state.has_method("on_Area2D_body_entered"):
+		state_machine.state.on_Area2D_body_entered(area.owner)	

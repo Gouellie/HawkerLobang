@@ -1,6 +1,8 @@
 extends Entity
 class_name Stall
 
+signal loaded
+
 export(Resource) var resource setget _set_resource
 
 var stall_name : String setget _set_stall_name
@@ -12,8 +14,15 @@ onready var sprite_stall : Sprite = $Sprite_Stall
 onready var stall_name_label : Label = $Control/VBoxContainer/Label_StallName
 onready var stall_type_label : Label = $Control/VBoxContainer/Label_StallType
 onready var state_machine : StateMachine = $States
+# used by the states
+onready var queue_manager :  = $Queue
 
+onready var label_state : Label = $Label_State
+
+
+var is_open_for_business : bool
 var queue_position : Vector2 setget ,get_queue_position
+var counter_position : Vector2 setget ,get_counter_position
 
 var is_stall_vacant : bool = true
 
@@ -32,7 +41,7 @@ func create_stall(p_stall_name : String, p_resource : Resource, date : DateTime)
 	dish_name = resource.dish_name if resource else "$"
 	stall_name_label.text = stall_name
 	stall_type_label.text = dish_name
-	state_machine.transition_to("Open")
+	state_machine.transition_to("Rented")
 	is_stall_vacant = false
 	# update the Toolbox
 	Events.emit_signal("entity_selected", self)	
@@ -62,13 +71,6 @@ func _on_Area2D_mouse_entered(entered: bool) -> void:
 	$Sprite_StallOutline.visible = entered
 
 
-func set_stall_is_open(open : bool) -> void:
-	if open :
-		sprite_stall.frame = 1
-	else :
-		sprite_stall.frame = 2
-
-
 func _set_resource(p_resource : Resource) -> void:
 	resource = p_resource
 	dish_name = resource.dish_name if resource else "$"
@@ -84,6 +86,10 @@ func _set_stall_name(p_name : String) -> void:
 
 func get_queue_position() -> Vector2:
 	return $Queue/QueuePosition.global_position
+	
+	
+func  get_counter_position() -> Vector2:
+	return $CounterPosition.global_position
 
 
 func serialize() -> Dictionary:
@@ -106,6 +112,7 @@ func deserialize(data : Dictionary) -> void:
 				Resources.STALLS[stall_key], 
 				Dates.get_date_from_ticks(data["do"]))
 		business_hours.deserialize(data["bh"])
+	emit_signal("loaded")
 
 
 func get_cell_stamps() -> Array:

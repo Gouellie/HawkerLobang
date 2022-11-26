@@ -2,7 +2,7 @@ extends Node
 
 const TOD_DEFAULT_TICK : float = 1.0
 
-var datetime : DateTime = DateTime.new()
+var datetime : DateTime = Dates.generate_date(1, 9, 0)
 var _current_speed : int = 1
 var _skip_ticker : bool
 

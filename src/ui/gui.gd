@@ -61,5 +61,5 @@ func _on_Button_ClearPatrons_pressed() -> void:
 	Events.emit_signal("clear_patrons_requested")
 
 
-
-		
+func _on_Button_InvokePatron_pressed() -> void:
+	Events.emit_signal("patron_invoked")
