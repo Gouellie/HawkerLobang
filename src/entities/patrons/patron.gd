@@ -49,7 +49,7 @@ func is_patron_in_queue() -> bool:
 	if state_machine.state.has_method("is_patron_in_queue"):
 		return state_machine.state.is_patron_in_queue()
 	return false
-	
+
 
 func taking_patron_order() -> void:
 	if state_machine.state.has_method("taking_patron_order"):

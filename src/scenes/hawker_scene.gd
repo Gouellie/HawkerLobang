@@ -7,8 +7,6 @@ var current_wait_time = 0
 var open_at : TimeOnly = TimeOnly.new(5, 0)
 var close_at : TimeOnly = TimeOnly.new(22,30)
 
-onready var _entity_manager = $EntityManager
-
 
 func _ready() -> void:
 	Log.log_error(Events.connect("hawker_center_changed", self, "_on_hawker_center_changed"))	
@@ -17,10 +15,12 @@ func _ready() -> void:
 	
 func _on_time_ellapsed(date) -> void:
 	if not hawker_is_opened:
+		# hawker is manually closed by user
 		return
 	if not Dates.in_time_only(date, open_at, close_at):
 		# hawker is closed for the night
 		return
+	# todo replace by value that fluctuates with offer 
 	if Global.patrons_count >= 300:
 		return
 	current_wait_time += 1

@@ -1,34 +1,24 @@
 extends State
 
 var _business_hours : BusinessHours
-
-var is_in_business_hour : bool
+var _is_in_business_hour : bool
 
 
 func enter(_msg: Dictionary = {}) -> void:
 	owner.label_state.text = "rented"	
-	is_in_business_hour = false
-# warning-ignore:return_value_discarded
+	_is_in_business_hour = false
+	# warning-ignore:return_value_discarded
 	update_business_state(Global.current_datetime, true)
-	
-
-func on_time_ellapsed(date_time : DateTime) -> void:
-# warning-ignore:return_value_discarded
-	update_business_state(date_time, false)
 
 
 func update_business_state(date_time : DateTime, init : bool) -> bool:
-	var previously_in_business_hour = is_in_business_hour
-	is_in_business_hour = get_is_open_for_business(date_time)
-	if not init and previously_in_business_hour == is_in_business_hour:
+	var previously_in_business_hour = _is_in_business_hour
+	_is_in_business_hour = get_is_open_for_business(date_time)
+	if not init and previously_in_business_hour == _is_in_business_hour:
 		return true # notify child state that there are no changes coming
-	var state = "Rented/Open" if is_in_business_hour else "Rented/Close"
+	var state = "Rented/Open" if _is_in_business_hour else "Rented/Close"
 	_state_machine.transition_to(state)
 	return false # current state should stop processing
-
-
-func select(_event: InputEventMouse) -> void:
-	pass
 
 
 func _get_business_hours() -> BusinessHours:

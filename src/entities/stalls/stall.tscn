@@ -92,24 +92,24 @@ script = ExtResource( 13 )
 [node name="Close" type="Node2D" parent="States/Rented"]
 script = ExtResource( 11 )
 
-[node name="Queue" type="Node2D" parent="."]
+[node name="QueueManager" type="Node2D" parent="."]
 script = ExtResource( 9 )
 
-[node name="QueuePosition" type="Node2D" parent="Queue"]
+[node name="QueuePosition" type="Node2D" parent="QueueManager"]
 position = Vector2( 80, 24 )
 
-[node name="Polygon2D" type="Polygon2D" parent="Queue/QueuePosition"]
+[node name="Polygon2D" type="Polygon2D" parent="QueueManager/QueuePosition"]
 visible = false
 color = Color( 0.329412, 0.0392157, 0.0392157, 0.419608 )
 polygon = PoolVector2Array( -8, 0, 0, -8, 8, 0, 0, 8 )
 
-[node name="QueueReached" type="Area2D" parent="Queue/QueuePosition"]
+[node name="QueueReached" type="Area2D" parent="QueueManager/QueuePosition"]
 rotation = 1.57079
 collision_layer = 2
 collision_mask = 4
 monitoring = false
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Queue/QueuePosition/QueueReached"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="QueueManager/QueuePosition/QueueReached"]
 position = Vector2( 5.34058e-05, -24 )
 shape = SubResource( 2 )
 

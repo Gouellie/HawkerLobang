@@ -14,22 +14,22 @@ onready var sprite_stall : Sprite = $Sprite_Stall
 onready var stall_name_label : Label = $Control/VBoxContainer/Label_StallName
 onready var stall_type_label : Label = $Control/VBoxContainer/Label_StallType
 onready var state_machine : StateMachine = $States
-# used by the states
-onready var queue_manager :  = $Queue
 
+# used by the states
+onready var queue_manager :  = $QueueManager
 onready var label_state : Label = $Label_State
 
 # debug
 var is_always_open : bool
 var is_manually_closed : bool
 
+var is_stall_vacant : bool = true
 var is_open_for_business : bool
 var queue_position : Vector2 setget ,get_queue_position
 var counter_position : Vector2 setget ,get_counter_position
 
-var is_stall_vacant : bool = true
-
 var cell_stamps : Array setget ,get_cell_stamps
+
 
 func _ready() -> void:
 	Log.log_error(Events.connect("toggle_label_display", self, "_toggle_label_display"))
@@ -40,7 +40,10 @@ func _ready() -> void:
 	label_state.rect_rotation = -rotation_degrees
 
 
-func create_stall(p_stall_name : String, p_resource : Resource, date : DateTime) -> void:
+func create_stall(
+			p_stall_name : String, 
+			p_resource : Resource, 
+			date : DateTime) -> void:
 	stall_name = p_stall_name
 	resource = p_resource
 	date_of_opening = date
@@ -53,6 +56,8 @@ func create_stall(p_stall_name : String, p_resource : Resource, date : DateTime)
 	Events.emit_signal("entity_selected", self)	
 
 
+# debug method that sets the stall to always be open even when outside of B/H
+# todo, method to resume operating within business hours
 func set_is_open(open : bool) -> void:
 	if is_stall_vacant:
 		return
@@ -106,7 +111,7 @@ func _set_stall_name(p_name : String) -> void:
 
 
 func get_queue_position() -> Vector2:
-	return $Queue/QueuePosition.global_position
+	return $QueueManager/QueuePosition.global_position
 	
 	
 func  get_counter_position() -> Vector2:
