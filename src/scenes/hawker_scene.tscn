@@ -237,6 +237,15 @@ position = Vector2( 912, 816 )
 [node name="Entrance_04" parent="HawkerScene/Entrances" instance=ExtResource( 11 )]
 position = Vector2( 1104, 816 )
 
+[node name="Entrance_05" parent="HawkerScene/Entrances" instance=ExtResource( 11 )]
+position = Vector2( 1392, 176 )
+
+[node name="Entrance_06" parent="HawkerScene/Entrances" instance=ExtResource( 11 )]
+position = Vector2( 528, 816 )
+
+[node name="Entrance_07" parent="HawkerScene/Entrances" instance=ExtResource( 11 )]
+position = Vector2( 720, 912 )
+
 [node name="UserInterface" type="CanvasLayer" parent="."]
 pause_mode = 2
 physics_interpolation_mode = 1

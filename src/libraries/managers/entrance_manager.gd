@@ -26,4 +26,9 @@ func get_entrance() -> Vector2:
 	if entrance:
 		return entrance.global_position
 	return Vector2.ZERO
-	
+
+
+func get_exit() -> Node2D:
+	var entrance = _random_entrance()
+	assert(entrance, "no valid exit found!")
+	return entrance
