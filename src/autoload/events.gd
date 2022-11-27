@@ -16,6 +16,9 @@ signal save_game()
 signal hawker_center_changed(opened)
 
 #warning-ignore: unused_signal
+signal toggle_label_display(show)
+
+#warning-ignore: unused_signal
 signal blueprint_selected(blueprint_scene)
 
 #warning-ignore: unused_signal

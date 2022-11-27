@@ -4,6 +4,7 @@ var current_datetime : DateTime setget set_curent_datetime,get_curent_datetime
 var entity_tracker : EntityTracker setget set_entity_tracker,get_entity_tracker
 var entrance_manager : EntraceManager
 var builder_mode_on : bool setget ,_get_builder_mode_on
+var show_states : bool
 var patrons_count : int = 0
 
 var current_speed : int = 1
@@ -17,6 +18,7 @@ func reset() -> void:
 	entity_tracker = null
 	entrance_manager = null
 	builder_mode_on = false
+	show_states = false
 	patrons_count = 0
 	current_speed = 1
 

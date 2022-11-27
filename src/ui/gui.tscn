@@ -96,6 +96,21 @@ focus_mode = 0
 enabled_focus_mode = 0
 text = "Close All Stalls"
 
+[node name="MarginContainer" type="MarginContainer" parent="HBoxContainer"]
+margin_left = 813.0
+margin_right = 917.0
+margin_bottom = 56.0
+
+[node name="ColorRect" type="ColorRect" parent="HBoxContainer/MarginContainer"]
+margin_right = 104.0
+margin_bottom = 56.0
+color = Color( 0.203922, 0.470588, 0.313726, 1 )
+
+[node name="CheckBox_ShowStates" type="CheckBox" parent="HBoxContainer/MarginContainer"]
+margin_right = 104.0
+margin_bottom = 56.0
+text = "Show States"
+
 [node name="HBoxContainer_Options" type="HBoxContainer" parent="."]
 anchor_left = 1.0
 anchor_right = 1.0
@@ -172,6 +187,7 @@ filters = PoolStringArray( "*.save ; Save Files" )
 [connection signal="toggled" from="HBoxContainer/Button_OpenCloseCenter" to="." method="_on_Button_OpenCenter_toggled"]
 [connection signal="pressed" from="HBoxContainer/Button_OpenAllStalls" to="." method="_on_Button_OpenAllStalls_pressed"]
 [connection signal="pressed" from="HBoxContainer/Button_CloseAllStalls" to="." method="_on_Button_CloseAllStalls_pressed"]
+[connection signal="toggled" from="HBoxContainer/MarginContainer/CheckBox_ShowStates" to="." method="_on_CheckBox_show_states_toggled"]
 [connection signal="pressed" from="HBoxContainer_Options/VBoxContainer/Button_Options" to="." method="_on_Button_Options_pressed"]
 [connection signal="pressed" from="HBoxContainer_Options/VBoxContainer/Container_Options/Button_Save" to="." method="_on_Button_Save_pressed"]
 [connection signal="pressed" from="HBoxContainer_Options/VBoxContainer/Container_Options/Button_SaveAs" to="." method="_on_Button_SaveAs_pressed"]

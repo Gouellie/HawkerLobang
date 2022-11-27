@@ -76,3 +76,8 @@ func _on_Button_CloseAllStalls_pressed() -> void:
 func _on_Button_OpenCenter_toggled(open: bool) -> void:
 	Events.emit_signal("hawker_center_changed", open)
 	$HBoxContainer/Button_OpenCloseCenter.text = "Close Center" if open else "Open Center"
+
+
+func _on_CheckBox_show_states_toggled(show: bool) -> void:
+	Events.emit_signal("toggle_label_display", show)
+	Global.show_states = show

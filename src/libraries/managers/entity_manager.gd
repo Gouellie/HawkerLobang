@@ -43,7 +43,7 @@ func _register_children() -> void:
 		_tracker.place_entity(child, cellv)
 		if child is Stall:
 			child.emit_signal("loaded")		
-		
+
 
 func _on_blueprint_selected(sender : Object) -> void:
 	if _blueprint:
@@ -143,7 +143,7 @@ func _place_entity() -> void:
 	var new_entity = _blueprint.entity_scene.instance() as Entity
 	new_entity.position = _blueprint.position
 	new_entity.rotation_degrees = _blueprint.rotation_degrees
-
+	
 	var cellv = _ground.world_to_map(new_entity.position)
 	# warning-ignore:narrowing_conversion
 	_mark_ground(cellv, STALL_TILE_INDEX, _blueprint.rotation_degrees)
@@ -151,6 +151,7 @@ func _place_entity() -> void:
 	
 	add_child(new_entity)
 	if new_entity is Stall:
+		# not called in the _ready function to prevent dual call
 		new_entity.emit_signal("loaded")
 
 

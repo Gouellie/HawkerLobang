@@ -32,9 +32,12 @@ var is_stall_vacant : bool = true
 var cell_stamps : Array setget ,get_cell_stamps
 
 func _ready() -> void:
+	Log.log_error(Events.connect("toggle_label_display", self, "_toggle_label_display"))
 	dish_name = resource.dish_name if resource else "$"
 	stall_name_label.text = stall_name
 	stall_type_label.text = dish_name
+	label_state.visible = Global.show_states
+	label_state.rect_rotation = -rotation_degrees
 
 
 func create_stall(p_stall_name : String, p_resource : Resource, date : DateTime) -> void:
@@ -130,8 +133,13 @@ func deserialize(data : Dictionary) -> void:
 				Resources.STALLS[stall_key], 
 				Dates.get_date_from_ticks(data["do"]))
 		business_hours.deserialize(data["bh"])
+	label_state.rect_rotation = -rotation_degrees
 	emit_signal("loaded")
 
 
 func get_cell_stamps() -> Array:
 	return $cell_stamps.get_children()
+
+
+func _toggle_label_display(show : bool) -> void:
+	label_state.visible = show

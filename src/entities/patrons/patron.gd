@@ -7,8 +7,11 @@ onready var state_machine : StateMachine = $States
 onready var label_state : Label = $Label_State 
 onready var stall_detector : Area2D = $Stall_Dectection
 
+
 func _ready() -> void:
+	Log.log_error(Events.connect("toggle_label_display", self, "_toggle_label_display"))	
 	Log.log_error(Events.connect("entity_selected", self, "_on_entity_selected"), "patron.gd")
+	label_state.visible = Global.show_states
 	
 
 func _draw() -> void:
@@ -66,3 +69,7 @@ func update_position_in_queue(pos : Vector2) -> void:
 func _on_Area2D_area_shape_entered(_area_rid: RID, area: Area2D, _area_shape_index: int, _local_shape_index: int) -> void:
 	if state_machine.state.has_method("on_Area2D_body_entered"):
 		state_machine.state.on_Area2D_body_entered(area.owner)	
+
+
+func _toggle_label_display(show : bool) -> void:
+	label_state.visible = show
