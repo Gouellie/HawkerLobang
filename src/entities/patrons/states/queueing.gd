@@ -2,8 +2,9 @@ extends State
 
 var queuing_at_stall : Stall
 
-var entered_queue_at : DateTime
-var time_in_queue : DateTime
+const TIME_MAX : int = 60
+var time_in_queue : int = 0
+var time_in_queue_since_last_update : int = 0
 var patron_in_queue : bool
 
 func enter(msg: Dictionary = {}) -> void:
@@ -22,15 +23,13 @@ func enter(msg: Dictionary = {}) -> void:
 			return
 		_parent.set_navigation_position(result["pos"])
 		queuing_at_stall = stall
-		entered_queue_at = Global.current_datetime
-		time_in_queue = DateTime.new()
+		time_in_queue = 0
+		time_in_queue_since_last_update = 0
 	else:
 		break_queue()
 
 
 func exit() -> void:
-	entered_queue_at = null
-	time_in_queue = null
 	queuing_at_stall = null
 	Events.disconnect("entity_debug_selected", self, "_on_entity_selected")
 
@@ -44,12 +43,20 @@ func _on_entity_selected(entity : Entity) -> void:
 
 
 func on_time_ellapsed(time : DateTime) -> void:
+	if not is_instance_valid(queuing_at_stall) :
+		break_queue()
+		return
+	if not queuing_at_stall.is_open_for_business:
+		break_queue()
 	_parent.on_time_ellapsed(time)
+	time_in_queue += 1
+	time_in_queue_since_last_update += 1
 	if patron_in_queue:
-		time_in_queue.increment()
-		owner.label_state.text = "queueing for : %02d:%02d" % [time_in_queue.hour, time_in_queue.minute]
+		owner.label_state.text = "queueing for : %02d minutes" % time_in_queue
 	else:
 		owner.label_state.text = "queueing : moving to position"
+	if time_in_queue_since_last_update >= TIME_MAX:
+		break_queue()
 
 
 func on_speed_changed(speed : int) -> void:
@@ -71,7 +78,7 @@ func is_patron_in_queue() -> bool:
 
 
 func break_queue() -> void:
-	if queuing_at_stall:
+	if is_instance_valid(queuing_at_stall) :
 		queuing_at_stall.queue_manager.patron_break_queue(self)
 	queuing_at_stall = null
 	_state_machine.transition_to("Moving/Browsing")
@@ -85,4 +92,5 @@ func taking_patron_order() -> void:
 
 func update_position_in_queue(pos : Vector2) -> void:
 	_parent.set_navigation_position(pos)
+	time_in_queue_since_last_update = 0
 	patron_in_queue = false

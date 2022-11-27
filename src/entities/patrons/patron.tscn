@@ -13,7 +13,7 @@
 [ext_resource path="res://src/entities/patrons/states/leaving.gd" type="Script" id=11]
 
 [sub_resource type="CircleShape2D" id=1]
-radius = 20.0
+radius = 5.0
 
 [node name="Patron" type="KinematicBody2D"]
 collision_layer = 4
@@ -37,6 +37,7 @@ max_neighbors = 4
 shape = SubResource( 1 )
 
 [node name="Stall_Dectection" type="Area2D" parent="."]
+visible = false
 collision_layer = 4
 collision_mask = 11
 
@@ -52,6 +53,7 @@ initial_state = NodePath("Moving")
 
 [node name="Moving" type="Node2D" parent="States"]
 script = ExtResource( 5 )
+nav_agent_radius = 1.0
 nav_avoidance_enabled = false
 
 [node name="Browsing" type="Node2D" parent="States/Moving"]

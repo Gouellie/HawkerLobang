@@ -3,6 +3,9 @@ extends Control
 var _datetime : DateTime
 var _current_speed : int = 1
 
+var _previous_speed
+var _is_paused_by_key
+
 
 onready var time_of_day_speed_label : Label = $HBoxContainer/VBoxContainer/TimeOfDaySpeedLabel
 onready var date_label : Label = $HBoxContainer/VBoxContainer/DateLabel
@@ -12,6 +15,18 @@ onready var datetime_control := $Panel_SetDate/CenterContainer/HBoxContainer/Dat
 func _ready() -> void:
 	Log.log_error(Events.connect("time_ellapsed", self, "_on_time_ellapsed"))
 	_update_speed_text()
+
+
+func _input(event: InputEvent) -> void:
+
+	if event.is_action_pressed("pause"):
+		if not _is_paused_by_key:
+			_is_paused_by_key = true
+			_previous_speed = _current_speed
+			_on_Button_Speed_pressed(0)
+		else:
+			_is_paused_by_key = false
+			_on_Button_Speed_pressed(_previous_speed)
 
 
 func _on_time_ellapsed(p_datetime : DateTime) -> void:

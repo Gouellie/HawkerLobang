@@ -1,6 +1,7 @@
 extends State
 
 var time_with_no_stall : int = 0
+var visited_stall = []
 
 func enter(_msg: Dictionary = {}) -> void:
 	if owner.label_state :
@@ -52,6 +53,7 @@ func _browse_for_stall() -> void:
 		var stall = opened_stalls[r_index]
 		_stall_found(stall)
 
+
 func _leave() -> void:
 	_state_machine.transition_to("Moving/Leaving")
 
@@ -61,6 +63,9 @@ func _stall_found(stall : Stall) -> void:
 		return
 	if not stall.is_open_for_business:
 		return
+	if visited_stall.has(stall):
+		return
+	visited_stall.push_back(stall)		
 	_state_machine.transition_to("Moving/VisitingStall", {
 		"stall" : stall
 	})	

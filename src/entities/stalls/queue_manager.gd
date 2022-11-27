@@ -88,8 +88,9 @@ func break_queue() -> void:
 func notify_patron_queue_changed(from_index : int = 0) -> void:
 	var queue_range = from_index if from_index > 0 else queue.size()
 	for i in range(queue_range):
-		if queue[i] is Patron:
-			queue[i].update_position_in_queue(queue_positions[i])
+		var patron = queue[i]
+		if is_instance_valid(patron) and patron is Patron:
+			patron.update_position_in_queue(queue_positions[i])
 
 
 func _on_clear_patrons_requested() -> void:

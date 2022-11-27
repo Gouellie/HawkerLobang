@@ -18,7 +18,7 @@ func exit() -> void:
 
 func on_time_ellapsed(time : DateTime) -> void:
 	_parent.on_time_ellapsed(time)
-	if not stall.is_open_for_business:
+	if not is_instance_valid(stall) or not stall.is_open_for_business:
 		resume_browse()
 
 	

@@ -39,6 +39,8 @@ func _ready() -> void:
 	nav_agent.connect("velocity_computed", self, "character_velocity_computed")
 	# config nav agent attributes
 	nav_agent.max_speed = 120
+	nav_agent.path_desired_distance = 2.0
+	nav_agent.target_desired_distance = 2.0
 	nav_agent.radius = nav_agent_radius
 	nav_agent.avoidance_enabled = nav_avoidance_enabled
 

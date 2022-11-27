@@ -23,7 +23,7 @@ func _on_entity_selected(entity : Entity) -> void:
 
 func on_time_ellapsed(time : DateTime) -> void:
 	_parent.on_time_ellapsed(time)
-	if not selected_stall.is_open_for_business:
+	if not is_instance_valid(selected_stall) or not selected_stall.is_open_for_business:
 		_resume_browsing()
 
 

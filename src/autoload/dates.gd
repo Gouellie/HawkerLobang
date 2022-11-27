@@ -78,6 +78,14 @@ static func get_ticks_from_date(datetime : DateTime) -> int:
 	var minute : int = datetime.minute
 	return get_ticks(day, hour, minute)
 
+
+static func get_daily_ticks_from_date(datetime : DateTime) -> int:
+	return get_ticks(0, datetime.hour, datetime.minute)
+	
+
+static func get_daily_ticks_from_timeonly(time : TimeOnly) -> int:
+	return get_ticks(0, time.hour, time.minute)
+
 	
 static func to_dictionary(datetime : DateTime) -> Dictionary:
 	return {
@@ -99,6 +107,11 @@ static func from_dictionary(date : Dictionary) -> DateTime:
 	if date.has(DateTime.MINUTE_KEY):
 		datetime.minute = date[DateTime.MINUTE_KEY]
 	return datetime
+
+
+static func in_time_only(date : DateTime, from: TimeOnly, to : TimeOnly) -> bool:
+	var date_ticks = get_daily_ticks_from_date(date)
+	return date_ticks > from.ticks  and date_ticks < to.ticks
 
 
 static func get_timespan(from : DateTime, to : DateTime, copy_datetimes : bool = false) -> TimeSpan:
