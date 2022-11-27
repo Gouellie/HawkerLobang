@@ -41,6 +41,6 @@ func _on_hawker_center_changed(open : bool) -> void:
 		
 
 func _get_time_of_day_modifier(date : DateTime) -> float:
-	var hourf = date.hour + date.minute / 60.0
+	var hourf = date.hour + range_lerp(date.minute, 0, 60, 0, 1)
 	return (cos(hourf - 0.8) + 1.1) * 4
 
