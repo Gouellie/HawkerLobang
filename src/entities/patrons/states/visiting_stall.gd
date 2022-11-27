@@ -3,16 +3,11 @@ extends State
 var selected_stall : Stall
 
 func enter(msg: Dictionary = {}) -> void:
-	Log.log_error(Events.connect("entity_debug_selected", self, "_on_entity_selected"), "visiting_stall.gd")
 	if owner.label_state :
 		owner.label_state.text = "visiting stall"
 	if msg.has("stall") and msg["stall"] is Stall :
 		_visit_stall(msg["stall"])
 	
-
-func exit() -> void:
-	Events.disconnect("entity_debug_selected", self, "_on_entity_selected")
-
 
 func _on_entity_selected(entity : Entity) -> void:
 	if not owner.selected :

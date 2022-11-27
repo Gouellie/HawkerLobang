@@ -7,6 +7,7 @@ func enter(_msg: Dictionary = {}) -> void:
 		owner.label_state.text = "leaving"
 	exit = Global.entrance_manager.get_exit()
 	var unspawn_pos = exit.global_position
+	_parent.on_speed_changed(Global.current_speed)
 	_parent.set_navigation_position(unspawn_pos)
 
 

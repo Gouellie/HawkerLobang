@@ -6,11 +6,6 @@ var visited_stall = []
 func enter(_msg: Dictionary = {}) -> void:
 	if owner.label_state :
 		owner.label_state.text = "browsing"
-	Log.log_error(Events.connect("entity_debug_selected", self, "_on_entity_selected"), "browsing.gd")
-
-
-func exit() -> void:
-	Events.disconnect("entity_debug_selected", self, "_on_entity_selected")
 
 
 func _on_entity_selected(entity : Entity) -> void:

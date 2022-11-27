@@ -1,2 +1,54 @@
 extends State
 
+var table : Table
+
+var owner_area_2d : Area2D
+
+func enter(_msg: Dictionary = {}) -> void:
+	if owner.label_state :
+		owner.label_state.text = "looking for table"	
+	table = Global.table_manager.get_table(owner.global_position)
+	if not is_instance_valid(table) :
+		leave()
+		return
+	var table_position = table.get_sitting_position()[0]
+	owner_area_2d = owner.stall_detector
+	_parent.set_navigation_position(table_position)	
+	_check_if_already_in_range()
+
+
+func exit() -> void:
+	pass
+	
+	
+func physics_process(delta: float) -> void:
+	_parent.physics_process(delta)	
+
+
+func on_time_ellapsed(time : DateTime) -> void:
+	_parent.on_time_ellapsed(time)
+
+	
+func on_speed_changed(speed : int) -> void:
+	_parent.on_speed_changed(speed)
+
+
+func _check_if_already_in_range() -> void:
+	if owner_area_2d is Area2D:
+		if owner_area_2d.overlaps_area(table.table_range):
+			on_Area2D_body_entered(table)
+
+
+func on_Area2D_body_entered(body: Node2D) -> void:
+	if body == table:
+		_state_machine.transition_to("Idle/Sitting", {
+			"table" : table
+		})
+
+
+func leave() -> void:
+	_state_machine.transition_to("Moving/Leaving")
+	
+
+
+

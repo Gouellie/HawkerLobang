@@ -10,7 +10,6 @@ var patron_in_queue : bool
 func enter(msg: Dictionary = {}) -> void:
 	if owner.label_state :
 		owner.label_state.text = "queueing"	
-	Log.log_error(Events.connect("entity_debug_selected", self, "_on_entity_selected"), "queueing.gd")
 	patron_in_queue = false
 	if msg.has("stall") and msg["stall"] is Stall :
 		var stall = msg["stall"]
@@ -31,7 +30,6 @@ func enter(msg: Dictionary = {}) -> void:
 
 func exit() -> void:
 	queuing_at_stall = null
-	Events.disconnect("entity_debug_selected", self, "_on_entity_selected")
 
 
 func _on_entity_selected(entity : Entity) -> void:

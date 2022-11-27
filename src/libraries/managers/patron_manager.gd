@@ -1,6 +1,7 @@
 extends Node2D
 
 const patron_scene := preload("res://src/entities/patrons/patron.tscn")
+var table_manager = TableManager.new()
 
 var patrons = []
 

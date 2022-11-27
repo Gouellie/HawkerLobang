@@ -5,7 +5,6 @@ var stall : Stall
 func enter(msg: Dictionary = {}) -> void:
 	if owner.label_state :
 		owner.label_state.text = "ordering"	
-	Log.log_error(Events.connect("entity_debug_selected", self, "_on_entity_selected"), "queueing.gd")
 	if msg.has("stall") and msg["stall"] is Stall :
 		stall = msg["stall"]
 		if stall:
@@ -13,7 +12,7 @@ func enter(msg: Dictionary = {}) -> void:
 
 
 func exit() -> void:
-	Events.disconnect("entity_debug_selected", self, "_on_entity_selected")
+	pass
 
 
 func on_time_ellapsed(time : DateTime) -> void:
@@ -31,7 +30,7 @@ func on_speed_changed(speed : int) -> void:
 
 
 func serving_patron() -> void:
-	_state_machine.transition_to("Moving/Leaving")
+	_state_machine.transition_to("Moving/LookingForTable")
 	
 
 func physics_process(delta: float) -> void:

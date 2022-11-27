@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=15 format=2]
 
 [ext_resource path="res://src/entities/patrons/patron.gd" type="Script" id=1]
 [ext_resource path="res://src/entities/patrons/states/browsing.gd" type="Script" id=2]
@@ -11,6 +11,8 @@
 [ext_resource path="res://src/entities/patrons/states/visiting_stall.gd" type="Script" id=9]
 [ext_resource path="res://src/entities/patrons/states/looking_for_table.gd" type="Script" id=10]
 [ext_resource path="res://src/entities/patrons/states/leaving.gd" type="Script" id=11]
+[ext_resource path="res://src/entities/patrons/states/sitting.gd" type="Script" id=12]
+[ext_resource path="res://src/entities/patrons/states/eating.gd" type="Script" id=13]
 
 [sub_resource type="CircleShape2D" id=1]
 radius = 5.0
@@ -37,9 +39,8 @@ max_neighbors = 4
 shape = SubResource( 1 )
 
 [node name="Stall_Dectection" type="Area2D" parent="."]
-visible = false
 collision_layer = 4
-collision_mask = 11
+collision_mask = 26
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Stall_Dectection"]
 shape = SubResource( 1 )
@@ -71,11 +72,17 @@ script = ExtResource( 7 )
 [node name="LookingForTable" type="Node2D" parent="States/Moving"]
 script = ExtResource( 10 )
 
-[node name="Eating" type="Node2D" parent="States/Moving"]
-script = ExtResource( 8 )
-
 [node name="Leaving" type="Node2D" parent="States/Moving"]
 script = ExtResource( 11 )
+
+[node name="Idle" type="Node2D" parent="States"]
+script = ExtResource( 8 )
+
+[node name="Sitting" type="Node2D" parent="States/Idle"]
+script = ExtResource( 12 )
+
+[node name="Eating" type="Node2D" parent="States/Idle"]
+script = ExtResource( 13 )
 
 [connection signal="area_shape_entered" from="Stall_Dectection" to="." method="_on_Area2D_area_shape_entered"]
 [connection signal="input_event" from="Stall_Dectection" to="." method="_on_Area2D_input_event"]

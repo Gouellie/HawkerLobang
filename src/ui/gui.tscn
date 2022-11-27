@@ -53,21 +53,21 @@ margin_bottom = 27.0
 size_flags_vertical = 6
 text = "Patrons : %d"
 
-[node name="Button_ClearPatrons" type="Button" parent="HBoxContainer"]
-margin_left = 384.0
-margin_right = 427.0
-margin_bottom = 56.0
-focus_mode = 0
-enabled_focus_mode = 0
-text = "clear"
-
 [node name="Button_InvokePatron" type="Button" parent="HBoxContainer"]
-margin_left = 431.0
-margin_right = 485.0
+margin_left = 384.0
+margin_right = 438.0
 margin_bottom = 56.0
 focus_mode = 0
 enabled_focus_mode = 0
 text = "invoke"
+
+[node name="Button_ClearPatrons" type="Button" parent="HBoxContainer"]
+margin_left = 442.0
+margin_right = 485.0
+margin_bottom = 56.0
+focus_mode = 0
+enabled_focus_mode = 0
+text = "clear"
 
 [node name="Button_OpenCloseCenter" type="Button" parent="HBoxContainer"]
 margin_left = 489.0
@@ -182,8 +182,8 @@ margin_bottom = 342.0
 access = 1
 filters = PoolStringArray( "*.save ; Save Files" )
 
-[connection signal="pressed" from="HBoxContainer/Button_ClearPatrons" to="." method="_on_Button_ClearPatrons_pressed"]
 [connection signal="pressed" from="HBoxContainer/Button_InvokePatron" to="." method="_on_Button_InvokePatron_pressed"]
+[connection signal="pressed" from="HBoxContainer/Button_ClearPatrons" to="." method="_on_Button_ClearPatrons_pressed"]
 [connection signal="toggled" from="HBoxContainer/Button_OpenCloseCenter" to="." method="_on_Button_OpenCenter_toggled"]
 [connection signal="pressed" from="HBoxContainer/Button_OpenAllStalls" to="." method="_on_Button_OpenAllStalls_pressed"]
 [connection signal="pressed" from="HBoxContainer/Button_CloseAllStalls" to="." method="_on_Button_CloseAllStalls_pressed"]

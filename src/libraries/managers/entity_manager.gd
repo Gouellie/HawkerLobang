@@ -42,7 +42,9 @@ func _register_children() -> void:
 		_mark_ground(cellv, STALL_TILE_INDEX)
 		_tracker.place_entity(child, cellv)
 		if child is Stall:
-			child.emit_signal("loaded")		
+			child.emit_signal("loaded")
+		if child is Table:
+			Global.table_manager.register_table(child)
 
 
 func _on_blueprint_selected(sender : Object) -> void:

@@ -1,5 +1,5 @@
 extends Node2D
-class_name EntraceManager
+class_name EntranceManager
 
 var entrances := []
 
