@@ -5,9 +5,9 @@ var exit = Node2D
 func enter(_msg: Dictionary = {}) -> void:
 	if owner.label_state :
 		owner.label_state.text = "leaving"
-	exit = Global.entrance_manager.get_exit()
+	exit = Global.entrance_manager.get_exit(owner.global_position)
 	var unspawn_pos = exit.global_position
-	_parent.on_speed_changed(Global.current_speed)
+	_parent.set_navigation_speed(Global.current_speed)
 	_parent.set_navigation_position(unspawn_pos)
 
 
@@ -16,7 +16,7 @@ func on_time_ellapsed(time : DateTime) -> void:
 
 
 func on_speed_changed(speed : int) -> void:
-	_parent.on_speed_changed(speed)
+	_parent.set_navigation_speed(speed)
 
 
 func physics_process(delta: float) -> void:

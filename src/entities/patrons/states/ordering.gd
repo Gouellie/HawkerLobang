@@ -26,7 +26,7 @@ func resume_browse() -> void:
 	
 	
 func on_speed_changed(speed : int) -> void:
-	_parent.on_speed_changed(speed)
+	_parent.set_navigation_speed(speed)
 
 
 func serving_patron() -> void:

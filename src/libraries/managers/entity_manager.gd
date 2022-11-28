@@ -25,7 +25,6 @@ func _ready() -> void:
 	tile_offset = _ground.cell_size / 2
 	Log.log_error(Events.connect("blueprint_selected", self, "_on_blueprint_selected"), "entity_manager.gd")
 	Log.log_error(Events.connect("check_clearance_changed", self, "_on_check_clearance_changed"), "entity_manager.gd")
-	Log.log_error(Events.connect("open_close_all_stalls", self, "_on_open_close_all_stalls"))
 	_load()
 
 
@@ -41,10 +40,8 @@ func _register_children() -> void:
 		var cellv = _ground.world_to_map(child.global_position)
 		_mark_ground(cellv, STALL_TILE_INDEX)
 		_tracker.place_entity(child, cellv)
-		if child is Stall:
-			child.emit_signal("loaded")
-		if child is Table:
-			Global.table_manager.register_table(child)
+		if child is Entity:
+			child.register()
 
 
 func _on_blueprint_selected(sender : Object) -> void:
@@ -53,12 +50,13 @@ func _on_blueprint_selected(sender : Object) -> void:
 		_blueprint = null
 		_placeable_blueprint = false
 		_valid_eraser = false
-	if sender is BlueprintPanel:
-		if sender.blueprint_scene:
-			_blueprint = sender.blueprint_scene.instance() as BlueprintBase
-			add_child(_blueprint)
-			_blueprint.show_debug(true)
-	#_ground.visible = _blueprint != null
+		
+	if not sender is BlueprintPanel:
+		return
+	if sender.blueprint_scene:
+		_blueprint = sender.blueprint_scene.instance() as BlueprintBase
+		add_child(_blueprint)
+		_blueprint.show_debug(true)
 
 
 func _mark_ground(cellv: Vector2, tile_index : int, rotation_in_degrees : int = 0) -> void:
@@ -136,6 +134,8 @@ func _unhandled_input(event: InputEvent) -> void:
 			_place_entity()
 		elif _valid_eraser:
 			_remove_entity()
+		if event.is_action_pressed("left_click"):
+			Events.emit_signal("entity_selected", null)				
 
 
 func _place_entity() -> void:
@@ -152,9 +152,7 @@ func _place_entity() -> void:
 	_tracker.place_entity(new_entity, cellv)
 	
 	add_child(new_entity)
-	if new_entity is Stall:
-		# not called in the _ready function to prevent dual call
-		new_entity.emit_signal("loaded")
+	new_entity.register()
 
 
 func _remove_entity() -> void:
@@ -165,7 +163,6 @@ func _remove_entity() -> void:
 
 func save() -> Dictionary:
 	var entities = {}
-	
 	if _tracker.entities is Dictionary:
 		for key in _tracker.entities:
 			var entity = _tracker.entities[key]
@@ -190,7 +187,7 @@ func _load() -> void:
 		for cellv_string in entities[file_name]:
 			var cellv = str2var(cellv_string)
 			_load_entity(file_name, cellv, entities[file_name][cellv_string])
-		
+
 
 func _delete_all_children() -> void:
 	for child in get_children():
@@ -206,13 +203,8 @@ func _load_entity(file_name: String, cellv : Vector2, data : Dictionary) -> void
 	_tracker.place_entity(entity, cellv)
 	add_child(entity)	
 	entity.deserialize(data)
+	entity.register()
 
 
 func _on_check_clearance_changed(value : bool) -> void:
 	_check_for_clearance = value
-
-
-func _on_open_close_all_stalls(open : bool) -> void:
-	for entity in _tracker.entities.values():
-		if entity is Stall:
-			entity.set_is_open(open)

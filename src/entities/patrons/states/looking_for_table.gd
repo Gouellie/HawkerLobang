@@ -30,7 +30,7 @@ func on_time_ellapsed(time : DateTime) -> void:
 
 	
 func on_speed_changed(speed : int) -> void:
-	_parent.on_speed_changed(speed)
+	_parent.set_navigation_speed(speed)
 
 
 func _check_if_already_in_range() -> void:

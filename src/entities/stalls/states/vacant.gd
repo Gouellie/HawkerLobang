@@ -6,7 +6,7 @@ var queue_manager : QueueManager
 func _ready() -> void:
 	yield(owner, "ready")
 	queue_manager = owner.queue_manager
-	
+
 
 func enter(_msg: Dictionary = {}) -> void:
 	queue_manager.set_stall_open(false)

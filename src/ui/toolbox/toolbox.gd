@@ -22,6 +22,9 @@ func load_setup(p_selected_entity : Entity) -> void:
 	_set_label_text(_selected_entity)
 	if not _tab_container.get_tab_hidden(current_tab):
 		_tab_container.current_tab = current_tab
+		
+	Global.is_toolbox_open = true
+	visible = true
 
 
 func _set_label_text(_entity : Entity) -> void:
@@ -30,6 +33,7 @@ func _set_label_text(_entity : Entity) -> void:
 
 
 func _on_Button_ClosePanel_pressed() -> void:
+	Global.is_toolbox_open = false
 	visible = false
 	_unload_entity()
 	

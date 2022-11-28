@@ -25,7 +25,7 @@ signal blueprint_selected(blueprint_scene)
 signal check_clearance_changed(value)
 
 #warning-ignore: unused_signal
-signal patron_invoked()
+signal patron_invoked(invoked_count, select)
 
 #warning-ignore: unused_signal
 signal clear_patrons_requested()

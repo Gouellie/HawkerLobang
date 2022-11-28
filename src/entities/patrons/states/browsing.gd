@@ -21,7 +21,7 @@ func on_time_ellapsed(time : DateTime) -> void:
 
 
 func on_speed_changed(speed : int) -> void:
-	_parent.on_speed_changed(speed)
+	_parent.set_navigation_speed(speed)
 
 
 func physics_process(delta: float) -> void:
@@ -29,24 +29,23 @@ func physics_process(delta: float) -> void:
 
 
 func _browse_for_stall() -> void:
-	if Global.entity_tracker:
-		var opened_stalls = []
-		var entities = Global.entity_tracker.entities.values()
-		
-		for entity in entities:
-			if entity is Stall and entity.is_open_for_business:
-				opened_stalls.push_back(entity)
-
+	var opened_stalls = Global.stall_manager.get_open_stall()
+	if opened_stalls.size() < 1:
+		time_with_no_stall += 1
+		if time_with_no_stall >= 3:
+			_leave()
+		return
+	var stall : Stall
+	var init = true
+	while init or visited_stall.has(stall):
+		init = false
 		if opened_stalls.size() < 1:
-			time_with_no_stall += 1
-			if time_with_no_stall >= 3:
-				_leave()
+			_leave()
 			return
-		else:
-			time_with_no_stall = 0
 		var r_index = randi() % opened_stalls.size()
-		var stall = opened_stalls[r_index]
-		_stall_found(stall)
+		stall = opened_stalls.pop_at(r_index)
+	time_with_no_stall = 0
+	_stall_found(stall)
 
 
 func _leave() -> void:
@@ -54,12 +53,6 @@ func _leave() -> void:
 
 
 func _stall_found(stall : Stall) -> void:
-	if not stall :
-		return
-	if not stall.is_open_for_business:
-		return
-	if visited_stall.has(stall):
-		return
 	visited_stall.push_back(stall)		
 	_state_machine.transition_to("Moving/VisitingStall", {
 		"stall" : stall

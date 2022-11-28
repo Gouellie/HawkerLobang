@@ -28,7 +28,16 @@ func get_entrance() -> Vector2:
 	return Vector2.ZERO
 
 
-func get_exit() -> Node2D:
-	var entrance = _random_entrance()
-	assert(entrance, "no valid exit found!")
-	return entrance
+func get_exit(pos : Vector2) -> Node2D:
+	var closest_exit = null
+	var closest_distance = 999999.0
+	for entrance in entrances:
+		var entrance_pos = entrance.global_position
+		var distance = pos.distance_to(entrance_pos)
+		if distance < closest_distance:
+			closest_distance = distance
+			closest_exit = entrance
+	assert(closest_exit, "no valid exit found!")
+	return closest_exit
+	
+

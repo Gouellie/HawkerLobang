@@ -13,3 +13,17 @@ func serialize() -> Dictionary:
 func deserialize(data : Dictionary) -> void:
 	if data and data.has("or"):
 		rotation_degrees = data["or"]
+
+
+func track_entity() -> void:
+	pass
+
+
+# override on subclass if the entity needs to register to a manager
+func register() -> void:
+	pass
+
+
+# invoked by entity_tracker before entity queue_freed
+func cleanup() -> void:
+	pass

@@ -40,3 +40,10 @@ func patron_leave_table() -> void:
 func _toggle_label_display(show : bool) -> void:
 	label_state.visible = show
 
+
+func register() -> void:
+	Global.table_manager.register_table(self)
+
+
+func cleanup() -> void:
+	Global.table_manager.remove_table(self)

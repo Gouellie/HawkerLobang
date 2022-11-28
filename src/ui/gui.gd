@@ -35,9 +35,8 @@ func _on_entity_selected(_selected_entity : Node2D) -> void:
 	# todo, remove
 	if _selected_entity is Patron:
 		return
-		
+
 	toolbox.load_setup(_selected_entity)
-	toolbox.visible = true
 
 
 func _on_patron_count_changed(count : int) -> void:
@@ -62,7 +61,7 @@ func _on_Button_ClearPatrons_pressed() -> void:
 
 
 func _on_Button_InvokePatron_pressed() -> void:
-	Events.emit_signal("patron_invoked")
+	Events.emit_signal("patron_invoked", 1, true)
 
 
 func _on_Button_OpenAllStalls_pressed() -> void:

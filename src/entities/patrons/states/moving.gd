@@ -36,7 +36,7 @@ func _ready() -> void:
 
 
 func enter(_msg: Dictionary = {}) -> void:
-	on_speed_changed(Global.current_speed)
+	set_navigation_speed(Global.current_speed)
 	_state_machine.transition_to("Moving/Browsing")
 
 
@@ -48,7 +48,7 @@ func set_navigation_position(nav_position_to_set : Vector2) -> void:
 	nav_agent.set_target_location(nav_position_to_set)
 
 
-func on_speed_changed(speed : int) -> void:
+func set_navigation_speed(speed : int) -> void:
 	character_speed_multiplier = initial_character_speed_multiplier * speed
 
 

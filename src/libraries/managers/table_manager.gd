@@ -10,8 +10,13 @@ func _init() -> void:
 func register_table(table : Table) -> void:
 	if not _tables.has(table):
 		_tables.push_back(table)
-	
-	
+
+
+func remove_table(table : Table) -> void:
+	if _tables.has(table):
+		_tables.erase(table)
+
+		
 func get_table(pos : Vector2) -> Table:
 	var closest_table = null
 	var closest_distance = 999999.0

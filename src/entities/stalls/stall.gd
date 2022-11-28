@@ -43,7 +43,7 @@ func _ready() -> void:
 func create_stall(
 			p_stall_name : String, 
 			p_resource : Resource, 
-			date : DateTime) -> void:
+			date : DateTime, select : bool) -> void:
 	stall_name = p_stall_name
 	resource = p_resource
 	date_of_opening = date
@@ -53,7 +53,8 @@ func create_stall(
 	state_machine.transition_to("Rented")
 	is_stall_vacant = false
 	# update the Toolbox
-	Events.emit_signal("entity_selected", self)	
+	if select: 
+		Events.emit_signal("entity_selected", self)	
 
 
 # debug method that sets the stall to always be open even when outside of B/H
@@ -136,7 +137,7 @@ func deserialize(data : Dictionary) -> void:
 		create_stall(
 				data["sn"], 
 				Resources.STALLS[stall_key], 
-				Dates.get_date_from_ticks(data["do"]))
+				Dates.get_date_from_ticks(data["do"]), false)
 		business_hours.deserialize(data["bh"])
 	label_state.rect_rotation = -rotation_degrees
 	emit_signal("loaded")
@@ -148,3 +149,12 @@ func get_cell_stamps() -> Array:
 
 func _toggle_label_display(show : bool) -> void:
 	label_state.visible = show
+
+
+func register() -> void:
+	emit_signal("loaded")	
+	Global.stall_manager.register_stall(self)
+
+
+func cleanup() -> void:
+	Global.stall_manager.remove_stall(self)
