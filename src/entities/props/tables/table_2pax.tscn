@@ -32,8 +32,6 @@ shape = SubResource( 3 )
 
 [node name="NavigationPolygonInstance" type="NavigationPolygonInstance" parent="."]
 navpoly = SubResource( 2 )
-enter_cost = 5.0
-travel_cost = 10.0
 
 [node name="Positions" type="Node2D" parent="."]
 

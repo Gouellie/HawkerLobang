@@ -255,7 +255,4 @@ physics_interpolation_mode = 1
 
 [node name="Ticker" type="Timer" parent="."]
 
-[node name="FinalDestination" type="Node2D" parent="."]
-position = Vector2( 40, 40 )
-
 [connection signal="timeout" from="Ticker" to="." method="_on_Ticker_timeout"]
