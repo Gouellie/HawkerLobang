@@ -22,8 +22,15 @@ func _ready() -> void:
 
 func _process(_delta: float) -> void:
 	zoom = lerp(zoom, desired_zoom, 0.1)
-	if lerping_to_selection and is_instance_valid(tracked_entity):
-		position = lerp(position, get_tracked_entity_position(), 0.1)
+	if not lerping_to_selection or not is_instance_valid(tracked_entity):
+		return
+	position = lerp(position, get_tracked_entity_position(), 0.1)
+	var desired_offset_h = 0.0 if not Global.is_toolbox_open else 2.0 * zoom.x
+	# don't lerp while zooming in/out to avoid weird camera bounce
+	if zoom.is_equal_approx(desired_zoom):
+		offset_h = lerp(offset_h, desired_offset_h, 0.1)
+	else:
+		offset_h = desired_offset_h
 
 
 func _input(event: InputEvent) -> void:
@@ -35,7 +42,6 @@ func _input(event: InputEvent) -> void:
 			if event.button_index == BUTTON_WHEEL_DOWN:
 				if desired_zoom < zoom_max:
 					desired_zoom += zoom_speed
-					
 	if event.is_action("camera_pan"):
 		lerping_to_selection = false
 		if event.is_pressed():
@@ -60,10 +66,7 @@ func get_tracked_entity_position() -> Vector2:
 		if not is_instance_valid(tracked_entity) :
 			lerping_to_selection = false
 			return position
-		var offset = OS.window_size
-		# don't know how to make it work properly yet
-		#offset.x /= 3.0 if Global.is_toolbox_open else 2.0
-		#offset.y /= 2.0
-		var pos = tracked_entity.global_position - offset / 2.0
+		var window_size = OS.window_size
+		var pos = tracked_entity.global_position - window_size / 2.0
 		return pos
 
