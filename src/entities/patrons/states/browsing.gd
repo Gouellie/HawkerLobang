@@ -33,14 +33,14 @@ func _browse_for_stall() -> void:
 	if opened_stalls.size() < 1:
 		time_with_no_stall += 1
 		if time_with_no_stall >= 3:
-			_leave()
+			leave()
 		return
 	var stall : Stall
 	var init = true
 	while init or visited_stall.has(stall):
 		init = false
 		if opened_stalls.size() < 1:
-			_leave()
+			leave()
 			return
 		var r_index = randi() % opened_stalls.size()
 		stall = opened_stalls.pop_at(r_index)
@@ -48,8 +48,11 @@ func _browse_for_stall() -> void:
 	_stall_found(stall)
 
 
-func _leave() -> void:
-	_state_machine.transition_to("Moving/Leaving")
+func leave() -> void:
+	if owner.is_in_patron_group:
+		_state_machine.transition_to("Moving/MovingToTable")
+	else:
+		_state_machine.transition_to("Moving/Leaving")
 
 
 func _stall_found(stall : Stall) -> void:

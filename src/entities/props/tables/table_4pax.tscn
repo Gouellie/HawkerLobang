@@ -1,0 +1,71 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://assets/props/tables.png" type="Texture" id=1]
+[ext_resource path="res://src/entities/props/tables/table.gd" type="Script" id=2]
+
+[sub_resource type="CircleShape2D" id=3]
+radius = 8.0
+
+[sub_resource type="NavigationPolygon" id=2]
+vertices = PoolVector2Array( 40, -40, 40, 40, 24, 20, 24, 12, 20, 8, 24, -12, 20, 24, 20, 36, -40, 40, -20, 36, -40, -40, -24, 20, 20, -8, 24, -20, 20, -24, 20, -36, -20, -36, -20, -24, -24, -20, -24, -12, -20, -8, -20, 8, -24, 12, -20, 24 )
+polygons = [ PoolIntArray( 0, 1, 2, 3 ), PoolIntArray( 0, 3, 4, 5 ), PoolIntArray( 6, 2, 1, 7 ), PoolIntArray( 7, 1, 8, 9 ), PoolIntArray( 9, 8, 10, 11 ), PoolIntArray( 4, 12, 5 ), PoolIntArray( 0, 5, 13 ), PoolIntArray( 0, 13, 14, 15 ), PoolIntArray( 10, 0, 15, 16 ), PoolIntArray( 10, 16, 17, 18 ), PoolIntArray( 19, 20, 21, 22 ), PoolIntArray( 11, 23, 9 ), PoolIntArray( 22, 11, 10 ), PoolIntArray( 19, 22, 10 ), PoolIntArray( 19, 10, 18 ) ]
+outlines = [ PoolVector2Array( -40, -40, 40, -40, 40, 40, -40, 40 ), PoolVector2Array( -20, -36, -20, -24, -24, -20, -24, -12, -20, -8, -20, 8, -24, 12, -24, 20, -20, 24, -20, 36, 20, 36, 20, 24, 24, 20, 24, 12, 20, 8, 20, -8, 24, -12, 24, -20, 20, -24, 20, -36 ) ]
+
+[node name="Table4Pax" type="Node2D"]
+script = ExtResource( 2 )
+scene_key = "table_4pax"
+
+[node name="Sprite" type="Sprite" parent="."]
+texture = ExtResource( 1 )
+region_enabled = true
+region_rect = Rect2( 32, 8, 64, 48 )
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_layer = 16
+collision_mask = 0
+monitoring = false
+
+[node name="CollisionShape2D_Pos_01" type="CollisionShape2D" parent="Area2D"]
+position = Vector2( -16, -16 )
+shape = SubResource( 3 )
+
+[node name="CollisionShape2D_Pos_02" type="CollisionShape2D" parent="Area2D"]
+position = Vector2( -16, 16 )
+shape = SubResource( 3 )
+
+[node name="CollisionShape2D_Pos_03" type="CollisionShape2D" parent="Area2D"]
+position = Vector2( 16, -16 )
+shape = SubResource( 3 )
+
+[node name="CollisionShape2D_Pos_04" type="CollisionShape2D" parent="Area2D"]
+position = Vector2( 16, 16 )
+shape = SubResource( 3 )
+
+[node name="NavigationPolygonInstance" type="NavigationPolygonInstance" parent="."]
+rotation = 1.57079
+navpoly = SubResource( 2 )
+
+[node name="Positions" type="Node2D" parent="."]
+
+[node name="Position_01" type="Node2D" parent="Positions"]
+position = Vector2( -16, -16 )
+
+[node name="Position_02" type="Node2D" parent="Positions"]
+position = Vector2( -16, 16 )
+
+[node name="Position_03" type="Node2D" parent="Positions"]
+position = Vector2( 16, -16 )
+
+[node name="Position_04" type="Node2D" parent="Positions"]
+position = Vector2( 16, 16 )
+
+[node name="Label_Shope" type="Label" parent="."]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -20.0
+margin_top = -7.0
+margin_right = 20.0
+margin_bottom = 7.0
+text = "Shope"

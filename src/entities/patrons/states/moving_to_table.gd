@@ -6,12 +6,15 @@ var owner_area_2d : Area2D
 
 func enter(_msg: Dictionary = {}) -> void:
 	if owner.label_state :
-		owner.label_state.text = "looking for table"	
-	table = Global.table_manager.get_table(owner.global_position)
+		owner.label_state.text = "moving to table"
+
+	table = Global.table_manager.get_choped_table(owner)
+
 	if not is_instance_valid(table) :
 		leave()
 		return
-	var table_position = table.get_sitting_position()[0]
+
+	var table_position = table.get_sitting_position(owner.sit_index)
 	owner_area_2d = owner.stall_detector
 	_parent.set_navigation_position(table_position)	
 	_check_if_already_in_range()
@@ -19,10 +22,12 @@ func enter(_msg: Dictionary = {}) -> void:
 
 func exit() -> void:
 	pass
-	
+
 	
 func physics_process(delta: float) -> void:
-	_parent.physics_process(delta)	
+	_parent.physics_process(delta)
+	if table == null:
+		leave()
 
 
 func on_time_ellapsed(time : DateTime) -> void:
@@ -48,7 +53,3 @@ func on_Area2D_body_entered(body: Node2D) -> void:
 
 func leave() -> void:
 	_state_machine.transition_to("Moving/Leaving")
-	
-
-
-

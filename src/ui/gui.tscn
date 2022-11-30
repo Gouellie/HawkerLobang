@@ -109,6 +109,8 @@ color = Color( 0.203922, 0.470588, 0.313726, 1 )
 [node name="CheckBox_ShowStates" type="CheckBox" parent="HBoxContainer/MarginContainer"]
 margin_right = 104.0
 margin_bottom = 56.0
+focus_mode = 0
+enabled_focus_mode = 0
 text = "Show States"
 
 [node name="HBoxContainer_Options" type="HBoxContainer" parent="."]

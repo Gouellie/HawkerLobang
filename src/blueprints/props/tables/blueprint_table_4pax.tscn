@@ -1,0 +1,20 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://src/blueprints/props/blueprint_props.gd" type="Script" id=1]
+[ext_resource path="res://assets/sprites/invalid.png" type="Texture" id=2]
+[ext_resource path="res://src/entities/props/tables/table_4pax.tscn" type="PackedScene" id=3]
+[ext_resource path="res://assets/props/tables.png" type="Texture" id=4]
+
+[node name="BluePrintTable4Pax" type="Node2D"]
+script = ExtResource( 1 )
+entity_scene = ExtResource( 3 )
+
+[node name="Sprite" type="Sprite" parent="."]
+texture = ExtResource( 4 )
+region_enabled = true
+region_rect = Rect2( 32, 8, 64, 48 )
+
+[node name="Invalid" type="Sprite" parent="."]
+visible = false
+z_index = 1
+texture = ExtResource( 2 )

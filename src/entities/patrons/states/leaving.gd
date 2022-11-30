@@ -5,6 +5,12 @@ var exit = Node2D
 func enter(_msg: Dictionary = {}) -> void:
 	if owner.label_state :
 		owner.label_state.text = "leaving"
+	if not owner.is_in_patron_group or owner.is_group_leader:
+		Global.table_manager.free_table(owner)
+	leave()
+
+
+func leave()-> void:
 	exit = Global.entrance_manager.get_exit(owner.global_position)
 	var unspawn_pos = exit.global_position
 	_parent.set_navigation_speed(Global.current_speed)

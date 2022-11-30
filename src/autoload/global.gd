@@ -3,6 +3,7 @@ extends Node
 var current_datetime : DateTime setget set_curent_datetime,get_curent_datetime
 var entity_tracker : EntityTracker setget set_entity_tracker,get_entity_tracker
 var entrance_manager : EntranceManager
+var patron_manager : PatronManager
 var stall_manager : StallManager
 var table_manager : TableManager
 var builder_mode_on : bool setget ,_get_builder_mode_on
@@ -20,6 +21,7 @@ func reset() -> void:
 	current_datetime = null
 	entity_tracker = null
 	entrance_manager = null
+	patron_manager = null
 	stall_manager = null
 	table_manager = null
 	builder_mode_on = false

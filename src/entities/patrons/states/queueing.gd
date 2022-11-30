@@ -92,3 +92,10 @@ func update_position_in_queue(pos : Vector2) -> void:
 	_parent.set_navigation_position(pos)
 	time_in_queue_since_last_update = 0
 	patron_in_queue = false
+
+
+func leave() -> void:
+	if is_instance_valid(queuing_at_stall) :
+		queuing_at_stall.queue_manager.patron_break_queue(self)
+		queuing_at_stall = null
+	_state_machine.transition_to("Moving/Leaving")

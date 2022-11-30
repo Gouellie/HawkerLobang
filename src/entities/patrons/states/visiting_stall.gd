@@ -58,3 +58,7 @@ func _visit_stall(stall : Stall) -> void:
 		return
 	selected_stall = stall		
 	_parent.set_navigation_position(stall.queue_position)
+	
+
+func leave() -> void:
+	_state_machine.transition_to("Moving/Leaving")

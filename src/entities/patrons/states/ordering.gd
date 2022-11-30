@@ -2,6 +2,7 @@ extends State
 
 var stall : Stall
 
+
 func enter(msg: Dictionary = {}) -> void:
 	if owner.label_state :
 		owner.label_state.text = "ordering"	
@@ -30,8 +31,11 @@ func on_speed_changed(speed : int) -> void:
 
 
 func serving_patron() -> void:
-	_state_machine.transition_to("Moving/LookingForTable")
-	
+	if owner.is_in_patron_group:
+		_state_machine.transition_to("Moving/MovingToTable")
+	else:
+		_state_machine.transition_to("Moving/ChopeTable")
+
 
 func physics_process(delta: float) -> void:
 	_parent.physics_process(delta)

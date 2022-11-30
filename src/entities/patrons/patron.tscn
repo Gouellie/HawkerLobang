@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=2]
+[gd_scene load_steps=16 format=2]
 
 [ext_resource path="res://src/entities/patrons/patron.gd" type="Script" id=1]
 [ext_resource path="res://src/entities/patrons/states/browsing.gd" type="Script" id=2]
@@ -9,10 +9,11 @@
 [ext_resource path="res://src/entities/patrons/states/ordering.gd" type="Script" id=7]
 [ext_resource path="res://src/libraries/state_machine/state.gd" type="Script" id=8]
 [ext_resource path="res://src/entities/patrons/states/visiting_stall.gd" type="Script" id=9]
-[ext_resource path="res://src/entities/patrons/states/looking_for_table.gd" type="Script" id=10]
+[ext_resource path="res://src/entities/patrons/states/moving_to_table.gd" type="Script" id=10]
 [ext_resource path="res://src/entities/patrons/states/leaving.gd" type="Script" id=11]
 [ext_resource path="res://src/entities/patrons/states/sitting.gd" type="Script" id=12]
 [ext_resource path="res://src/entities/patrons/states/eating.gd" type="Script" id=13]
+[ext_resource path="res://src/entities/patrons/states/chope_table.gd" type="Script" id=14]
 
 [sub_resource type="CircleShape2D" id=1]
 radius = 5.0
@@ -67,7 +68,10 @@ script = ExtResource( 6 )
 [node name="Ordering" type="Node2D" parent="States/Moving"]
 script = ExtResource( 7 )
 
-[node name="LookingForTable" type="Node2D" parent="States/Moving"]
+[node name="ChopeTable" type="Node2D" parent="States/Moving"]
+script = ExtResource( 14 )
+
+[node name="MovingToTable" type="Node2D" parent="States/Moving"]
 script = ExtResource( 10 )
 
 [node name="Leaving" type="Node2D" parent="States/Moving"]

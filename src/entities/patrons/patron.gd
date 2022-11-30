@@ -1,7 +1,15 @@
 extends Entity
 class_name Patron
 
+var is_in_patron_group : bool
+var is_group_leader : bool
+var sit_index : int = 0
+var group_size : int
+var group_id
+var ready_to_leave : bool
+
 var selected : bool setget set_selected,get_selected
+
 onready var skin : Sprite = $Patron
 onready var state_machine : StateMachine = $States
 onready var label_state : Label = $Label_State 
@@ -59,6 +67,11 @@ func taking_patron_order() -> void:
 func serving_patron() -> void:
 	if state_machine.state.has_method("serving_patron"):
 		state_machine.state.serving_patron()
+	
+	
+func leave() -> void:
+	if state_machine.state.has_method("leave"):
+		state_machine.state.leave()
 
 
 func update_position_in_queue(pos : Vector2) -> void:
@@ -71,6 +84,9 @@ func _on_Area2D_area_shape_entered(_area_rid: RID, area: Area2D, _area_shape_ind
 		state_machine.state.on_Area2D_body_entered(area.owner)
 
 
-
 func _toggle_label_display(show : bool) -> void:
 	label_state.visible = show
+
+
+func cleanup() -> void:
+	state_machine.state.cleanup()

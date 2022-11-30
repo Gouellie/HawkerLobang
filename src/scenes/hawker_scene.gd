@@ -40,7 +40,7 @@ func _on_time_ellapsed(date) -> void:
 	var mod = _get_time_of_day_modifier(date)
 	current_wait_time = 0
 	random_wait_time = randi() % 12 - mod
-	var groupsize = randi() % 8  + 1
+	var groupsize = randi() % 4  + 1
 	Events.emit_signal("patron_invoked", groupsize, false)
 
 
