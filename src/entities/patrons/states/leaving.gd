@@ -33,6 +33,6 @@ func character_target_reached() -> void:
 	Events.emit_signal("patron_leaving", owner)
 
 
-func on_Area2D_body_entered(body: Node2D) -> void:
+func on_Area2D_body_entered(body: Node2D, _area_shape_index: int) -> void:
 	if body == exit:
 		Events.emit_signal("patron_leaving", owner)

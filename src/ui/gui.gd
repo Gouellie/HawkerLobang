@@ -61,7 +61,8 @@ func _on_Button_ClearPatrons_pressed() -> void:
 
 
 func _on_Button_InvokePatron_pressed() -> void:
-	Events.emit_signal("patron_invoked", 1, true)
+	var invoke_count : int = $HBoxContainer/SpinBox.value
+	Events.emit_signal("patron_invoked", invoke_count, true)
 
 
 func _on_Button_OpenAllStalls_pressed() -> void:

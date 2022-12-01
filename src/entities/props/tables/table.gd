@@ -23,7 +23,9 @@ func serialize() -> Dictionary:
 
 func deserialize(data : Dictionary) -> void:
 	.deserialize(data)
-	Global.table_manager.register_table(self)
+	positions = []
+	for pos in $Positions.get_children():
+		positions.push_back(pos.global_position)
 
 
 func table_reserved(is_reserved : bool) -> void:

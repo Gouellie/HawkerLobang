@@ -79,9 +79,9 @@ func update_position_in_queue(pos : Vector2) -> void:
 		state_machine.state.update_position_in_queue(pos)
 
 
-func _on_Area2D_area_shape_entered(_area_rid: RID, area: Area2D, _area_shape_index: int, _local_shape_index: int) -> void:
+func _on_Area2D_area_shape_entered(_area_rid: RID, area: Area2D, area_shape_index: int, _local_shape_index: int) -> void:
 	if state_machine.state.has_method("on_Area2D_body_entered"):
-		state_machine.state.on_Area2D_body_entered(area.owner)
+		state_machine.state.on_Area2D_body_entered(area.owner, area_shape_index)
 
 
 func _toggle_label_display(show : bool) -> void:

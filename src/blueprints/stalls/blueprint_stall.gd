@@ -1,19 +1,9 @@
 extends Blueprint
 class_name BlueprintStall
 
-
-onready var _outline := $StallShape_Outline
 onready var _invalid : Sprite = $Invalid
 onready var _clearances := $Clearances
 onready var _clearance_positions := $Clearances/ClearancesPositions
-
-
-func _ready() -> void:
-	_outline.visible = false
-
-
-func set_selected(selected : bool) -> void:
-	_outline.visible = selected	
 
 
 func show_debug(p_show : bool) -> void:

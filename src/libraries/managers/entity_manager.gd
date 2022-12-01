@@ -50,12 +50,12 @@ func _on_blueprint_selected(sender : Object) -> void:
 		_blueprint = null
 		_placeable_blueprint = false
 		_valid_eraser = false
-		
 	if not sender is BlueprintPanel:
 		return
 	if sender.blueprint_scene:
 		_blueprint = sender.blueprint_scene.instance() as BlueprintBase
 		add_child(_blueprint)
+		_blueprint.z_index = VisualServer.CANVAS_ITEM_Z_MAX
 		_blueprint.show_debug(true)
 
 
@@ -201,7 +201,9 @@ func _load_entity(file_name: String, cellv : Vector2, data : Dictionary) -> void
 	entity.position = entity_position + tile_offset
 	_mark_ground(cellv, STALL_TILE_INDEX)
 	_tracker.place_entity(entity, cellv)
-	add_child(entity)	
+	add_child(entity)
+	# todo, deserialize should be called before the node is added to the three
+	# currently impossible because the Stalls need to be fully loaded beforehand 
 	entity.deserialize(data)
 	entity.register()
 

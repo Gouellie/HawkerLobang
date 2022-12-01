@@ -61,17 +61,25 @@ focus_mode = 0
 enabled_focus_mode = 0
 text = "invoke"
 
-[node name="Button_ClearPatrons" type="Button" parent="HBoxContainer"]
+[node name="SpinBox" type="SpinBox" parent="HBoxContainer"]
 margin_left = 442.0
-margin_right = 485.0
+margin_right = 516.0
+margin_bottom = 56.0
+min_value = 1.0
+max_value = 6.0
+value = 1.0
+
+[node name="Button_ClearPatrons" type="Button" parent="HBoxContainer"]
+margin_left = 520.0
+margin_right = 563.0
 margin_bottom = 56.0
 focus_mode = 0
 enabled_focus_mode = 0
 text = "clear"
 
 [node name="Button_OpenCloseCenter" type="Button" parent="HBoxContainer"]
-margin_left = 489.0
-margin_right = 589.0
+margin_left = 567.0
+margin_right = 667.0
 margin_bottom = 56.0
 rect_min_size = Vector2( 100, 0 )
 focus_mode = 0
@@ -81,24 +89,24 @@ enabled_focus_mode = 0
 text = "Close Center"
 
 [node name="Button_OpenAllStalls" type="Button" parent="HBoxContainer"]
-margin_left = 593.0
-margin_right = 699.0
+margin_left = 671.0
+margin_right = 777.0
 margin_bottom = 56.0
 focus_mode = 0
 enabled_focus_mode = 0
 text = "Open All Stalls"
 
 [node name="Button_CloseAllStalls" type="Button" parent="HBoxContainer"]
-margin_left = 703.0
-margin_right = 809.0
+margin_left = 781.0
+margin_right = 887.0
 margin_bottom = 56.0
 focus_mode = 0
 enabled_focus_mode = 0
 text = "Close All Stalls"
 
 [node name="MarginContainer" type="MarginContainer" parent="HBoxContainer"]
-margin_left = 813.0
-margin_right = 917.0
+margin_left = 891.0
+margin_right = 995.0
 margin_bottom = 56.0
 
 [node name="ColorRect" type="ColorRect" parent="HBoxContainer/MarginContainer"]
@@ -163,20 +171,21 @@ text = "Exit"
 [node name="BlueprintInventory" parent="." instance=ExtResource( 5 )]
 
 [node name="Toolbox_Container" type="MarginContainer" parent="."]
+anchor_left = 0.6
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_left = 730.0
-margin_top = 120.0
-margin_right = -50.0
-margin_bottom = -120.0
 mouse_filter = 2
+custom_constants/margin_right = 60
+custom_constants/margin_top = 100
+custom_constants/margin_bottom = 100
 
 [node name="Toolbox" parent="Toolbox_Container" instance=ExtResource( 1 )]
 visible = false
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_right = 500.0
-margin_bottom = 480.0
+margin_top = 100.0
+margin_right = 452.0
+margin_bottom = 620.0
 
 [node name="SaveFileDialog" type="FileDialog" parent="."]
 margin_right = 563.0

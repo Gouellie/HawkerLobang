@@ -8,10 +8,6 @@ export (bool) var is_prop
 var clearance_positions : Array setget ,_get_clearance_positions
 
 
-func set_selected(_selected : bool) -> void:
-	pass
-
-
 func show_debug(_show : bool) -> void:
 	pass
 

@@ -30,7 +30,7 @@ func physics_process(delta: float) -> void:
 	_parent.physics_process(delta)
 
 
-func on_Area2D_body_entered(body: Node2D) -> void:
+func on_Area2D_body_entered(body: Node2D, _area_shape_index: int) -> void:
 	if body == selected_stall:
 		_enter_queue()
 
