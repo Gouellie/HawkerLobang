@@ -2,10 +2,27 @@ extends Control
 
 onready var _tab_container : TabContainer = $TabContainer
 onready var _label_text : Label = $CenterContainer/Label
+onready var _hawker_center_control : ToolboxPanel = $TabContainer/HawkerCenter/ControlPanel
 onready var _stall_creator : ToolboxPanel = $TabContainer/Open/StallCreator
 onready var _info_panel : ToolboxPanel = $TabContainer/Info/InfoPanel
-onready var _business_hours_editor : ToolboxPanel = $"TabContainer/Business Hours/BusinessHoursEditor"
+onready var _business_hours_editor : ToolboxPanel = $TabContainer/BusinessHours/Editor
 var _selected_entity : Entity
+
+func _ready() -> void:
+	Log.log_error(Events.connect("entity_selected", self, "on_entity_selected"), "toolbox.gd")
+
+
+func on_entity_selected(p_selected_entity : Entity) -> void:
+	if p_selected_entity == null:
+		return
+	if not p_selected_entity.open_toolbox():
+		return
+	if _selected_entity == p_selected_entity:
+		if p_selected_entity is HawkerCenter:
+			visible = false
+			_unload_entity()
+		return
+	load_setup(p_selected_entity)
 
 
 func load_setup(p_selected_entity : Entity) -> void:
@@ -19,6 +36,8 @@ func load_setup(p_selected_entity : Entity) -> void:
 	_tab_container.set_tab_hidden(1, not info_panel_active)	
 	var business_hours_active = _business_hours_editor.load_entity(_selected_entity)
 	_tab_container.set_tab_hidden(2, not business_hours_active)
+	var hawker_controls_active = _hawker_center_control.load_entity(_selected_entity)
+	_tab_container.set_tab_hidden(3, not hawker_controls_active)	
 	_set_label_text(_selected_entity)
 	if not _tab_container.get_tab_hidden(current_tab):
 		_tab_container.current_tab = current_tab
@@ -34,12 +53,14 @@ func _set_label_text(_entity : Entity) -> void:
 
 func _on_Button_ClosePanel_pressed() -> void:
 	Global.is_toolbox_open = false
-	visible = false
+	visible = false	
 	_unload_entity()
-	
+
 
 func _unload_entity() -> void:
+	_hawker_center_control.unload_entity()
 	_info_panel.unload_entity()
 	_stall_creator.unload_entity()
 	_business_hours_editor.unload_entity()
 	_selected_entity = null
+

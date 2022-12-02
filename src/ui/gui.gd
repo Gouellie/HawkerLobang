@@ -1,15 +1,13 @@
 extends Control
 
-onready var toolbox : Control = $Toolbox_Container/Toolbox
+export (NodePath) var hawker_center_path
+
 onready var save_file_dialog : FileDialog = $SaveFileDialog
 onready var options_container := $HBoxContainer_Options/VBoxContainer/Container_Options
-onready var label_patrons := $HBoxContainer/Control/InfoControl/Label_Patrons
 
 
 func _ready() -> void:
-	Log.log_error(Events.connect("entity_selected", self, "_on_entity_selected"), "gui.gd")
-	Log.log_error(Events.connect("patron_count_changed", self, "_on_patron_count_changed"))
-	_on_patron_count_changed(Global.get_patrons_count())
+	$HawkerControl.hawker_center = get_node(hawker_center_path)
 
 
 func _on_Button_Save_pressed() -> void:
@@ -28,21 +26,6 @@ func _on_Button_Exit_pressed() -> void:
 		Log.log_error(err)
 
 
-func _on_entity_selected(_selected_entity : Node2D) -> void:
-	if _selected_entity == null:
-		return
-	
-	# todo, remove
-	if _selected_entity is Patron:
-		return
-
-	toolbox.load_setup(_selected_entity)
-
-
-func _on_patron_count_changed(count : int) -> void:
-	label_patrons.text = "Patrons : %d" % count 
-
-
 func _on_SaveFileDialog_file_selected(path: String) -> void:
 	SaveFile.save_game(path)
 
@@ -54,30 +37,3 @@ func _on_Button_Options_pressed() -> void:
 		$HBoxContainer_Options/VBoxContainer/Button_Options.text = "Expand"
 	else:
 		$HBoxContainer_Options/VBoxContainer/Button_Options.text = "Collapse"
-
-
-func _on_Button_ClearPatrons_pressed() -> void:
-	Events.emit_signal("clear_patrons_requested")
-
-
-func _on_Button_InvokePatron_pressed() -> void:
-	var invoke_count : int = $HBoxContainer/SpinBox.value
-	Events.emit_signal("patron_invoked", invoke_count, true)
-
-
-func _on_Button_OpenAllStalls_pressed() -> void:
-	Events.emit_signal("open_close_all_stalls", true)
-
-
-func _on_Button_CloseAllStalls_pressed() -> void:
-	Events.emit_signal("open_close_all_stalls", false)
-
-
-func _on_Button_OpenCenter_toggled(open: bool) -> void:
-	Events.emit_signal("hawker_center_changed", open)
-	$HBoxContainer/Button_OpenCloseCenter.text = "Close Center" if open else "Open Center"
-
-
-func _on_CheckBox_show_states_toggled(show: bool) -> void:
-	Events.emit_signal("toggle_label_display", show)
-	Global.show_states = show

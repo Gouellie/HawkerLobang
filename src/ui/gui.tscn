@@ -1,9 +1,11 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://src/ui/toolbox/toolbox.tscn" type="PackedScene" id=1]
 [ext_resource path="res://src/ui/controls/time_of_day_control.tscn" type="PackedScene" id=2]
+[ext_resource path="res://src/ui/controls/patrons_controls.tscn" type="PackedScene" id=3]
 [ext_resource path="res://src/ui/gui.gd" type="Script" id=4]
 [ext_resource path="res://src/ui/blueprint_inventory.tscn" type="PackedScene" id=5]
+[ext_resource path="res://src/ui/controls/hawker_control.tscn" type="PackedScene" id=6]
 
 [node name="GUI" type="Control"]
 anchor_right = 1.0
@@ -18,108 +20,6 @@ margin_top = 10.0
 [node name="TimeOfDayControl" parent="HBoxContainer" instance=ExtResource( 2 )]
 margin_right = 226.0
 mouse_filter = 2
-
-[node name="Control" type="Control" parent="HBoxContainer"]
-margin_left = 230.0
-margin_right = 380.0
-margin_bottom = 56.0
-rect_min_size = Vector2( 150, 40 )
-
-[node name="ColorRect" type="ColorRect" parent="HBoxContainer/Control"]
-anchor_right = 1.0
-anchor_bottom = 1.0
-color = Color( 0.121569, 0.501961, 0.243137, 1 )
-
-[node name="InfoControl" type="VBoxContainer" parent="HBoxContainer/Control"]
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-margin_left = -40.0
-margin_top = -20.0
-margin_right = 40.0
-margin_bottom = 20.0
-
-[node name="Label_Stalls" type="Label" parent="HBoxContainer/Control/InfoControl"]
-visible = false
-margin_right = 99.0
-margin_bottom = 14.0
-text = "Stalls : 000/000"
-
-[node name="Label_Patrons" type="Label" parent="HBoxContainer/Control/InfoControl"]
-margin_top = 13.0
-margin_right = 80.0
-margin_bottom = 27.0
-size_flags_vertical = 6
-text = "Patrons : %d"
-
-[node name="Button_InvokePatron" type="Button" parent="HBoxContainer"]
-margin_left = 384.0
-margin_right = 438.0
-margin_bottom = 56.0
-focus_mode = 0
-enabled_focus_mode = 0
-text = "invoke"
-
-[node name="SpinBox" type="SpinBox" parent="HBoxContainer"]
-margin_left = 442.0
-margin_right = 516.0
-margin_bottom = 56.0
-min_value = 1.0
-max_value = 6.0
-value = 1.0
-
-[node name="Button_ClearPatrons" type="Button" parent="HBoxContainer"]
-margin_left = 520.0
-margin_right = 563.0
-margin_bottom = 56.0
-focus_mode = 0
-enabled_focus_mode = 0
-text = "clear"
-
-[node name="Button_OpenCloseCenter" type="Button" parent="HBoxContainer"]
-margin_left = 567.0
-margin_right = 667.0
-margin_bottom = 56.0
-rect_min_size = Vector2( 100, 0 )
-focus_mode = 0
-toggle_mode = true
-pressed = true
-enabled_focus_mode = 0
-text = "Close Center"
-
-[node name="Button_OpenAllStalls" type="Button" parent="HBoxContainer"]
-margin_left = 671.0
-margin_right = 777.0
-margin_bottom = 56.0
-focus_mode = 0
-enabled_focus_mode = 0
-text = "Open All Stalls"
-
-[node name="Button_CloseAllStalls" type="Button" parent="HBoxContainer"]
-margin_left = 781.0
-margin_right = 887.0
-margin_bottom = 56.0
-focus_mode = 0
-enabled_focus_mode = 0
-text = "Close All Stalls"
-
-[node name="MarginContainer" type="MarginContainer" parent="HBoxContainer"]
-margin_left = 891.0
-margin_right = 995.0
-margin_bottom = 56.0
-
-[node name="ColorRect" type="ColorRect" parent="HBoxContainer/MarginContainer"]
-margin_right = 104.0
-margin_bottom = 56.0
-color = Color( 0.203922, 0.470588, 0.313726, 1 )
-
-[node name="CheckBox_ShowStates" type="CheckBox" parent="HBoxContainer/MarginContainer"]
-margin_right = 104.0
-margin_bottom = 56.0
-focus_mode = 0
-enabled_focus_mode = 0
-text = "Show States"
 
 [node name="HBoxContainer_Options" type="HBoxContainer" parent="."]
 anchor_left = 1.0
@@ -166,7 +66,7 @@ margin_right = 66.0
 margin_bottom = 68.0
 rect_min_size = Vector2( 50, 20 )
 size_flags_vertical = 0
-text = "Exit"
+text = "Quit"
 
 [node name="BlueprintInventory" parent="." instance=ExtResource( 5 )]
 
@@ -193,12 +93,10 @@ margin_bottom = 342.0
 access = 1
 filters = PoolStringArray( "*.save ; Save Files" )
 
-[connection signal="pressed" from="HBoxContainer/Button_InvokePatron" to="." method="_on_Button_InvokePatron_pressed"]
-[connection signal="pressed" from="HBoxContainer/Button_ClearPatrons" to="." method="_on_Button_ClearPatrons_pressed"]
-[connection signal="toggled" from="HBoxContainer/Button_OpenCloseCenter" to="." method="_on_Button_OpenCenter_toggled"]
-[connection signal="pressed" from="HBoxContainer/Button_OpenAllStalls" to="." method="_on_Button_OpenAllStalls_pressed"]
-[connection signal="pressed" from="HBoxContainer/Button_CloseAllStalls" to="." method="_on_Button_CloseAllStalls_pressed"]
-[connection signal="toggled" from="HBoxContainer/MarginContainer/CheckBox_ShowStates" to="." method="_on_CheckBox_show_states_toggled"]
+[node name="HawkerControl" parent="." instance=ExtResource( 6 )]
+
+[node name="PatronsControls" parent="." instance=ExtResource( 3 )]
+
 [connection signal="pressed" from="HBoxContainer_Options/VBoxContainer/Button_Options" to="." method="_on_Button_Options_pressed"]
 [connection signal="pressed" from="HBoxContainer_Options/VBoxContainer/Container_Options/Button_Save" to="." method="_on_Button_Save_pressed"]
 [connection signal="pressed" from="HBoxContainer_Options/VBoxContainer/Container_Options/Button_SaveAs" to="." method="_on_Button_SaveAs_pressed"]

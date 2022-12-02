@@ -4,9 +4,10 @@ class_name Entity
 
 export (String) var scene_key
 
+
 func serialize() -> Dictionary:
 	return {
-		"or" : rotation_degrees,		
+		"or" : rotation_degrees,
 	}
 
 
@@ -29,7 +30,13 @@ func register() -> void:
 # invoked by entity_tracker before entity queue_freed
 func cleanup() -> void:
 	pass
+	
+	
+# override if entity can be tracked by the camera when selected
+func can_track_entity() -> bool:
+	return false
+	
 
-
-func track_entity() -> void:
-	pass
+# override if entity should prompt the toolbox to open when selected
+func open_toolbox() -> bool:
+	return false

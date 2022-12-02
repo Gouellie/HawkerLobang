@@ -1,4 +1,5 @@
-extends Node2D
+extends Entity
+class_name HawkerCenter
 
 var hawker_is_opened : bool = true
 var random_wait_time := 10
@@ -14,7 +15,7 @@ var stall_manager : StallManager = StallManager.new()
 func _ready() -> void:
 	Log.log_error(Events.connect("hawker_center_changed", self, "_on_hawker_center_changed"))	
 	Log.log_error(Events.connect("time_ellapsed", self, "_on_time_ellapsed"))
-	
+
 	
 func _on_time_ellapsed(date) -> void:
 	if not hawker_is_opened:
@@ -56,3 +57,6 @@ func _get_time_of_day_modifier(date : DateTime) -> float:
 	var hourf = date.hour + range_lerp(date.minute, 0, 60, 0, 1)
 	return (cos(hourf - 0.8) + 1.1) * 4
 
+
+func open_toolbox() -> bool:
+	return true

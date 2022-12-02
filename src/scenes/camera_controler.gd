@@ -55,12 +55,14 @@ func _input(event: InputEvent) -> void:
 
 
 func on_entity_selected(entity : Entity) -> void:
-	tracked_entity = entity
 	if is_instance_valid(entity) :
-		lerping_to_selection = true
+		if entity.can_track_entity():
+			lerping_to_selection = true	
+			tracked_entity = entity
 	else:
+		tracked_entity = null
 		lerping_to_selection = false
-		
+
 
 func get_tracked_entity_position() -> Vector2:
 		if not is_instance_valid(tracked_entity) :

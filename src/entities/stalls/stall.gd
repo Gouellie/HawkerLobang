@@ -164,3 +164,7 @@ func _toggle_label_display(show : bool) -> void:
 
 func cleanup() -> void:
 	Global.stall_manager.remove_stall(self)
+	
+
+func open_toolbox() -> bool:
+	return true

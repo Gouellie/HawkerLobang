@@ -135,7 +135,7 @@ func _unhandled_input(event: InputEvent) -> void:
 		elif _valid_eraser:
 			_remove_entity()
 		if event.is_action_pressed("left_click"):
-			Events.emit_signal("entity_selected", null)				
+			Events.emit_signal("entity_selected", null)	
 
 
 func _place_entity() -> void:

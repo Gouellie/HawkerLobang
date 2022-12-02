@@ -36,6 +36,8 @@ func _on_Area2D_input_event(_viewport: Node, event: InputEvent, _shape_idx: int)
 
 
 func _on_entity_selected(entity : Entity) -> void:
+	if selected and entity and not entity.can_track_entity():
+		return
 	set_selected(entity == self)
 
 
@@ -86,6 +88,10 @@ func _on_Area2D_area_shape_entered(_area_rid: RID, area: Area2D, area_shape_inde
 
 func _toggle_label_display(show : bool) -> void:
 	label_state.visible = show
+
+
+func can_track_entity() -> bool:
+	return true
 
 
 func cleanup() -> void:
