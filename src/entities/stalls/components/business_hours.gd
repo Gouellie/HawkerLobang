@@ -1,10 +1,10 @@
-extends Node2D
+extends Reference
 class_name BusinessHours
 
 var business_hours := []
 
 
-func _ready() -> void:
+func _init() -> void:
 	for day in range(1,6):
 		var span = Dates.generate_timespan(day, 8, 0, day, 20, 0)
 		business_hours.append(span)

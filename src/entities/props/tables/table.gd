@@ -15,7 +15,7 @@ func _ready() -> void:
 	for pos in $Positions.get_children():
 		positions.push_back(pos.global_position)
 	seats_count = positions.size()
-	
+
 
 func serialize() -> Dictionary:
 	return .serialize()
@@ -24,8 +24,6 @@ func serialize() -> Dictionary:
 func deserialize(data : Dictionary) -> void:
 	.deserialize(data)
 	positions = []
-	for pos in $Positions.get_children():
-		positions.push_back(pos.global_position)
 
 
 func table_reserved(is_reserved : bool) -> void:

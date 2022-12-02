@@ -10,12 +10,14 @@ func serialize() -> Dictionary:
 	}
 
 
+# called before the node is added to the tree
 func deserialize(data : Dictionary) -> void:
 	if data and data.has("or"):
 		rotation_degrees = data["or"]
 
 
-func track_entity() -> void:
+# called after the node is added to the tree, if deserialize has been called
+func post_deserialized() -> void:
 	pass
 
 
@@ -26,4 +28,8 @@ func register() -> void:
 
 # invoked by entity_tracker before entity queue_freed
 func cleanup() -> void:
+	pass
+
+
+func track_entity() -> void:
 	pass

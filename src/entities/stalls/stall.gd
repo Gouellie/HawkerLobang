@@ -5,18 +5,20 @@ signal loaded
 
 export(Resource) var resource setget _set_resource
 
+var business_hours : BusinessHours = BusinessHours.new()
+
 var stall_name : String setget _set_stall_name
 var date_of_opening : DateTime
 var dish_name : String
 
-onready var business_hours : BusinessHours = $BusinessHours
+var _state_name : String
+
+
+onready var queue_manager := $QueueManager 
 onready var sprite_stall : Sprite = $Sprite_Stall
-onready var stall_name_label : Label = $Control/VBoxContainer/Label_StallName
-onready var stall_type_label : Label = $Control/VBoxContainer/Label_StallType
 onready var state_machine : StateMachine = $States
 
 # used by the states
-onready var queue_manager :  = $QueueManager
 onready var label_state : Label = $Label_State
 
 # debug
@@ -34,28 +36,30 @@ var cell_stamps : Array setget ,get_cell_stamps
 func _ready() -> void:
 	Log.log_error(Events.connect("toggle_label_display", self, "_toggle_label_display"))
 	dish_name = resource.dish_name if resource else "$"
-	stall_name_label.text = stall_name
-	stall_type_label.text = dish_name
 	label_state.visible = Global.show_states
 	label_state.rect_rotation = -rotation_degrees
 
 
-func create_stall(
-			p_stall_name : String, 
-			p_resource : Resource, 
-			date : DateTime, select : bool) -> void:
+func initialize_stall(
+		p_stall_name : String, 
+		p_resource : Resource, 
+		date : DateTime)-> void:
 	stall_name = p_stall_name
 	resource = p_resource
 	date_of_opening = date
 	dish_name = resource.dish_name if resource else "$"
-	stall_name_label.text = stall_name
-	stall_type_label.text = dish_name
-	state_machine.transition_to("Rented")
 	is_stall_vacant = false
-	# update the Toolbox
-	if select: 
-		Events.emit_signal("entity_selected", self)	
 
+
+func open_stall(
+			p_stall_name : String, 
+			p_resource : Resource, 
+			date : DateTime) -> void:
+	initialize_stall(p_stall_name, p_resource, date)
+	state_machine.transition_to("Rented")
+	# update the Toolbox
+	Events.emit_signal("entity_selected", self)	
+		
 
 # debug method that sets the stall to always be open even when outside of B/H
 # todo, method to resume operating within business hours
@@ -76,6 +80,7 @@ func vacate_stall() -> void:
 	_set_stall_name("")
 	_set_resource(null)
 	state_machine.transition_to("Vacant")
+	queue_manager.set_stall_open(false)	
 	is_stall_vacant = true
 	date_of_opening = null
 	is_always_open = false
@@ -101,14 +106,10 @@ func _on_Area2D_mouse_entered(entered: bool) -> void:
 func _set_resource(p_resource : Resource) -> void:
 	resource = p_resource
 	dish_name = resource.dish_name if resource else "$"
-	if stall_type_label:
-		stall_type_label.text = dish_name
 
 
 func _set_stall_name(p_name : String) -> void:
 	stall_name = p_name
-	if stall_name_label:
-		stall_name_label.text = stall_name
 
 
 func get_queue_position() -> Vector2:
@@ -134,13 +135,23 @@ func deserialize(data : Dictionary) -> void:
 	.deserialize(data)
 	var stall_key = data["rs"]
 	if Resources.STALLS.has(stall_key) :
-		create_stall(
+		initialize_stall(
 				data["sn"], 
 				Resources.STALLS[stall_key], 
-				Dates.get_date_from_ticks(data["do"]), false)
+				Dates.get_date_from_ticks(data["do"]))
 		business_hours.deserialize(data["bh"])
-	label_state.rect_rotation = -rotation_degrees
+		_state_name = "Rented"
 	emit_signal("loaded")
+
+
+func post_deserialized() -> void:
+	if _state_name :
+		state_machine.transition_to(_state_name)	
+
+
+func register() -> void:
+	emit_signal("loaded")	
+	Global.stall_manager.register_stall(self)
 
 
 func get_cell_stamps() -> Array:
@@ -149,11 +160,6 @@ func get_cell_stamps() -> Array:
 
 func _toggle_label_display(show : bool) -> void:
 	label_state.visible = show
-
-
-func register() -> void:
-	emit_signal("loaded")	
-	Global.stall_manager.register_stall(self)
 
 
 func cleanup() -> void:

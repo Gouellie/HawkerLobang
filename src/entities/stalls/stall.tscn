@@ -1,14 +1,13 @@
-[gd_scene load_steps=16 format=2]
+[gd_scene load_steps=15 format=2]
 
 [ext_resource path="res://src/entities/stalls/stall.gd" type="Script" id=1]
-[ext_resource path="res://src/entities/stalls/components/business_hours.gd" type="Script" id=2]
+[ext_resource path="res://src/entities/stalls/queue_manager.gd" type="Script" id=2]
 [ext_resource path="res://src/libraries/state_machine/state_machine.gd" type="Script" id=3]
 [ext_resource path="res://src/entities/stalls/states/rented.gd" type="Script" id=4]
 [ext_resource path="res://src/entities/stalls/states/vacant.gd" type="Script" id=5]
 [ext_resource path="res://assets/stalls/stall.png" type="Texture" id=6]
 [ext_resource path="res://assets/stalls/stall_outline.png" type="Texture" id=7]
 [ext_resource path="res://src/libraries/entities/cell_stamp.gd" type="Script" id=8]
-[ext_resource path="res://src/entities/stalls/queue_manager.gd" type="Script" id=9]
 [ext_resource path="res://src/entities/stalls/states/open.gd" type="Script" id=10]
 [ext_resource path="res://src/entities/stalls/states/close.gd" type="Script" id=11]
 [ext_resource path="res://src/entities/stalls/states/idle.gd" type="Script" id=12]
@@ -33,9 +32,6 @@ texture = ExtResource( 7 )
 [node name="Sprite_Stall" type="Sprite" parent="."]
 texture = ExtResource( 6 )
 vframes = 3
-
-[node name="BusinessHours" type="Node2D" parent="."]
-script = ExtResource( 2 )
 
 [node name="Control" type="Control" parent="."]
 visible = false
@@ -93,7 +89,7 @@ script = ExtResource( 13 )
 script = ExtResource( 11 )
 
 [node name="QueueManager" type="Node2D" parent="."]
-script = ExtResource( 9 )
+script = ExtResource( 2 )
 
 [node name="QueuePosition" type="Node2D" parent="QueueManager"]
 position = Vector2( 80, 24 )

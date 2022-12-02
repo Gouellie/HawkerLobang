@@ -201,10 +201,10 @@ func _load_entity(file_name: String, cellv : Vector2, data : Dictionary) -> void
 	entity.position = entity_position + tile_offset
 	_mark_ground(cellv, STALL_TILE_INDEX)
 	_tracker.place_entity(entity, cellv)
-	add_child(entity)
-	# todo, deserialize should be called before the node is added to the three
-	# currently impossible because the Stalls need to be fully loaded beforehand 
+	
 	entity.deserialize(data)
+	add_child(entity)
+	entity.post_deserialized()
 	entity.register()
 
 
