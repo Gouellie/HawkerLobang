@@ -59,8 +59,9 @@ func physics_process(_delta: float) -> void:
 	if nav_agent.is_target_reached():
 		return
 	var next_nav_position = nav_agent.get_next_location()
-	if owner.skin is Sprite:
+	if owner.skin:
 		owner.skin.rotation = get_angle_to(next_nav_position)
+
 	var desired_velocity = global_position.direction_to(next_nav_position) * character_speed_multiplier	
 	if nav_avoidance_enabled:
 		nav_agent.set_velocity(desired_velocity)

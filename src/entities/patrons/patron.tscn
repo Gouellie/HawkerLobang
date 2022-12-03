@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=2]
+[gd_scene load_steps=17 format=2]
 
 [ext_resource path="res://src/entities/patrons/patron.gd" type="Script" id=1]
 [ext_resource path="res://src/entities/patrons/states/browsing.gd" type="Script" id=2]
@@ -14,6 +14,7 @@
 [ext_resource path="res://src/entities/patrons/states/sitting.gd" type="Script" id=12]
 [ext_resource path="res://src/entities/patrons/states/eating.gd" type="Script" id=13]
 [ext_resource path="res://src/entities/patrons/states/chope_table.gd" type="Script" id=14]
+[ext_resource path="res://assets/sprites/tray.png" type="Texture" id=15]
 
 [sub_resource type="CircleShape2D" id=1]
 radius = 5.0
@@ -45,9 +46,6 @@ collision_mask = 26
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Stall_Dectection"]
 shape = SubResource( 1 )
-
-[node name="Patron" type="Sprite" parent="."]
-texture = ExtResource( 4 )
 
 [node name="States" type="Node2D" parent="."]
 script = ExtResource( 3 )
@@ -85,6 +83,18 @@ script = ExtResource( 12 )
 
 [node name="Eating" type="Node2D" parent="States/Idle"]
 script = ExtResource( 13 )
+
+[node name="Skin" type="Node2D" parent="."]
+
+[node name="Patron" type="Sprite" parent="Skin"]
+texture = ExtResource( 4 )
+
+[node name="Tray" type="Sprite" parent="Skin"]
+visible = false
+texture = ExtResource( 15 )
+offset = Vector2( 10, 0 )
+region_enabled = true
+region_rect = Rect2( 0, 0, 8, 16 )
 
 [connection signal="area_shape_entered" from="Stall_Dectection" to="." method="_on_Area2D_area_shape_entered"]
 [connection signal="input_event" from="Stall_Dectection" to="." method="_on_Area2D_input_event"]

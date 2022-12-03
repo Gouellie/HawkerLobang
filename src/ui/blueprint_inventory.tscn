@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://src/blueprints/props/tables/blueprint_table_2pax.tscn" type="PackedScene" id=1]
 [ext_resource path="res://src/ui/controls/blueprint_panel.tscn" type="PackedScene" id=2]
@@ -6,6 +6,7 @@
 [ext_resource path="res://src/blueprints/blueprint_eraser.tscn" type="PackedScene" id=4]
 [ext_resource path="res://src/ui/blueprint_inventory.gd" type="Script" id=5]
 [ext_resource path="res://src/blueprints/props/tables/blueprint_table_4pax.tscn" type="PackedScene" id=6]
+[ext_resource path="res://src/blueprints/props/tables/blueprint_table_8pax.tscn" type="PackedScene" id=7]
 
 [node name="BlueprintInventory" type="MarginContainer"]
 anchor_top = 1.0
@@ -46,7 +47,7 @@ text = "Collapse"
 [node name="HBoxContainer_Collapsable" type="HBoxContainer" parent="HBoxContainer"]
 visible = false
 margin_left = 78.0
-margin_right = 490.0
+margin_right = 594.0
 margin_bottom = 100.0
 
 [node name="BlueprintPanel_Stall" parent="HBoxContainer/HBoxContainer_Collapsable" instance=ExtResource( 2 )]
@@ -65,9 +66,15 @@ margin_right = 308.0
 grow_vertical = 0
 blueprint_scene = ExtResource( 6 )
 
-[node name="BlueprintPanel_Eraser" parent="HBoxContainer/HBoxContainer_Collapsable" instance=ExtResource( 2 )]
+[node name="BlueprintPanel_Table8Pax" parent="HBoxContainer/HBoxContainer_Collapsable" instance=ExtResource( 2 )]
 margin_left = 312.0
 margin_right = 412.0
+grow_vertical = 0
+blueprint_scene = ExtResource( 7 )
+
+[node name="BlueprintPanel_Eraser" parent="HBoxContainer/HBoxContainer_Collapsable" instance=ExtResource( 2 )]
+margin_left = 416.0
+margin_right = 516.0
 grow_vertical = 0
 blueprint_scene = ExtResource( 4 )
 

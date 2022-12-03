@@ -31,6 +31,7 @@ func on_speed_changed(speed : int) -> void:
 
 
 func serving_patron() -> void:
+	owner.skin_tray.visible = true
 	if owner.is_in_patron_group:
 		_state_machine.transition_to("Moving/MovingToTable")
 	else:

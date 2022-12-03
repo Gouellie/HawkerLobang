@@ -2,7 +2,7 @@ extends State
 
 var table : Table
 var sitting_position : Vector2
-var owner_skin : Sprite
+var owner_skin : Node2D
 var sitting_speed : int
 
 func enter(msg: Dictionary = {}) -> void:

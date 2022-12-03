@@ -10,7 +10,8 @@ var ready_to_leave : bool
 
 var selected : bool setget set_selected,get_selected
 
-onready var skin : Sprite = $Patron
+onready var skin : Node2D = $Skin
+onready var skin_tray : Node2D = $Skin/Tray
 onready var state_machine : StateMachine = $States
 onready var label_state : Label = $Label_State 
 onready var stall_detector : Area2D = $Stall_Dectection
@@ -20,6 +21,7 @@ func _ready() -> void:
 	Log.log_error(Events.connect("toggle_label_display", self, "_toggle_label_display"))	
 	Log.log_error(Events.connect("entity_selected", self, "_on_entity_selected"), "patron.gd")
 	label_state.visible = Global.show_states
+	$Skin/Tray.visible = false
 	
 
 func _draw() -> void:

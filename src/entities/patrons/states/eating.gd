@@ -12,10 +12,12 @@ var patron_group : Array
 
 func enter(msg: Dictionary = {}) -> void:
 	if owner.label_state :
-		owner.label_state.text = "eating"	
+		owner.label_state.text = "eating"
 	table = msg["table"]
 	if not is_instance_valid(table):
 		leave()
+	table.patron_sit_at_position(owner.sit_index)
+	owner.skin_tray.visible = false
 	time_eating = 0
 	done_eating = false
 	if owner.is_group_leader:
@@ -42,5 +44,6 @@ func _validate_ready_to_leave() -> void:
 
 
 func leave() -> void:
+	table.patron_leave_position(owner.sit_index, true)
 	_state_machine.transition_to("Moving/Leaving")
 

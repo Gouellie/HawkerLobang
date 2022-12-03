@@ -12,4 +12,5 @@ var ENTITIES = {
 	"stall" : preload("res://src/entities/stalls/stall.tscn"),
 	"table_2pax" : preload("res://src/entities/props/tables/table_2pax.tscn"),
 	"table_4pax" : preload("res://src/entities/props/tables/table_4pax.tscn"),
+	"table_8pax" : preload("res://src/entities/props/tables/table_8pax.tscn"),
 }
