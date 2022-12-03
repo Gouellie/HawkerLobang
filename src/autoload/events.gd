@@ -47,3 +47,7 @@ signal patron_leaving(patron)
 
 #warning-ignore: unused_signal
 signal open_close_all_stalls(open)
+
+#warning-ignore: unused_signal
+signal send_feedback(feedback)
+

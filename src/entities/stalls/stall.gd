@@ -168,3 +168,7 @@ func cleanup() -> void:
 
 func open_toolbox() -> bool:
 	return true
+
+
+func get_toolbox_display_name() -> String:
+	return "%s : %s" % [stall_name, dish_name]

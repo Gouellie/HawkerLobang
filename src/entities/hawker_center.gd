@@ -4,6 +4,7 @@ class_name HawkerCenter
 var hawker_is_opened : bool = true
 var random_wait_time := 10
 var current_wait_time = 100
+var feedbacks := []
 
 var open_at : TimeOnly = TimeOnly.new(5, 0)
 var close_at : TimeOnly = TimeOnly.new(22,30)
@@ -15,6 +16,7 @@ var stall_manager : StallManager = StallManager.new()
 func _ready() -> void:
 	Log.log_error(Events.connect("hawker_center_changed", self, "_on_hawker_center_changed"))	
 	Log.log_error(Events.connect("time_ellapsed", self, "_on_time_ellapsed"))
+	Log.log_error(Events.connect("send_feedback", self, "on_feedback_sent"))
 
 	
 func _on_time_ellapsed(date) -> void:
@@ -60,3 +62,15 @@ func _get_time_of_day_modifier(date : DateTime) -> float:
 
 func open_toolbox() -> bool:
 	return true
+
+
+func on_feedback_sent(feedback : Feedback) -> void:
+	feedbacks.append(feedback)
+
+
+func delete_feeback_entry(feedback : Feedback) -> void:
+	feedbacks.erase(feedback)
+	
+	
+func delete_feedbacks() -> void:
+	feedbacks.clear()

@@ -1,10 +1,11 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://src/ui/toolbox/panels/business_hours_editor.tscn" type="PackedScene" id=1]
 [ext_resource path="res://src/ui/toolbox/toolbox.gd" type="Script" id=2]
 [ext_resource path="res://src/ui/toolbox/panels/stall_creator.tscn" type="PackedScene" id=3]
 [ext_resource path="res://src/ui/toolbox/panels/info_panel.tscn" type="PackedScene" id=4]
 [ext_resource path="res://src/ui/toolbox/panels/hawker_center_control_panel.tscn" type="PackedScene" id=5]
+[ext_resource path="res://src/ui/toolbox/panels/feedback_panel.tscn" type="PackedScene" id=6]
 
 [node name="Toolbox" type="Control"]
 anchor_right = 1.0
@@ -56,6 +57,13 @@ margin_right = 40.0
 margin_bottom = 40.0
 
 [node name="ControlPanel" parent="TabContainer/HawkerCenter" instance=ExtResource( 5 )]
+
+[node name="Feedback" type="Control" parent="TabContainer"]
+visible = false
+margin_right = 40.0
+margin_bottom = 40.0
+
+[node name="FeedbackPanel" parent="TabContainer/Feedback" instance=ExtResource( 6 )]
 
 [node name="Button_ClosePanel" type="Button" parent="."]
 anchor_left = 1.0

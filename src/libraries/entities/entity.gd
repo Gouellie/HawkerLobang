@@ -40,3 +40,7 @@ func can_track_entity() -> bool:
 # override if entity should prompt the toolbox to open when selected
 func open_toolbox() -> bool:
 	return false
+
+
+func get_toolbox_display_name() -> String:
+	return ""

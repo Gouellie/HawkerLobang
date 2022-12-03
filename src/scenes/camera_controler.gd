@@ -33,7 +33,7 @@ func _process(_delta: float) -> void:
 		offset_h = desired_offset_h
 
 
-func _input(event: InputEvent) -> void:
+func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventMouseButton:
 		if event.is_pressed():
 			if event.button_index == BUTTON_WHEEL_UP:

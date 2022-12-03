@@ -84,6 +84,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://src/libraries/managers/entrance_manager.gd"
 }, {
+"base": "Reference",
+"class": "Feedback",
+"language": "GDScript",
+"path": "res://src/libraries/feedbacks/feedback.gd"
+}, {
 "base": "Entity",
 "class": "HawkerCenter",
 "language": "GDScript",
@@ -175,6 +180,7 @@ _global_script_class_icons={
 "EntityManager": "",
 "EntityTracker": "",
 "EntranceManager": "",
+"Feedback": "",
 "HawkerCenter": "",
 "Patron": "",
 "PatronManager": "",

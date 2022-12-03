@@ -54,7 +54,7 @@ func on_time_ellapsed(time : DateTime) -> void:
 	else:
 		owner.label_state.text = "queueing : moving to position"
 	if time_in_queue_since_last_update >= TIME_MAX:
-		break_queue()
+		break_queue("I've been queueing at this stall for too long..")
 
 
 func on_speed_changed(speed : int) -> void:
@@ -68,14 +68,17 @@ func physics_process(delta: float) -> void:
 func character_target_reached() -> void:
 	if not is_instance_valid(queuing_at_stall) :
 		break_queue()
-	patron_in_queue = true
+	else:
+		patron_in_queue = true
 
 
 func is_patron_in_queue() -> bool:
 	return patron_in_queue
 
 
-func break_queue() -> void:
+func break_queue(reason : String = "") -> void:
+	if not reason == "":
+		Events.emit_signal("send_feedback", Feedback.new(reason))		
 	if is_instance_valid(queuing_at_stall) :
 		queuing_at_stall.queue_manager.patron_break_queue(self)
 	queuing_at_stall = null

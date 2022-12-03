@@ -2,14 +2,15 @@ extends Control
 
 onready var _tab_container : TabContainer = $TabContainer
 onready var _label_text : Label = $CenterContainer/Label
-onready var _hawker_center_control : ToolboxPanel = $TabContainer/HawkerCenter/ControlPanel
-onready var _stall_creator : ToolboxPanel = $TabContainer/Open/StallCreator
-onready var _info_panel : ToolboxPanel = $TabContainer/Info/InfoPanel
-onready var _business_hours_editor : ToolboxPanel = $TabContainer/BusinessHours/Editor
+onready var _toobox_panels := []
+
 var _selected_entity : Entity
+
 
 func _ready() -> void:
 	Log.log_error(Events.connect("entity_selected", self, "on_entity_selected"), "toolbox.gd")
+	for tab in $TabContainer.get_children():
+		_toobox_panels.append(tab.get_child(0))
 
 
 func on_entity_selected(p_selected_entity : Entity) -> void:
@@ -19,48 +20,47 @@ func on_entity_selected(p_selected_entity : Entity) -> void:
 		return
 	if _selected_entity == p_selected_entity:
 		if p_selected_entity is HawkerCenter:
-			visible = false
+			_set_panel_visible(false)
 			_unload_entity()
-		return
-	load_setup(p_selected_entity)
+			return
+
+	_load_entity(p_selected_entity)
 
 
-func load_setup(p_selected_entity : Entity) -> void:
+func _load_entity(p_selected_entity : Entity) -> void:
 	var current_tab = _tab_container.current_tab
 	if _selected_entity :
 		_unload_entity()
 	_selected_entity = p_selected_entity
-	var creator_active = _stall_creator.load_entity(_selected_entity)
-	_tab_container.set_tab_hidden(0, not creator_active)
-	var info_panel_active = _info_panel.load_entity(_selected_entity)
-	_tab_container.set_tab_hidden(1, not info_panel_active)	
-	var business_hours_active = _business_hours_editor.load_entity(_selected_entity)
-	_tab_container.set_tab_hidden(2, not business_hours_active)
-	var hawker_controls_active = _hawker_center_control.load_entity(_selected_entity)
-	_tab_container.set_tab_hidden(3, not hawker_controls_active)	
-	_set_label_text(_selected_entity)
+	
+	var current = 0
+	for panel in _toobox_panels:
+		var panel_active = panel.load_entity(_selected_entity)
+		_tab_container.set_tab_hidden(current, not panel_active)
+		current += 1
+
 	if not _tab_container.get_tab_hidden(current_tab):
 		_tab_container.current_tab = current_tab
-		
-	Global.is_toolbox_open = true
-	visible = true
+
+	_set_label_text(_selected_entity)
+	_set_panel_visible(true)
 
 
 func _set_label_text(_entity : Entity) -> void:
-	if _entity is Stall:
-		_label_text.text = "%s : %s" % [_entity.stall_name, _entity.dish_name]
+	_label_text.text = _entity.get_toolbox_display_name()
 
 
 func _on_Button_ClosePanel_pressed() -> void:
-	Global.is_toolbox_open = false
-	visible = false	
+	_set_panel_visible(false)
 	_unload_entity()
 
 
 func _unload_entity() -> void:
-	_hawker_center_control.unload_entity()
-	_info_panel.unload_entity()
-	_stall_creator.unload_entity()
-	_business_hours_editor.unload_entity()
+	for panel in _toobox_panels:
+		panel.unload_entity()
 	_selected_entity = null
 
+
+func _set_panel_visible(value : bool) -> void:
+	Global.is_toolbox_open = value
+	visible = value	
