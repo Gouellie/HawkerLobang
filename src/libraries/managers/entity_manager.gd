@@ -17,7 +17,7 @@ var _blueprint : BlueprintBase
 var _placeable_blueprint : bool
 var _valid_eraser : bool
 
-var _check_for_clearance : bool = true
+var _check_for_clearance : bool = false
 
 func _ready() -> void:
 	_ground = get_node(ground_path) as TileMap

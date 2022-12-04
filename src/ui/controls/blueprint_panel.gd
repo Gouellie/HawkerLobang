@@ -2,6 +2,7 @@ extends Panel
 class_name BlueprintPanel
 
 export (PackedScene) var blueprint_scene
+export (String) var blueprint_name
 
 onready var blueprint_container := $MarginContainer_Dock/CenterContainer
 onready var center_position : Control = $MarginContainer_Dock/CenterContainer/Blueprint_position
@@ -19,6 +20,7 @@ func _ready() -> void:
 		_blueprint.scale = Vector2(0.7, 0.7)
 		_blueprint.position = center_position.rect_position
 		blueprint_container.add_child(_blueprint)
+	$Panel/Label_BlueprintName.text = blueprint_name
 
 
 func _input(event: InputEvent) -> void:

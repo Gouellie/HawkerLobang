@@ -6,6 +6,7 @@ onready var button_hide_show := $HBoxContainer/Control/Button_HideShow
 
 func _ready() -> void:
 	button_hide_show.text = "Expand"
+	collapsable_inventory.visible = false
 
 
 func _on_CheckBox_EnableCheckForClearance_toggled(button_pressed: bool) -> void:

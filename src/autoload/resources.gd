@@ -13,4 +13,5 @@ var ENTITIES = {
 	"table_2pax" : preload("res://src/entities/props/tables/table_2pax.tscn"),
 	"table_4pax" : preload("res://src/entities/props/tables/table_4pax.tscn"),
 	"table_8pax" : preload("res://src/entities/props/tables/table_8pax.tscn"),
+	"tray_station_large" : preload("res://src/entities/props/tray_stations/tray_station_large.tscn"),
 }
