@@ -1,4 +1,4 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://src/entities/props/tray_stations/tray_station.gd" type="Script" id=1]
 [ext_resource path="res://assets/props/tray_stations.png" type="Texture" id=2]
@@ -7,6 +7,10 @@
 vertices = PoolVector2Array( 48, -48, 48, 48, 40, 32, 40, -32, -48, -48, -40, -32, -48, 48, -40, 32 )
 polygons = [ PoolIntArray( 0, 1, 2, 3 ), PoolIntArray( 4, 0, 3, 5 ), PoolIntArray( 6, 4, 5, 7 ), PoolIntArray( 2, 1, 6, 7 ) ]
 outlines = [ PoolVector2Array( 48, -48, 48, 48, -48, 48, -48, -48 ), PoolVector2Array( -40, -32, 40, -32, 40, 32, -40, 32 ) ]
+
+[sub_resource type="CapsuleShape2D" id=2]
+radius = 72.0
+height = 48.0
 
 [node name="TrayStationLarge" type="Node2D"]
 script = ExtResource( 1 )
@@ -19,3 +23,32 @@ region_rect = Rect2( 0, 0, 96, 96 )
 
 [node name="NavigationPolygonInstance" type="NavigationPolygonInstance" parent="."]
 navpoly = SubResource( 1 )
+
+[node name="Positions" type="Node2D" parent="."]
+
+[node name="Position_01" type="Node2D" parent="Positions"]
+position = Vector2( -16, 32 )
+
+[node name="Position_02" type="Node2D" parent="Positions"]
+position = Vector2( 0, 32 )
+
+[node name="Position_03" type="Node2D" parent="Positions"]
+position = Vector2( 16, 32 )
+
+[node name="Position_04" type="Node2D" parent="Positions"]
+position = Vector2( -16, -32 )
+
+[node name="Position_05" type="Node2D" parent="Positions"]
+position = Vector2( 0, -32 )
+
+[node name="Position_06" type="Node2D" parent="Positions"]
+position = Vector2( 16, -32 )
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_layer = 32
+collision_mask = 0
+monitoring = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+rotation = 1.5708
+shape = SubResource( 2 )

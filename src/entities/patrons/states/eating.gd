@@ -44,6 +44,5 @@ func _validate_ready_to_leave() -> void:
 
 
 func leave() -> void:
-	table.patron_leave_position(owner.sit_index, true)
-	_state_machine.transition_to("Moving/Leaving")
+	_state_machine.transition_to("Moving/ReturningTray", {"table" : table})
 

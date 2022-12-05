@@ -56,8 +56,9 @@ func set_navigation_speed(speed : int) -> void:
 
 
 func physics_process(_delta: float) -> void:
-	if nav_agent.is_target_reached():
-		return
+	# todo figure out why sometime this is true even after set_target_location
+	#if nav_agent.is_target_reached():
+	#	return
 	var next_nav_position = nav_agent.get_next_location()
 	if owner.skin:
 		owner.skin.rotation = get_angle_to(next_nav_position)

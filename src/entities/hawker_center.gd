@@ -11,6 +11,7 @@ var close_at : TimeOnly = TimeOnly.new(22,30)
 
 var table_manager : TableManager = TableManager.new()
 var stall_manager : StallManager = StallManager.new()
+var tray_station_manager : TrayStationManager = TrayStationManager.new()
 
 
 func _ready() -> void:

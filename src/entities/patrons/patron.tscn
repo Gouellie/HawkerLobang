@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=2]
+[gd_scene load_steps=18 format=2]
 
 [ext_resource path="res://src/entities/patrons/patron.gd" type="Script" id=1]
 [ext_resource path="res://src/entities/patrons/states/browsing.gd" type="Script" id=2]
@@ -15,6 +15,7 @@
 [ext_resource path="res://src/entities/patrons/states/eating.gd" type="Script" id=13]
 [ext_resource path="res://src/entities/patrons/states/chope_table.gd" type="Script" id=14]
 [ext_resource path="res://assets/sprites/tray.png" type="Texture" id=15]
+[ext_resource path="res://src/entities/patrons/returning_tray.gd" type="Script" id=16]
 
 [sub_resource type="CircleShape2D" id=1]
 radius = 5.0
@@ -42,7 +43,7 @@ shape = SubResource( 1 )
 
 [node name="Stall_Dectection" type="Area2D" parent="."]
 collision_layer = 4
-collision_mask = 26
+collision_mask = 58
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Stall_Dectection"]
 shape = SubResource( 1 )
@@ -71,6 +72,9 @@ script = ExtResource( 14 )
 
 [node name="MovingToTable" type="Node2D" parent="States/Moving"]
 script = ExtResource( 10 )
+
+[node name="ReturningTray" type="Node2D" parent="States/Moving"]
+script = ExtResource( 16 )
 
 [node name="Leaving" type="Node2D" parent="States/Moving"]
 script = ExtResource( 11 )

@@ -11,7 +11,6 @@ func enter(_msg: Dictionary = {}) -> void:
 
 
 func leave()-> void:
-	owner.skin_tray.visible = false
 	exit = Global.entrance_manager.get_exit(owner.global_position)
 	var unspawn_pos = exit.global_position
 	_parent.set_navigation_speed(Global.current_speed)

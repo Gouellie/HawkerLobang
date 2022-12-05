@@ -6,6 +6,7 @@ var entrance_manager : EntranceManager
 var patron_manager : PatronManager
 var stall_manager : StallManager
 var table_manager : TableManager
+var tray_station_manager : TrayStationManager
 var builder_mode_on : bool setget ,_get_builder_mode_on
 var is_toolbox_open : bool
 var show_states : bool

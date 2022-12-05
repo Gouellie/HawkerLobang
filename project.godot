@@ -163,6 +163,16 @@ _global_script_classes=[ {
 "class": "ToolboxPanel",
 "language": "GDScript",
 "path": "res://src/ui/toolbox/toolbox_panel.gd"
+}, {
+"base": "Entity",
+"class": "TrayStation",
+"language": "GDScript",
+"path": "res://src/entities/props/tray_stations/tray_station.gd"
+}, {
+"base": "Reference",
+"class": "TrayStationManager",
+"language": "GDScript",
+"path": "res://src/libraries/managers/tray_station_manager.gd"
 } ]
 _global_script_class_icons={
 "Blueprint": "",
@@ -195,7 +205,9 @@ _global_script_class_icons={
 "TimeOnly": "",
 "TimeSpan": "",
 "TimespanResource": "",
-"ToolboxPanel": ""
+"ToolboxPanel": "",
+"TrayStation": "",
+"TrayStationManager": ""
 }
 
 [application]
@@ -289,6 +301,7 @@ pause={
 2d_physics/layer_3="Patron"
 2d_physics/layer_4="Entrance"
 2d_physics/layer_5="Table"
+2d_physics/layer_6="TrayStation"
 2d_navigation/layer_1="Floor"
 
 [navigation]

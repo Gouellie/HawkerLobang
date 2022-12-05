@@ -1,8 +1,8 @@
 extends State
 
 var table : Table
-
 var owner_area_2d : Area2D
+
 
 func enter(_msg: Dictionary = {}) -> void:
 	if owner.label_state :
