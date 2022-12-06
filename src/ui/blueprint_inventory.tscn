@@ -18,35 +18,45 @@ grow_vertical = 0
 script = ExtResource( 5 )
 
 [node name="HBoxContainer" type="HBoxContainer" parent="."]
-margin_right = 698.0
+margin_right = 702.0
 margin_bottom = 100.0
 
 [node name="Control" type="VBoxContainer" parent="HBoxContainer"]
-margin_right = 74.0
+margin_right = 78.0
 margin_bottom = 100.0
 rect_min_size = Vector2( 70, 100 )
 
 [node name="ToggleButton_CheckForClearance" type="Button" parent="HBoxContainer/Control"]
-margin_right = 74.0
-margin_bottom = 48.0
+margin_right = 78.0
+margin_bottom = 30.0
 focus_mode = 0
 size_flags_vertical = 3
 toggle_mode = true
 enabled_focus_mode = 0
 text = "Clearance"
 
+[node name="ToggleButton_ExpansionMode" type="Button" parent="HBoxContainer/Control"]
+margin_top = 34.0
+margin_right = 78.0
+margin_bottom = 65.0
+focus_mode = 0
+size_flags_vertical = 3
+toggle_mode = true
+enabled_focus_mode = 0
+text = "Expansion"
+
 [node name="Button_HideShow" type="Button" parent="HBoxContainer/Control"]
-margin_top = 52.0
-margin_right = 74.0
+margin_top = 69.0
+margin_right = 78.0
 margin_bottom = 100.0
 focus_mode = 0
 size_flags_vertical = 3
 enabled_focus_mode = 0
-text = "Collapse"
+text = "Blueprints"
 
 [node name="HBoxContainer_Collapsable" type="HBoxContainer" parent="HBoxContainer"]
-margin_left = 78.0
-margin_right = 698.0
+margin_left = 82.0
+margin_right = 702.0
 margin_bottom = 100.0
 
 [node name="BlueprintPanel_Stall" parent="HBoxContainer/HBoxContainer_Collapsable" instance=ExtResource( 2 )]
@@ -90,4 +100,5 @@ blueprint_scene = ExtResource( 4 )
 blueprint_name = "Eraser"
 
 [connection signal="toggled" from="HBoxContainer/Control/ToggleButton_CheckForClearance" to="." method="_on_CheckBox_EnableCheckForClearance_toggled"]
+[connection signal="toggled" from="HBoxContainer/Control/ToggleButton_ExpansionMode" to="." method="_on_Button_ExpansionMode_toggled"]
 [connection signal="pressed" from="HBoxContainer/Control/Button_HideShow" to="." method="_on_Button_pressed"]

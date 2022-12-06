@@ -1,11 +1,9 @@
 extends MarginContainer
 
-
 onready var collapsable_inventory := $HBoxContainer/HBoxContainer_Collapsable
-onready var button_hide_show := $HBoxContainer/Control/Button_HideShow
+
 
 func _ready() -> void:
-	button_hide_show.text = "Expand"
 	collapsable_inventory.visible = false
 
 
@@ -13,12 +11,13 @@ func _on_CheckBox_EnableCheckForClearance_toggled(button_pressed: bool) -> void:
 	Events.emit_signal("check_clearance_changed", button_pressed)
 
 
-
 func _on_Button_pressed() -> void:
 	var visible = collapsable_inventory.visible
 	if visible:
 		Events.emit_signal("blueprint_selected", null)
-		button_hide_show.text = "Expand"
-	else:
-		button_hide_show.text = "Collapse"
 	collapsable_inventory.visible = not visible
+	$HBoxContainer/Control/ToggleButton_ExpansionMode.pressed = false
+
+
+func _on_Button_ExpansionMode_toggled(button_pressed: bool) -> void:
+	Events.emit_signal("expansion_mode_changed", button_pressed)

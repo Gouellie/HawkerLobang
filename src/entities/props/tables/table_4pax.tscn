@@ -15,6 +15,7 @@ outlines = [ PoolVector2Array( -40, -40, 40, -40, 40, 40, -40, 40 ), PoolVector2
 [node name="Table4Pax" type="Node2D"]
 script = ExtResource( 2 )
 scene_key = "table_4pax"
+tile_index = 2
 
 [node name="Sprite" type="Sprite" parent="."]
 texture = ExtResource( 1 )

@@ -5,12 +5,12 @@ export (NodePath) var ground_path
 
 var _ground: TileMap
 
-var tile_offset : Vector2
+onready var tile_offset : Vector2
 var prop_tile_offset : Vector2
 
 const EMPTY_TILE_INDEX : int = 0
 const STALL_TILE_INDEX : int = 1
-const STALL_FRONT_TILE_INDEX : int = 5
+const PROP_TILE_INDEX : int = 2
 
 var _tracker: EntityTracker
 var _blueprint : BlueprintBase
@@ -35,16 +35,17 @@ func _process(_delta: float) -> void:
 
 func _register_children() -> void:
 	for child in get_children():
-		if not child is Node2D:
+		if not child is Entity:
 			continue
 		var cellv = _ground.world_to_map(child.global_position)
-		_mark_ground(cellv, STALL_TILE_INDEX)
+		_mark_ground(cellv, child.tile_index)
 		_tracker.place_entity(child, cellv)
 		if child is Entity:
 			child.register()
 
 
 func _on_blueprint_selected(sender : Object) -> void:
+	_ground.visible = sender != null
 	if _blueprint:
 		_blueprint.queue_free()
 		_blueprint = null
@@ -116,7 +117,7 @@ func _check_clearance(clearance_tile : ClearanceTile) -> bool:
 
 func _validate_eraser_position(cellv: Vector2) -> void:
 	var tile_index = _ground.get_cellv(cellv)
-	_valid_eraser = tile_index == STALL_TILE_INDEX
+	_valid_eraser = tile_index == STALL_TILE_INDEX or tile_index == PROP_TILE_INDEX
 	_blueprint.set_valid(_valid_eraser)
 
 
@@ -148,7 +149,7 @@ func _place_entity() -> void:
 	
 	var cellv = _ground.world_to_map(new_entity.position)
 	# warning-ignore:narrowing_conversion
-	_mark_ground(cellv, STALL_TILE_INDEX, _blueprint.rotation_degrees)
+	_mark_ground(cellv, new_entity.tile_index, _blueprint.rotation_degrees)
 	_tracker.place_entity(new_entity, cellv)
 	
 	add_child(new_entity)
@@ -199,7 +200,7 @@ func _load_entity(file_name: String, cellv : Vector2, data : Dictionary) -> void
 	var entity = entity_scene.instance() as Entity
 	var entity_position = _ground.map_to_world(cellv)
 	entity.position = entity_position + tile_offset
-	_mark_ground(cellv, STALL_TILE_INDEX)
+	_mark_ground(cellv, entity.tile_index)
 	_tracker.place_entity(entity, cellv)
 	
 	entity.deserialize(data)

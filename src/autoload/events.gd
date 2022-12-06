@@ -51,3 +51,6 @@ signal open_close_all_stalls(open)
 #warning-ignore: unused_signal
 signal send_feedback(feedback)
 
+#warning-ignore: unused_signal
+signal expansion_mode_changed(value)
+

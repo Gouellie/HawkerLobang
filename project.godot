@@ -84,6 +84,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://src/libraries/managers/entrance_manager.gd"
 }, {
+"base": "Node2D",
+"class": "ExpansionTab",
+"language": "GDScript",
+"path": "res://src/objects/expansion_tab.gd"
+}, {
 "base": "Reference",
 "class": "Feedback",
 "language": "GDScript",
@@ -190,6 +195,7 @@ _global_script_class_icons={
 "EntityManager": "",
 "EntityTracker": "",
 "EntranceManager": "",
+"ExpansionTab": "",
 "Feedback": "",
 "HawkerCenter": "",
 "Patron": "",

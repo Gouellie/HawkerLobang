@@ -3,6 +3,7 @@ extends Node2D
 class_name Entity
 
 export (String) var scene_key
+export (int) var tile_index
 
 
 func serialize() -> Dictionary:
