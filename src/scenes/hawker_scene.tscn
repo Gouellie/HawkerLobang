@@ -31,35 +31,11 @@ cell_size = Vector2( 96, 96 )
 cell_custom_transform = Transform2D( 96, 0, 0, 96, 0, 0 )
 bake_navigation = true
 format = 1
-tile_data = PoolIntArray( 65540, 0, 0, 65541, 0, 0, 65542, 0, 0, 65543, 0, 0, 65544, 0, 0, 131076, 0, 0, 131077, 0, 0, 131078, 0, 0, 131079, 0, 0, 131080, 0, 0, 196612, 0, 0, 196613, 0, 0, 196614, 0, 0, 196615, 0, 0, 196616, 0, 0, 262148, 0, 0, 262149, 0, 0, 262150, 0, 0, 262151, 0, 0, 262152, 0, 0, 327684, 0, 0, 327685, 0, 0, 327686, 0, 0, 327687, 0, 0, 327688, 0, 0 )
+tile_data = PoolIntArray( 3, 0, 0, 4, 0, 0, 5, 0, 0, 6, 0, 0, 7, 0, 0, 8, 0, 0, 9, 0, 0, 65539, 0, 0, 65540, 0, 0, 65541, 0, 0, 65542, 0, 0, 65543, 0, 0, 65544, 0, 0, 65545, 0, 0, 131075, 0, 0, 131076, 0, 0, 131077, 0, 0, 131078, 0, 0, 131079, 0, 0, 131080, 0, 0, 131081, 0, 0, 196611, 0, 0, 196612, 0, 0, 196613, 0, 0, 196614, 0, 0, 196615, 0, 0, 196616, 0, 0, 196617, 0, 0, 262147, 0, 0, 262148, 0, 0, 262149, 0, 0, 262150, 0, 0, 262151, 0, 0, 262152, 0, 0, 262153, 0, 0, 327683, 0, 0, 327684, 0, 0, 327685, 0, 0, 327686, 0, 0, 327687, 0, 0, 327688, 0, 0, 327689, 0, 0, 393219, 0, 0, 393220, 0, 0, 393221, 0, 0, 393222, 0, 0, 393223, 0, 0, 393224, 0, 0, 393225, 0, 0 )
 
 [node name="ExpansionManager" type="Node2D" parent="HawkerCenter" groups=["Persist"]]
 script = ExtResource( 8 )
 ground_path = NodePath("../Ground")
-
-[node name="Entrances" type="Node2D" parent="HawkerCenter"]
-script = ExtResource( 12 )
-
-[node name="Entrance_01" parent="HawkerCenter/Entrances" instance=ExtResource( 11 )]
-position = Vector2( 48, 48 )
-
-[node name="Entrance_02" parent="HawkerCenter/Entrances" instance=ExtResource( 11 )]
-position = Vector2( 48, 240 )
-
-[node name="Entrance_03" parent="HawkerCenter/Entrances" instance=ExtResource( 11 )]
-position = Vector2( 912, 816 )
-
-[node name="Entrance_04" parent="HawkerCenter/Entrances" instance=ExtResource( 11 )]
-position = Vector2( 1104, 816 )
-
-[node name="Entrance_05" parent="HawkerCenter/Entrances" instance=ExtResource( 11 )]
-position = Vector2( 1392, 176 )
-
-[node name="Entrance_06" parent="HawkerCenter/Entrances" instance=ExtResource( 11 )]
-position = Vector2( 528, 816 )
-
-[node name="Entrance_07" parent="HawkerCenter/Entrances" instance=ExtResource( 11 )]
-position = Vector2( 720, 912 )
 
 [node name="EntityManager" type="Node2D" parent="HawkerCenter" groups=["Persist"]]
 script = ExtResource( 4 )
@@ -82,6 +58,24 @@ position = Vector2( 624, 432 )
 
 [node name="PatronManager" type="Node2D" parent="HawkerCenter" groups=["Persist"]]
 script = ExtResource( 9 )
+
+[node name="Entrances" type="Node2D" parent="HawkerCenter"]
+script = ExtResource( 12 )
+
+[node name="Entrance_Right" parent="HawkerCenter/Entrances" instance=ExtResource( 11 )]
+position = Vector2( 961, 336 )
+
+[node name="Entrance_Down" parent="HawkerCenter/Entrances" instance=ExtResource( 11 )]
+position = Vector2( 624, 672 )
+rotation = 1.5708
+
+[node name="Entrance_Left" parent="HawkerCenter/Entrances" instance=ExtResource( 11 )]
+position = Vector2( 288, 336 )
+rotation = 3.14159
+
+[node name="Entrance_Up" parent="HawkerCenter/Entrances" instance=ExtResource( 11 )]
+position = Vector2( 624, 0 )
+rotation = -1.5708
 
 [node name="UserInterface" type="CanvasLayer" parent="."]
 pause_mode = 2

@@ -1,13 +1,18 @@
 extends Node2D
+class_name ExpansionManager
+
+signal expanded(top_left, bottom_right, cell_size)
 
 const GROUND_TILE_INDEX : int = 0
 const expansion_scene := preload("res://src/objects/expansion_tab.tscn")
 
 export (NodePath) var ground_path
 
-onready var _ground : TileMap
-var expension_mode_active : bool
+var top_left := Vector2(9000,9000)
+var bottom_right := Vector2(0,0)
+var expansions : PoolIntArray = []
 
+onready var _ground : TileMap
 onready var tile_offset : Vector2
 
 onready var tab_up : ExpansionTab
@@ -15,9 +20,13 @@ onready var tab_down : ExpansionTab
 onready var tab_right : ExpansionTab
 onready var tab_left : ExpansionTab
 
-var top_left := Vector2(9000,9000)
-var bottom_right := Vector2(0,0)
-var expansions : PoolIntArray = []
+onready var real_top_left : Vector2 setget ,get_real_top_left
+onready var real_bottom_right : Vector2 setget ,get_real_bottom_right
+onready var cell_size : Vector2
+
+
+func _init() -> void:
+	Global.expansion_manager = self
 
 
 func _ready() -> void:
@@ -25,11 +34,11 @@ func _ready() -> void:
 	Log.log_error(Events.connect("blueprint_selected", self, "on_blueprint_selected"))	
 	_ground = get_node(ground_path) as TileMap
 	visible = true
-	expension_mode_active = false
+	cell_size = _ground.cell_size
 	tile_offset = _ground.cell_size / 2
 	_get_dimensions()
-	var real_top_left = _ground.map_to_world(top_left)
-	var real_bottom_right = _ground.map_to_world(bottom_right)
+	real_top_left = _ground.map_to_world(top_left)
+	real_bottom_right = _ground.map_to_world(bottom_right)
 	var width : float = real_bottom_right.x - real_top_left.x  + _ground.cell_size.x
 	var height : float = real_bottom_right.y - real_top_left.y  + _ground.cell_size.y
 
@@ -69,7 +78,7 @@ func _ready() -> void:
 	tab_left.connect("expanded", self, "on_expanded")	
 	add_child(tab_left)
 	_load()
-	set_tab_visibility()
+	set_tab_visibility(false)
 
 
 func _get_dimensions() -> void:
@@ -126,6 +135,8 @@ func _update_tiles() -> void:
 			if _ground.get_cellv(cellv) >= 0:
 				continue
 			_ground.set_cellv(cellv, GROUND_TILE_INDEX)
+	var csize = _ground.cell_size
+	emit_signal("expanded", get_real_top_left(), get_real_bottom_right(), csize)
 
 
 func save() -> Dictionary:
@@ -155,17 +166,23 @@ func _expand_tab_load(direction : int) -> void:
 
 
 func on_expansion_mode_changed(value : bool) -> void:
-	expension_mode_active = value
-	set_tab_visibility()
+	set_tab_visibility(value)
 
 
 func on_blueprint_selected(_value) -> void:
-	expension_mode_active = false
-	set_tab_visibility()
+	set_tab_visibility(false)
 
 
-func set_tab_visibility() -> void:
-	tab_right.visible = expension_mode_active
-	tab_down.visible = expension_mode_active
-	tab_left.visible = expension_mode_active
-	tab_up.visible = expension_mode_active
+func set_tab_visibility(value : bool) -> void:
+	tab_right.visible = value
+	tab_down.visible = value
+	tab_left.visible = value
+	tab_up.visible = value
+
+
+func get_real_top_left() -> Vector2:
+	return _ground.map_to_world(top_left)
+	
+
+func get_real_bottom_right() -> Vector2:
+	return _ground.map_to_world(bottom_right)

@@ -1,18 +1,20 @@
 extends Node
 
+# don't forget to add a cleanup in reset()
 var current_datetime : DateTime setget set_curent_datetime,get_curent_datetime
 var entity_tracker : EntityTracker setget set_entity_tracker,get_entity_tracker
 var entrance_manager : EntranceManager
 var patron_manager : PatronManager
 var stall_manager : StallManager
 var table_manager : TableManager
+var expansion_manager : ExpansionManager
 var tray_station_manager : TrayStationManager
 var builder_mode_on : bool setget ,_get_builder_mode_on
-var is_toolbox_open : bool
 var show_states : bool
+var is_toolbox_open : bool
 var patrons_count : int = 0
-
 var current_speed : int = 1
+
 
 func _ready() -> void:
 	Log.log_error(Events.connect("blueprint_selected", self, "_on_blueprint_selected"), "global.gd")
@@ -25,6 +27,8 @@ func reset() -> void:
 	patron_manager = null
 	stall_manager = null
 	table_manager = null
+	expansion_manager = null
+	tray_station_manager = null
 	builder_mode_on = false
 	show_states = false
 	is_toolbox_open = false
