@@ -54,6 +54,9 @@ func invoke_patron(invoked_count : int, select : bool) -> void:
 	var group_id = _get_next_key()
 	var patron = null
 	var spawn_pos = Global.entrance_manager.get_entrance()
+	if spawn_pos == Vector2.INF:
+		# no entrance found
+		return
 	if invoked_count > 1 :
 		var group = []
 		var spawn_positions = _generate_spawn_pos(spawn_pos, invoked_count)

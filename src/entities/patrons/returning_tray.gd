@@ -11,6 +11,7 @@ func enter(msg: Dictionary = {}) -> void:
 	table = msg["table"]
 	station  = Global.tray_station_manager.get_nearest_station(owner.global_position)
 	table.patron_leave_position(owner.sit_index, station != null)
+	_parent.set_navigation_speed(Global.current_speed)		
 	if station:
 		owner.skin_tray.visible = true
 		owner_area_2d = owner.stall_detector

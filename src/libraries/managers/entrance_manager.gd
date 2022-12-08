@@ -30,7 +30,7 @@ func get_entrance() -> Vector2:
 	var entrance = _random_entrance()
 	if entrance:
 		return entrance.global_position
-	return Vector2.ZERO
+	return Vector2.INF
 
 
 func get_exit(pos : Vector2) -> Node2D:
@@ -61,7 +61,10 @@ func _update_exits(top_left : Vector2, bottom_right : Vector2, cell_size : Vecto
 
 
 func on_entrance_closed(entrance : Entrance, is_closed : bool) -> void:
-	if is_closed:
-		open_entrances.erase(entrance)
-	elif not open_entrances.has(entrance):
+	if not is_closed and not open_entrances.has(entrance):
 		open_entrances.append(entrance)
+	elif open_entrances.size() <= 1:
+		entrance.cancel_close()
+		return
+	else:
+		open_entrances.erase(entrance)
