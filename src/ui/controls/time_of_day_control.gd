@@ -5,6 +5,7 @@ var _current_speed : int = 1
 
 var _previous_speed
 var _is_paused_by_key
+var simulation_paused : bool
 
 
 onready var time_of_day_speed_label : Label = $HBoxContainer/VBoxContainer/TimeOfDaySpeedLabel
@@ -13,6 +14,7 @@ onready var panel_set_date := $Panel_SetDate
 onready var datetime_control := $Panel_SetDate/CenterContainer/HBoxContainer/DateTimeControl
 
 func _ready() -> void:
+	Log.log_error(Events.connect("pause_simulation", self, "on_simulation_paused"))	
 	Log.log_error(Events.connect("time_ellapsed", self, "_on_time_ellapsed"))
 	_update_speed_text()
 
@@ -39,7 +41,6 @@ func _on_Button_Speed_pressed(speed: int) -> void:
 		return
 	_current_speed = speed
 	Events.emit_signal("speed_changed", speed)
-	Global.current_speed = speed
 	_update_speed_text()
 
 
@@ -52,7 +53,7 @@ func _update_speed_text() -> void:
 	
 
 func _display_date() -> void:
-	date_label.text = _datetime.to_string()
+	date_label.text = _datetime.to_string() if not simulation_paused else _datetime.to_string_date_only()
 
 
 func _on_Button_SetDate_pressed() -> void:
@@ -64,3 +65,7 @@ func _on_Button_SetDate_User_pressed(accept : bool) -> void:
 	panel_set_date.visible = false
 	if accept and datetime_control.datetime :
 		Events.emit_signal("update_current_datetime", datetime_control.datetime)
+
+
+func on_simulation_paused(paused : bool) -> void:
+	simulation_paused = paused

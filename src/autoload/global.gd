@@ -17,7 +17,8 @@ var current_speed : int = 1
 
 
 func _ready() -> void:
-	Log.log_error(Events.connect("blueprint_selected", self, "_on_blueprint_selected"), "global.gd")
+	Log.log_error(Events.connect("blueprint_selected", self, "on_blueprint_selected"))
+	Log.log_error(Events.connect("speed_changed", self, "on_speed_changed"))	
 
 
 func reset() -> void:
@@ -52,10 +53,6 @@ func set_entity_tracker(tracker : EntityTracker) -> void:
 
 func get_entity_tracker() -> EntityTracker:
 	return entity_tracker
-
-	
-func _on_blueprint_selected(sender)-> void:
-	builder_mode_on = sender != null
 	
 	
 func _get_builder_mode_on() -> bool:
@@ -69,3 +66,11 @@ func set_patrons_count(count : int) -> void:
 	
 func get_patrons_count() -> int:
 	return patrons_count
+
+
+func on_blueprint_selected(sender)-> void:
+	builder_mode_on = sender != null
+	
+
+func on_speed_changed(speed : int) -> void:
+	current_speed = speed

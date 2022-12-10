@@ -19,8 +19,10 @@ func load_entity(entity : Entity) -> bool:
 	
 	
 func unload_entity() -> void:
-	Events.disconnect("send_feedback", self, "on_feedback_sent")
-	_delete_feedbacks()
+	if selected_entity is HawkerCenter:
+		Events.disconnect("send_feedback", self, "on_feedback_sent")
+		_delete_feedbacks()
+	.unload_entity()
 
 
 func _delete_feedbacks() -> void:

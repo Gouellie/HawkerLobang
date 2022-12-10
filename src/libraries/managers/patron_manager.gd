@@ -5,6 +5,9 @@ const patron_scene := preload("res://src/entities/patrons/patron.tscn")
 var patrons = []
 var patron_groups = {}
 
+var total_patrons_counts : int = 0
+var max_patron_counts : int = 0
+
 
 func _init() -> void:
 	Global.patron_manager = self
@@ -70,7 +73,11 @@ func invoke_patron(invoked_count : int, select : bool) -> void:
 		patron = _spawn_patron(spawn_pos, group_id, false, 0)
 	if select:
 		Events.emit_signal("entity_selected", patron)
-	Global.set_patrons_count(patrons.size())
+	total_patrons_counts += invoked_count
+	var patron_count = patrons.size()
+	if patron_count > max_patron_counts:
+		max_patron_counts = patron_count
+	Global.set_patrons_count(patron_count)
 
 
 func get_patron_group(patron : Patron) -> Array:
@@ -119,7 +126,7 @@ func _on_patron_leaving(patron : Patron) -> void:
 	if patron.is_group_leader:
 		patron_groups.erase(patron.group_id)
 	patron.queue_free()
-	Global.set_patrons_count(patrons.size())	
+	Global.set_patrons_count(patrons.size())
 
 
 func _on_clear_patrons_requested() -> void:
@@ -128,3 +135,10 @@ func _on_clear_patrons_requested() -> void:
 	patron_groups.clear()
 	_delete_all_children()
 	Global.set_patrons_count(0)
+	total_patrons_counts = 0
+	max_patron_counts = 0
+
+
+func all_patrons_leave() -> void:
+	for patron in patrons:
+		patron.leave()

@@ -9,6 +9,7 @@ const MINUTE_KEY = "minute"
 var weekly_ticks : int setget ,_get_weekly_ticks
 
 var ticks : int = 0
+var week : int = 1
 var day : int = 0
 var hour : int = 0
 var minute : int = 0
@@ -17,6 +18,8 @@ var minute : int = 0
 func increment(increment_in_minutes : int = 1) -> void:
 	ticks += increment_in_minutes
 # warning-ignore:integer_division
+	week = (ticks / Dates.TICKS_PER_WEEK) + 1
+# warning-ignore:integer_division
 	day = (ticks / Dates.MINUTES_PER_DAY) % 7
 # warning-ignore:integer_division
 	hour = (ticks / Dates.MINUTES_PER_HOUR) % 24
@@ -24,7 +27,11 @@ func increment(increment_in_minutes : int = 1) -> void:
 
 
 func to_string() -> String:
-	return "%s %02d:%02d" % [Dates.WEEKDAYS[day], hour, minute]
+	return "Week %d, %s %02d:%02d" % [week, Dates.WEEKDAYS[day], hour, minute]
+
+
+func to_string_date_only() -> String:
+	return "Week %d, %s" % [week, Dates.WEEKDAYS[day]]	
 
 
 func _get_weekly_ticks() -> int:

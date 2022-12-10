@@ -6,6 +6,8 @@ onready var button_load : Button = $VBoxContainer/Button_Load
 
 func _ready() -> void:
 	button_load.disabled = not SaveFile.save_file_found()
+	if OS.get_name() == "HTML5":
+		$VBoxContainer/Button_Quit.visible = false
 	Global.reset()
 	
 

@@ -119,4 +119,11 @@ func _on_Area2D_input_event(_viewport: Node, event: InputEvent, _shape_idx: int)
 	if event.is_action_pressed("left_click"):
 		expand()		
 		emit_signal("expanded", direction)
-		
+
+
+func _on_ColorRect_gui_input(event: InputEvent) -> void:
+	if not event is InputEventMouseButton:
+		return
+	if event.is_action_pressed("left_click"):
+		expand()		
+		emit_signal("expanded", direction)

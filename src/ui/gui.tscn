@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://src/ui/toolbox/toolbox.tscn" type="PackedScene" id=1]
 [ext_resource path="res://src/ui/controls/time_of_day_control.tscn" type="PackedScene" id=2]
@@ -6,6 +6,7 @@
 [ext_resource path="res://src/ui/gui.gd" type="Script" id=4]
 [ext_resource path="res://src/ui/blueprint_inventory.tscn" type="PackedScene" id=5]
 [ext_resource path="res://src/ui/controls/hawker_control.tscn" type="PackedScene" id=6]
+[ext_resource path="res://src/ui/tally_screen/tally_screen.tscn" type="PackedScene" id=7]
 
 [node name="GUI" type="Control"]
 anchor_right = 1.0
@@ -94,8 +95,19 @@ access = 1
 filters = PoolStringArray( "*.save ; Save Files" )
 
 [node name="HawkerControl" parent="." instance=ExtResource( 6 )]
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -213.0
+margin_top = -83.0
+margin_right = 0.0
+margin_bottom = 0.0
 
 [node name="PatronsControls" parent="." instance=ExtResource( 3 )]
+
+[node name="TallyScreen" parent="." instance=ExtResource( 7 )]
+visible = false
 
 [connection signal="pressed" from="HBoxContainer_Options/VBoxContainer/Button_Options" to="." method="_on_Button_Options_pressed"]
 [connection signal="pressed" from="HBoxContainer_Options/VBoxContainer/Container_Options/Button_Save" to="." method="_on_Button_Save_pressed"]

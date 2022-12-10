@@ -15,6 +15,7 @@ const WEEKDAYS = {
 
 const MINUTES_PER_HOUR : int = 60
 const MINUTES_PER_DAY : int = 1440
+const TICKS_PER_WEEK : int = MINUTES_PER_DAY * 7
 
 
 static func get_new_date() -> DateTime:
@@ -25,9 +26,11 @@ static func get_date_from_ticks(ticks : int) -> DateTime:
 	var date = get_new_date()
 	date.ticks = ticks
 # warning-ignore:integer_division
-	date.day = (ticks / Dates.MINUTES_PER_DAY) % 7
+	date.week = (ticks / TICKS_PER_WEEK) + 1
 # warning-ignore:integer_division
-	date.hour = (ticks / Dates.MINUTES_PER_HOUR) % 24
+	date.day = (ticks / MINUTES_PER_DAY) % 7
+# warning-ignore:integer_division
+	date.hour = (ticks / MINUTES_PER_HOUR) % 24
 	date.minute = ticks % 60
 	return date
 
@@ -111,7 +114,7 @@ static func from_dictionary(date : Dictionary) -> DateTime:
 
 static func in_time_only(date : DateTime, from: TimeOnly, to : TimeOnly) -> bool:
 	var date_ticks = get_daily_ticks_from_date(date)
-	return date_ticks > from.ticks  and date_ticks < to.ticks
+	return date_ticks >= from.ticks  and date_ticks <= to.ticks
 
 
 static func get_timespan(from : DateTime, to : DateTime, copy_datetimes : bool = false) -> TimeSpan:

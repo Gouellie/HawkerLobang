@@ -15,6 +15,7 @@ func _ready() -> void:
 		open_entrances.append(entrance)
 		entrance.connect("entrance_close", self, "on_entrance_closed")
 	_update_exits(Global.expansion_manager.real_top_left, Global.expansion_manager.real_bottom_right, Global.expansion_manager.cell_size)
+	_load()
 
 
 func _random_entrance() -> Node2D:
@@ -68,3 +69,22 @@ func on_entrance_closed(entrance : Entrance, is_closed : bool) -> void:
 		return
 	else:
 		open_entrances.erase(entrance)
+
+
+func save() -> Dictionary:
+	var entrances_state : PoolIntArray = []
+	for entrance in entrances:
+		entrances_state.append(0 if entrance.is_closed else 1)
+	return {"entrances" : entrances_state}
+
+
+func _load() -> void:
+	if not SaveFile.game_data.has("entrances"):
+		return
+	var entrances_state : PoolIntArray = SaveFile.game_data["entrances"]
+	var entrance_numb = 0
+	for entrance in entrances:
+		var closed = true if entrances_state[entrance_numb] == 0 else false
+		if closed:
+			entrance.set_is_closed(closed)
+		entrance_numb += 1

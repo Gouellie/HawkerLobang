@@ -54,3 +54,11 @@ signal send_feedback(feedback)
 #warning-ignore: unused_signal
 signal expansion_mode_changed(value)
 
+#warning-ignore: unused_signal
+signal tally_screen_requested(value)
+
+#warning-ignore: unused_signal
+signal tally_screen_closed(value)
+
+#warning-ignore: unused_signal
+signal pause_simulation(paused)

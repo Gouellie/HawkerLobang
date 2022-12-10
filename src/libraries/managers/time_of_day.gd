@@ -2,8 +2,9 @@ extends Node
 
 const TOD_DEFAULT_TICK : float = 1.0
 
-var datetime : DateTime = Dates.generate_date(1, 9, 0)
+var datetime : DateTime = Dates.generate_date(1, 6, 0)
 
+var simulation_paused : bool = true
 var _current_speed : int = 1
 var _skip_ticker : bool
 
@@ -12,6 +13,7 @@ onready var ticker : Timer = $Ticker
 
 func _ready() -> void:
 	_load()
+	Log.log_error(Events.connect("pause_simulation", self, "pause_simulation"))
 	Log.log_error(Events.connect("speed_changed", self, "_on_speed_changed"), "time_of_day.gd")
 	Log.log_error(Events.connect("update_current_datetime", self, "_on_update_current_datetime"), "time_of_day.gd")
 	Global.current_datetime = datetime
@@ -25,12 +27,20 @@ func _process(_delta: float) -> void:
 
 
 func _on_Ticker_timeout() -> void:
+	if simulation_paused:
+#		Events.emit_signal("time_ellapsed", datetime)
+		return
 	_increment_date()
 
 
 func _increment_date() -> void:
 	datetime.increment()	
 	Events.emit_signal("time_ellapsed", datetime)
+
+
+func pause_simulation(paused : bool) -> void:
+	simulation_paused = paused
+	# todo, allow for tick speed to max
 
 
 func _on_speed_changed(p_speed : int) -> void:
