@@ -81,6 +81,15 @@ func _ready() -> void:
 	set_tab_visibility(false)
 
 
+func _draw() -> void:
+	var rtl = get_real_top_left()
+	var rbr = get_real_bottom_right()
+	var width : float = rbr.x - rtl.x  + _ground.cell_size.x
+	var height : float = rbr.y - rtl.y  + _ground.cell_size.y
+	var rec = Rect2(rtl + _ground.cell_size, Vector2(width, height) - _ground.cell_size * 2)
+	draw_rect(rec, Color.white, false, 5.0)
+
+
 func _get_dimensions() -> void:
 	for cell in _ground.get_used_cells():
 		if cell.x < top_left.x:
@@ -99,6 +108,7 @@ func on_expanded(direction : int) -> void:
 	expansions.append(direction)
 	_expand_tabs(direction)
 	_update_tiles()
+	update()
 
 
 func _expand_tabs(direction : int) -> void:
