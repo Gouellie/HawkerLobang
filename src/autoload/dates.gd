@@ -46,7 +46,7 @@ static func copy_datetime(other_datetime : DateTime) -> DateTime:
 
 static func generate_date(day : int, hour : int, minute : int) -> DateTime:
 	var date = get_new_date()
-	date.ticks = get_ticks(day, hour, minute)
+	date.ticks = get_ticks(1, day, hour, minute)
 	date.day = day
 	date.hour = hour
 	date.minute = minute
@@ -56,7 +56,7 @@ static func generate_date(day : int, hour : int, minute : int) -> DateTime:
 static func get_date_now() -> DateTime:
 	var time = OS.get_datetime()
 	var date = get_new_date()
-	date.ticks = get_ticks(time.weekday, time.hour, time.minute)
+	date.ticks = get_ticks(1, time.weekday, time.hour, time.minute)
 	date.day = time.weekday
 	date.hour = time.hour
 	date.minute = time.minute
@@ -66,28 +66,29 @@ static func get_date_now() -> DateTime:
 static func get_date_today() -> DateTime:
 	var time = OS.get_datetime()
 	var date = get_new_date()
-	date.ticks = get_ticks(time.weekday, 0, 0)
+	date.ticks = get_ticks(1, time.weekday, 0, 0)
 	date.day = time.weekday
 	return date
 	
 	
-static func get_ticks(day : int, hour : int, minute : int) -> int:
-	return day * MINUTES_PER_DAY + hour * MINUTES_PER_HOUR + minute
+static func get_ticks(week : int, day : int, hour : int, minute : int) -> int:
+	return (week-1) * TICKS_PER_WEEK + day * MINUTES_PER_DAY + hour * MINUTES_PER_HOUR + minute
 
 
 static func get_ticks_from_date(datetime : DateTime) -> int:
+	var week : int = datetime.week
 	var day : int  = datetime.day
 	var hour : int = datetime.hour
 	var minute : int = datetime.minute
-	return get_ticks(day, hour, minute)
+	return get_ticks(week, day, hour, minute)
 
 
 static func get_daily_ticks_from_date(datetime : DateTime) -> int:
-	return get_ticks(0, datetime.hour, datetime.minute)
+	return get_ticks(1, 0, datetime.hour, datetime.minute)
 	
 
 static func get_daily_ticks_from_timeonly(time : TimeOnly) -> int:
-	return get_ticks(0, time.hour, time.minute)
+	return get_ticks(1, 0, time.hour, time.minute)
 
 	
 static func to_dictionary(datetime : DateTime) -> Dictionary:
@@ -172,3 +173,13 @@ static func copy_timespan(timespan : TimeSpan, deep_copy : bool = true) -> TimeS
 		new_timespan.from_datetime = timespan.from_datetime
 		new_timespan.to_datetime = timespan.to_datetime
 	return new_timespan
+
+
+# return 0 if both dates are equal, 1 if d1 is greater than d2 else -1
+static func compare_dates(d1 : DateTime, d2 : DateTime) -> int:
+	var t1 = get_ticks_from_date(d1)
+	var t2 = get_ticks_from_date(d2)
+	if t1 == t2:
+		return 0
+	return 1 if t1 > t2 else -1
+	 

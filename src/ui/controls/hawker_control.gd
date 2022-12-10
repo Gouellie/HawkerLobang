@@ -24,6 +24,6 @@ func on_simulation_paused(paused : bool) -> void:
 
 
 func _on_Button_OpenHawker_pressed() -> void:
-	open_hawker_button.visible = false
 	# todo, replace by signal?
-	hawker_center.start_new_day()
+	if hawker_center.start_new_day():
+		open_hawker_button.visible = false

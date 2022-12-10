@@ -17,3 +17,7 @@ func in_span(datetime : DateTime) -> bool:
 	var weekly_ticks_to = to_datetime.weekly_ticks
 	return weekly_ticks_from < weekly_ticks and weekly_ticks < weekly_ticks_to
 
+
+func _to_string() -> String:
+	return "%s -> %s" % [from_datetime.to_string(), to_datetime.to_string()]
+	

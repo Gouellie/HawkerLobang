@@ -26,6 +26,10 @@ func increment(increment_in_minutes : int = 1) -> void:
 	minute = ticks % 60
 
 
+func _to_string() -> String:
+	return to_string()
+
+
 func to_string() -> String:
 	return "Week %d, %s %02d:%02d" % [week, Dates.WEEKDAYS[day], hour, minute]
 
@@ -35,20 +39,21 @@ func to_string_date_only() -> String:
 
 
 func _get_weekly_ticks() -> int:
-	return Dates.get_ticks(day, hour, minute)
+	return Dates.get_ticks(1, day, hour, minute)
 
 
 func update_date(other_datetime : DateTime) -> void:
-	ticks = other_datetime.ticks
+	week = other_datetime.week
 	day = other_datetime.day
 	hour = other_datetime.hour
 	minute = other_datetime.minute
+	ticks = Dates.get_ticks(week, day, hour, minute)
 
 
 func update_time(other_datetime : DateTime) -> void:
-	ticks = Dates.get_ticks(day, hour, minute)
 	hour = other_datetime.hour
 	minute = other_datetime.minute
+	ticks = Dates.get_ticks(week, day, hour, minute)
 
 
 func from_ticks(p_ticks : int) -> void:

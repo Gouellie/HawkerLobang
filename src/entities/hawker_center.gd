@@ -9,13 +9,13 @@ var feedbacks := []
 
 var open_at : TimeOnly = TimeOnly.new(6,0)
 var close_at : TimeOnly = TimeOnly.new(23,00)
-var next_day : DateTime
 
 var table_manager : TableManager = TableManager.new()
 var stall_manager : StallManager = StallManager.new()
 var tray_station_manager : TrayStationManager = TrayStationManager.new()
 
 onready var patron_manager : PatronManager = $PatronManager
+onready var next_day : DateTime
 
 
 func _ready() -> void:
@@ -92,7 +92,7 @@ func on_tally_screen_closed() -> void:
 
  
 func close_hawker(date : DateTime) -> void:
-	calculated_next_day(date)
+	next_day = get_next_day(date.week, date.day)
 	Events.emit_signal("pause_simulation", true)	
 	Global.patron_manager.all_patrons_leave()
 	Events.emit_signal("tally_screen_requested", {
@@ -102,19 +102,30 @@ func close_hawker(date : DateTime) -> void:
 	}) 
 
 
-func calculated_next_day(date : DateTime) -> void:
-	var week = date.week
-	var next_day_nu = date.day + 1
-	if next_day_nu > 6:
-		next_day_nu = 0
+func get_next_day(week : int, today : int) -> DateTime:
+	today = today + 1
+	if today > 6:
+		today = 0
 		week += 1
 	var ticks = open_at.ticks
-	ticks += (week - 1) * Dates.TICKS_PER_WEEK + next_day_nu * Dates.MINUTES_PER_DAY
-	next_day = Dates.get_date_from_ticks(ticks)
+	ticks += (week - 1) * Dates.TICKS_PER_WEEK + today * Dates.MINUTES_PER_DAY
+	return Dates.get_date_from_ticks(ticks)
 
 
-func start_new_day() -> void:
-	if next_day == null:
-		next_day = Global.current_datetime
+func start_new_day() -> bool:
+	if not validate_next_day():
+		return false
 	Events.emit_signal("update_current_datetime", next_day)
 	Events.emit_signal("pause_simulation", false)
+	return true
+
+
+# validate that next day has any operating stalls
+func validate_next_day() -> bool:
+	if next_day == null:
+		next_day = Global.current_datetime		
+	var timespan = stall_manager.get_today_timespan(next_day.day)
+	if timespan is TimeSpan:
+		next_day.update_time(timespan.from_datetime)
+		return true
+	return false
