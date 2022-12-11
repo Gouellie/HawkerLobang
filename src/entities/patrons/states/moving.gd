@@ -56,10 +56,9 @@ func set_navigation_speed(speed : int) -> void:
 
 
 func physics_process(_delta: float) -> void:
-	# todo figure out why sometime this is true even after set_target_location
-	#if nav_agent.is_target_reached():
-	#	return
 	var next_nav_position = nav_agent.get_next_location()
+	if nav_agent.is_navigation_finished():
+		return
 	if owner.skin:
 		owner.skin.rotation = get_angle_to(next_nav_position)
 
@@ -88,6 +87,8 @@ func character_navigation_finished() -> void:
 	
 
 func character_target_reached() -> void:
+	if not _state_machine.state:
+		return
 	if _state_machine.state == self:
 		return
 	if _state_machine.state.has_method("character_target_reached"):
