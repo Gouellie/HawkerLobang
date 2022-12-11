@@ -77,6 +77,8 @@ rotation = 3.14159
 position = Vector2( 624, 0 )
 rotation = -1.5708
 
+[node name="Cleaners" type="Node2D" parent="HawkerCenter"]
+
 [node name="UserInterface" type="CanvasLayer" parent="."]
 pause_mode = 2
 physics_interpolation_mode = 1

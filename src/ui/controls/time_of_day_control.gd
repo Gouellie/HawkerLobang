@@ -15,7 +15,8 @@ onready var datetime_control := $Panel_SetDate/CenterContainer/HBoxContainer/Dat
 
 func _ready() -> void:
 	Log.log_error(Events.connect("pause_simulation", self, "on_simulation_paused"))	
-	Log.log_error(Events.connect("time_ellapsed", self, "on_time_ellapsed"))
+	Log.log_error(Events.connect("time_updated", self, "on_time_updated"))
+	Log.log_error(Events.connect("time_ellapsed", self, "on_time_updated"))
 	_update_speed_text()
 
 
@@ -31,7 +32,7 @@ func _input(event: InputEvent) -> void:
 			_on_Button_Speed_pressed(_previous_speed)
 
 
-func on_time_ellapsed(p_datetime : DateTime) -> void:
+func on_time_updated(p_datetime : DateTime) -> void:
 	_datetime = p_datetime
 	_display_date()
 

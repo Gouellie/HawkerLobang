@@ -1,10 +1,10 @@
-[gd_scene load_steps=18 format=2]
+[gd_scene load_steps=19 format=2]
 
 [ext_resource path="res://src/entities/patrons/patron.gd" type="Script" id=1]
 [ext_resource path="res://src/entities/patrons/states/browsing.gd" type="Script" id=2]
 [ext_resource path="res://src/libraries/state_machine/state_machine.gd" type="Script" id=3]
 [ext_resource path="res://assets/sprites/patron.png" type="Texture" id=4]
-[ext_resource path="res://src/entities/patrons/states/moving.gd" type="Script" id=5]
+[ext_resource path="res://src/entities/agents/shared/states/moving.gd" type="Script" id=5]
 [ext_resource path="res://src/entities/patrons/states/queueing.gd" type="Script" id=6]
 [ext_resource path="res://src/entities/patrons/states/ordering.gd" type="Script" id=7]
 [ext_resource path="res://src/libraries/state_machine/state.gd" type="Script" id=8]
@@ -15,7 +15,8 @@
 [ext_resource path="res://src/entities/patrons/states/eating.gd" type="Script" id=13]
 [ext_resource path="res://src/entities/patrons/states/chope_table.gd" type="Script" id=14]
 [ext_resource path="res://assets/sprites/tray.png" type="Texture" id=15]
-[ext_resource path="res://src/entities/patrons/returning_tray.gd" type="Script" id=16]
+[ext_resource path="res://src/entities/patrons/states/returning_tray.gd" type="Script" id=16]
+[ext_resource path="res://src/entities/patrons/states/init.gd" type="Script" id=17]
 
 [sub_resource type="CircleShape2D" id=1]
 radius = 5.0
@@ -50,10 +51,13 @@ shape = SubResource( 1 )
 
 [node name="States" type="Node2D" parent="."]
 script = ExtResource( 3 )
-initial_state = NodePath("Moving")
+initial_state = NodePath("Moving/Init")
 
 [node name="Moving" type="Node2D" parent="States"]
 script = ExtResource( 5 )
+
+[node name="Init" type="Node2D" parent="States/Moving"]
+script = ExtResource( 17 )
 
 [node name="Browsing" type="Node2D" parent="States/Moving"]
 script = ExtResource( 2 )

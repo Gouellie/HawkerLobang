@@ -36,11 +36,7 @@ func _ready() -> void:
 
 
 func enter(_msg: Dictionary = {}) -> void:
-	set_navigation_speed(Global.current_speed)
-	if owner.is_group_leader:
-		_state_machine.transition_to("Moving/ChopeTable")
-	else:
-		_state_machine.transition_to("Moving/Browsing")
+	pass
 
 
 func exit() -> void:

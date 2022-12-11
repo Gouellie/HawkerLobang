@@ -7,7 +7,7 @@ var random_wait_time := 10
 var current_wait_time = 100
 var feedbacks := []
 
-var open_at : TimeOnly = TimeOnly.new(6,0)
+var open_at : TimeOnly = TimeOnly.new(5,0)
 var close_at : TimeOnly = TimeOnly.new(23,00)
 
 var table_manager : TableManager = TableManager.new()

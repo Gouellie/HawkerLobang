@@ -17,7 +17,7 @@ func _ready() -> void:
 	Log.log_error(Events.connect("speed_changed", self, "_on_speed_changed"))
 	Log.log_error(Events.connect("update_current_datetime", self, "on_current_datetime_updated"))
 	Global.current_datetime = datetime
-	Events.emit_signal("time_ellapsed", datetime)
+	Events.emit_signal("time_updated", datetime)
 	ticker.start()
 
 
@@ -59,7 +59,7 @@ func _on_speed_changed(p_speed : int) -> void:
 
 func on_current_datetime_updated(p_current : DateTime) -> void:
 	datetime.update_date(p_current)
-	Events.emit_signal("time_ellapsed", datetime)
+	Events.emit_signal("time_updated", datetime)
 
 
 func _load() -> void:

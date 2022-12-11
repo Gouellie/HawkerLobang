@@ -1,6 +1,9 @@
 extends Node
 
 #warning-ignore: unused_signal
+signal time_updated(datetime)
+
+#warning-ignore: unused_signal
 signal time_ellapsed(datetime)
 
 #warning-ignore: unused_signal
