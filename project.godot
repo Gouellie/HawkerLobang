@@ -114,6 +114,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://src/entities/hawker_center.gd"
 }, {
+"base": "Popup",
+"class": "OmniDialog",
+"language": "GDScript",
+"path": "res://src/ui/dialogs/omni_dialog.gd"
+}, {
 "base": "Entity",
 "class": "Patron",
 "language": "GDScript",
@@ -216,6 +221,7 @@ _global_script_class_icons={
 "ExpansionTab": "",
 "Feedback": "",
 "HawkerCenter": "",
+"OmniDialog": "",
 "Patron": "",
 "PatronManager": "",
 "QueueManager": "",

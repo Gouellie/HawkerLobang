@@ -13,6 +13,15 @@ var dish_name : String
 
 var _state_name : String
 
+var is_stall_vacant : bool = true
+var is_open_for_business : bool
+var queue_position : Vector2 setget ,get_queue_position
+var counter_position : Vector2 setget ,get_counter_position
+var cell_stamps : Array setget ,get_cell_stamps
+
+# debug
+var is_always_open : bool
+var is_manually_closed : bool
 
 onready var queue_manager := $QueueManager 
 onready var sprite_stall : Sprite = $Sprite_Stall
@@ -20,17 +29,6 @@ onready var state_machine : StateMachine = $States
 
 # used by the states
 onready var label_state : Label = $Label_State
-
-# debug
-var is_always_open : bool
-var is_manually_closed : bool
-
-var is_stall_vacant : bool = true
-var is_open_for_business : bool
-var queue_position : Vector2 setget ,get_queue_position
-var counter_position : Vector2 setget ,get_counter_position
-
-var cell_stamps : Array setget ,get_cell_stamps
 
 
 func _ready() -> void:

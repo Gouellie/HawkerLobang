@@ -9,6 +9,7 @@ var stall_manager : StallManager
 var table_manager : TableManager
 var expansion_manager : ExpansionManager
 var tray_station_manager : TrayStationManager
+var omni_dialog : OmniDialog
 var builder_mode_on : bool setget ,_get_builder_mode_on
 var show_states : bool
 var is_toolbox_open : bool
@@ -30,6 +31,7 @@ func reset() -> void:
 	table_manager = null
 	expansion_manager = null
 	tray_station_manager = null
+	omni_dialog = null
 	builder_mode_on = false
 	show_states = false
 	is_toolbox_open = false

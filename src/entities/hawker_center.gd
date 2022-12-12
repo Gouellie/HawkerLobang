@@ -113,7 +113,10 @@ func get_next_day(week : int, today : int) -> DateTime:
 
 
 func start_new_day() -> bool:
-	if not validate_next_day():
+	if next_day == null:
+		next_day = Global.current_datetime		
+	if not stall_operating_on(next_day):
+		user_can_skip()
 		return false
 	Events.emit_signal("update_current_datetime", next_day)
 	Events.emit_signal("pause_simulation", false)
@@ -121,11 +124,30 @@ func start_new_day() -> bool:
 
 
 # validate that next day has any operating stalls
-func validate_next_day() -> bool:
-	if next_day == null:
-		next_day = Global.current_datetime		
-	var timespan = stall_manager.get_today_timespan(next_day.day)
+func stall_operating_on(date : DateTime) -> bool:
+	var timespan = stall_manager.get_today_timespan(date.day)
 	if timespan is TimeSpan:
-		next_day.update_time(timespan.from_datetime)
+		date.update_time(timespan.from_datetime)
 		return true
 	return false
+
+
+func user_can_skip() -> void:
+	var title = "No Stall set to operate"
+	if stall_manager.get_operating_stall_count() < 1:
+		var message = "Cannot open Hawker Center without Stalls."
+		Global.omni_dialog.setup(OmniDialog.MODE.OK, title, message)
+		Global.omni_dialog.popup()
+		return
+	var message = "There are no Stall set to operate today, skip to next day?"
+	Global.omni_dialog.setup(OmniDialog.MODE.OK_CANCEL, title, message)
+	Global.omni_dialog.popup()	
+	var choice = yield(Global.omni_dialog, "user_choice")
+	if choice == OmniDialog.SELECTION.OK:
+		skip_day(next_day)
+
+
+func skip_day(date : DateTime) -> void:
+	date.increment(Dates.MINUTES_PER_DAY)
+	Events.emit_signal("update_current_datetime", date)	
+	pass

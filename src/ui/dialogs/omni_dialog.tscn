@@ -1,0 +1,101 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://src/ui/dialogs/omni_dialog.gd" type="Script" id=1]
+
+[node name="ConfirmationDialog" type="Popup"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 1 )
+mode = 1
+title = "No days"
+message = "Have fun man...."
+
+[node name="CenterContainer" type="CenterContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="Panel" type="Panel" parent="CenterContainer"]
+margin_left = 490.0
+margin_top = 235.0
+margin_right = 790.0
+margin_bottom = 485.0
+rect_min_size = Vector2( 300, 250 )
+
+[node name="MarginContainer" type="MarginContainer" parent="CenterContainer/Panel"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+custom_constants/margin_right = 10
+custom_constants/margin_top = 10
+custom_constants/margin_left = 10
+custom_constants/margin_bottom = 10
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer/Panel/MarginContainer"]
+margin_left = 10.0
+margin_top = 10.0
+margin_right = 290.0
+margin_bottom = 240.0
+
+[node name="Label_Title" type="Label" parent="CenterContainer/Panel/MarginContainer/VBoxContainer"]
+margin_right = 280.0
+margin_bottom = 14.0
+text = "TITLE"
+
+[node name="MarginContainer" type="MarginContainer" parent="CenterContainer/Panel/MarginContainer/VBoxContainer"]
+margin_top = 18.0
+margin_right = 280.0
+margin_bottom = 206.0
+size_flags_vertical = 3
+custom_constants/margin_right = 10
+custom_constants/margin_top = 2
+custom_constants/margin_left = 10
+custom_constants/margin_bottom = 2
+
+[node name="Label_Message" type="Label" parent="CenterContainer/Panel/MarginContainer/VBoxContainer/MarginContainer"]
+margin_left = 10.0
+margin_top = 2.0
+margin_right = 270.0
+margin_bottom = 186.0
+size_flags_vertical = 7
+text = "MESSAGE"
+valign = 1
+autowrap = true
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CenterContainer/Panel/MarginContainer/VBoxContainer"]
+margin_top = 210.0
+margin_right = 280.0
+margin_bottom = 230.0
+
+[node name="Label" type="Label" parent="CenterContainer/Panel/MarginContainer/VBoxContainer/HBoxContainer"]
+margin_top = 3.0
+margin_right = 116.0
+margin_bottom = 17.0
+size_flags_horizontal = 3
+
+[node name="Button_Ok" type="Button" parent="CenterContainer/Panel/MarginContainer/VBoxContainer/HBoxContainer"]
+margin_left = 120.0
+margin_right = 150.0
+margin_bottom = 20.0
+text = "Ok"
+
+[node name="Button_Yes" type="Button" parent="CenterContainer/Panel/MarginContainer/VBoxContainer/HBoxContainer"]
+margin_left = 154.0
+margin_right = 188.0
+margin_bottom = 20.0
+text = "Yes"
+
+[node name="Button_No" type="Button" parent="CenterContainer/Panel/MarginContainer/VBoxContainer/HBoxContainer"]
+margin_left = 192.0
+margin_right = 222.0
+margin_bottom = 20.0
+text = "No"
+
+[node name="Button_Cancel" type="Button" parent="CenterContainer/Panel/MarginContainer/VBoxContainer/HBoxContainer"]
+margin_left = 226.0
+margin_right = 280.0
+margin_bottom = 20.0
+text = "Cancel"
+
+[connection signal="pressed" from="CenterContainer/Panel/MarginContainer/VBoxContainer/HBoxContainer/Button_Ok" to="." method="_on_Button_Ok_pressed"]
+[connection signal="pressed" from="CenterContainer/Panel/MarginContainer/VBoxContainer/HBoxContainer/Button_Yes" to="." method="_on_Button_Yes_pressed"]
+[connection signal="pressed" from="CenterContainer/Panel/MarginContainer/VBoxContainer/HBoxContainer/Button_No" to="." method="_on_Button_No_pressed"]
+[connection signal="pressed" from="CenterContainer/Panel/MarginContainer/VBoxContainer/HBoxContainer/Button_Cancel" to="." method="_on_Button_Cancel_pressed"]

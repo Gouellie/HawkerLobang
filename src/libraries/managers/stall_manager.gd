@@ -17,6 +17,15 @@ func remove_stall(stall : Stall) -> void:
 		_stalls.erase(stall)
 
 
+func get_operating_stall_count() -> int:
+	var count = 0
+	for stall in _stalls:
+		if stall is Stall and not stall.is_stall_vacant:
+			count+=1
+	return count
+
+
+
 func get_open_stall_count() -> int:
 	var count = 0
 	for stall in _stalls:
