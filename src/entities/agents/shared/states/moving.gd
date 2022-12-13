@@ -52,9 +52,10 @@ func set_navigation_speed(speed : int) -> void:
 
 
 func physics_process(_delta: float) -> void:
-	var next_nav_position = nav_agent.get_next_location()
 	if nav_agent.is_navigation_finished():
 		return
+		
+	var next_nav_position = nav_agent.get_next_location()
 	if owner.skin:
 		owner.skin.rotation = get_angle_to(next_nav_position)
 

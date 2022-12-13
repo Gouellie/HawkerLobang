@@ -4,9 +4,9 @@
 [ext_resource path="res://assets/props/tray_stations.png" type="Texture" id=2]
 
 [sub_resource type="NavigationPolygon" id=1]
-vertices = PoolVector2Array( 48, -48, 48, 48, 40, 32, 40, -32, -48, -48, -40, -32, -48, 48, -40, 32 )
+vertices = PoolVector2Array( 40, -40, 40, 40, 32, 24, 32, -24, -40, -40, -32, -24, -40, 40, -32, 24 )
 polygons = [ PoolIntArray( 0, 1, 2, 3 ), PoolIntArray( 4, 0, 3, 5 ), PoolIntArray( 6, 4, 5, 7 ), PoolIntArray( 2, 1, 6, 7 ) ]
-outlines = [ PoolVector2Array( 48, -48, 48, 48, -48, 48, -48, -48 ), PoolVector2Array( -40, -32, 40, -32, 40, 32, -40, 32 ) ]
+outlines = [ PoolVector2Array( 40, -40, 40, 40, -40, 40, -40, -40 ), PoolVector2Array( -32, -24, 32, -24, 32, 24, -32, 24 ) ]
 
 [sub_resource type="CapsuleShape2D" id=2]
 radius = 72.0

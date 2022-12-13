@@ -3,7 +3,7 @@ class_name Entrance
 
 signal entrance_close(entrance,is_closed)
 
-var is_closed : bool = false
+export var is_closed : bool = false
 var expansion_mode_enabled : bool = false
 onready var closed_sprite := $Closed
 

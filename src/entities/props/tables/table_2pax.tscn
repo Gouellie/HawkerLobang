@@ -5,12 +5,12 @@
 [ext_resource path="res://assets/sprites/tray.png" type="Texture" id=3]
 
 [sub_resource type="CircleShape2D" id=3]
-radius = 8.0
+radius = 12.0
 
 [sub_resource type="NavigationPolygon" id=2]
-vertices = PoolVector2Array( 40, -40, 40, 40, 28, 4, 28, -4, 24, -8, 20, -20, -40, -40, -20, -20, 24, 8, 20, 20, -40, 40, -20, 20, -24, -8, -28, -4, -28, 4, -24, 8 )
-polygons = [ PoolIntArray( 0, 1, 2, 3 ), PoolIntArray( 0, 3, 4, 5 ), PoolIntArray( 6, 0, 5, 7 ), PoolIntArray( 8, 2, 1, 9 ), PoolIntArray( 9, 1, 10, 11 ), PoolIntArray( 6, 7, 12, 13 ), PoolIntArray( 10, 6, 13, 14 ), PoolIntArray( 11, 10, 14, 15 ) ]
-outlines = [ PoolVector2Array( -40, -40, 40, -40, 40, 40, -40, 40 ), PoolVector2Array( -20, -20, -24, -8, -28, -4, -28, 4, -24, 8, -20, 20, 20, 20, 24, 8, 28, 4, 28, -4, 24, -8, 20, -20 ) ]
+vertices = PoolVector2Array( 40, -40, 40, 40, 24, 8, 24, -8, 20, -20, -40, -40, -20, -20, 20, 20, -40, 40, -20, 20, -24, -8, -24, 8 )
+polygons = [ PoolIntArray( 0, 1, 2, 3 ), PoolIntArray( 0, 3, 4 ), PoolIntArray( 5, 0, 4, 6 ), PoolIntArray( 7, 2, 1 ), PoolIntArray( 7, 1, 8, 9 ), PoolIntArray( 5, 6, 10 ), PoolIntArray( 8, 5, 10, 11 ), PoolIntArray( 8, 11, 9 ) ]
+outlines = [ PoolVector2Array( -40, -40, 40, -40, 40, 40, -40, 40 ), PoolVector2Array( -20, -20, -24, -8, -24, 8, -20, 20, 20, 20, 24, 8, 24, -8, 20, -20 ) ]
 
 [node name="Table2Pax" type="Node2D"]
 script = ExtResource( 2 )
@@ -24,7 +24,6 @@ region_enabled = true
 region_rect = Rect2( 0, 0, 32, 64 )
 
 [node name="Area2D" type="Area2D" parent="."]
-visible = false
 collision_layer = 16
 collision_mask = 0
 monitoring = false
@@ -38,7 +37,6 @@ position = Vector2( 20, 0 )
 shape = SubResource( 3 )
 
 [node name="NavigationPolygonInstance" type="NavigationPolygonInstance" parent="."]
-visible = false
 navpoly = SubResource( 2 )
 
 [node name="Positions" type="Node2D" parent="."]

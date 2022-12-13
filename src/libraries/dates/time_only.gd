@@ -13,6 +13,12 @@ func _init(i_hour, i_minute) -> void:
 	ticks = Dates.get_ticks(1, 0, hour, minute)
 
 
+func set_time(p_hour, p_min) -> void:
+	hour = p_hour
+	minute = p_min
+	ticks = Dates.get_ticks(1, 0, hour, minute)
+
+
 func set_hour(p_hour) -> void:
 	hour = p_hour
 	ticks = Dates.get_ticks(1, 0, hour, minute)

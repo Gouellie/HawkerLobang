@@ -54,7 +54,7 @@ func _on_time_ellapsed(date : DateTime) -> void:
 	var mod = _get_time_of_day_modifier(date)
 	current_wait_time = 0
 	random_wait_time = randi() % 12 - mod
-	var groupsize = randi() % 4  + 1
+	var groupsize = randi() % 3  + 1
 	Events.emit_signal("patron_invoked", groupsize, false)
 
 
@@ -127,6 +127,8 @@ func start_new_day() -> bool:
 func stall_operating_on(date : DateTime) -> bool:
 	var timespan = stall_manager.get_today_timespan(date.day)
 	if timespan is TimeSpan:
+		open_at.set_time(timespan.from_datetime.hour, timespan.from_datetime.minute)
+		close_at.set_time(timespan.to_datetime.hour, timespan.to_datetime.minute + 30)
 		date.update_time(timespan.from_datetime)
 		return true
 	return false

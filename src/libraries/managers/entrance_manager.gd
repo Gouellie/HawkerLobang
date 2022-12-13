@@ -12,7 +12,8 @@ func _ready() -> void:
 	Log.log_error(Global.expansion_manager.connect("expanded", self, "on_expanded"))
 	entrances = get_children()
 	for entrance in entrances:
-		open_entrances.append(entrance)
+		if not entrance.is_closed:
+			open_entrances.append(entrance)
 		entrance.connect("entrance_close", self, "on_entrance_closed")
 	_update_exits(Global.expansion_manager.real_top_left, Global.expansion_manager.real_bottom_right, Global.expansion_manager.cell_size)
 	_load()

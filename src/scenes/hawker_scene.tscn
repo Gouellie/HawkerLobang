@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=15 format=2]
 
 [ext_resource path="res://src/ui/gui.tscn" type="PackedScene" id=1]
 [ext_resource path="res://assets/tiles/tiles_tileset.tres" type="TileSet" id=2]
@@ -12,6 +12,8 @@
 [ext_resource path="res://src/entities/props/tables/table_2pax.tscn" type="PackedScene" id=10]
 [ext_resource path="res://src/entities/entrances/entrance.tscn" type="PackedScene" id=11]
 [ext_resource path="res://src/libraries/managers/entrance_manager.gd" type="Script" id=12]
+[ext_resource path="res://src/entities/props/tray_stations/tray_station_large.tscn" type="PackedScene" id=13]
+[ext_resource path="res://src/entities/props/tables/table_4pax.tscn" type="PackedScene" id=14]
 
 [node name="Simulation" type="Node2D" groups=["Persist"]]
 script = ExtResource( 5 )
@@ -51,10 +53,16 @@ position = Vector2( 432, 336 )
 position = Vector2( 432, 432 )
 
 [node name="Table2Pax_01" parent="HawkerCenter/EntityManager" instance=ExtResource( 10 )]
-position = Vector2( 624, 336 )
+position = Vector2( 528, 336 )
 
 [node name="Table2Pax_02" parent="HawkerCenter/EntityManager" instance=ExtResource( 10 )]
+position = Vector2( 528, 432 )
+
+[node name="Table4Pax" parent="HawkerCenter/EntityManager" instance=ExtResource( 14 )]
 position = Vector2( 624, 432 )
+
+[node name="TrayStationLarge" parent="HawkerCenter/EntityManager" instance=ExtResource( 13 )]
+position = Vector2( 624, 336 )
 
 [node name="PatronManager" type="Node2D" parent="HawkerCenter" groups=["Persist"]]
 script = ExtResource( 9 )
@@ -72,6 +80,7 @@ rotation = 1.5708
 [node name="Entrance_Left" parent="HawkerCenter/Entrances" instance=ExtResource( 11 )]
 position = Vector2( 288, 336 )
 rotation = 3.14159
+is_closed = true
 
 [node name="Entrance_Up" parent="HawkerCenter/Entrances" instance=ExtResource( 11 )]
 position = Vector2( 624, 0 )
