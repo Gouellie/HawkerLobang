@@ -86,6 +86,6 @@ func _load() -> void:
 	var entrance_numb = 0
 	for entrance in entrances:
 		var closed = true if entrances_state[entrance_numb] == 0 else false
-		if closed:
+		if closed != entrance.is_closed:
 			entrance.set_is_closed(closed)
 		entrance_numb += 1
