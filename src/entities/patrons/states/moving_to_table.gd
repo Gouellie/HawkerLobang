@@ -10,7 +10,8 @@ func enter(_msg: Dictionary = {}) -> void:
 
 	table = Global.table_manager.get_choped_table(owner)
 
-	if not is_instance_valid(table) :
+	if not is_instance_valid(table):
+		Events.emit_signal("send_feedback", Feedback.new("There are no tables available!"))		
 		leave()
 		return
 
@@ -53,4 +54,5 @@ func on_Area2D_body_entered(body: Node2D, area_shape_index: int) -> void:
 
 
 func leave() -> void:
+	
 	_state_machine.transition_to("Moving/Leaving")

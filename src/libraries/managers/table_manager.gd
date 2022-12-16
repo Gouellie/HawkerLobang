@@ -6,6 +6,7 @@ var _choped_tables = {}
 
 func _init() -> void:
 	Global.table_manager = self
+	Log.log_error(Events.connect("clear_patrons_requested", self, "clean_all"))
 	
 
 func register_table(table : Table) -> void:
@@ -28,6 +29,8 @@ func chope_table(patron : Patron) -> Table:
 	var closest_distance = 999999.0
 	for table in _tables:
 		if table.seats_count < desired_seats_count:
+			continue
+		if table.dirtiness > 90.0:
 			continue
 		var table_pos = table.global_position
 		var distance = pos.distance_to(table_pos)
@@ -78,3 +81,8 @@ func _get_desired_seats_count(patron_counts : int) -> int:
 	else : 
 		return 8
 
+
+func clean_all() -> void:
+	_choped_tables.clear()
+	for table in _tables:
+		table.clean_table()
