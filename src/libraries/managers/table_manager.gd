@@ -2,6 +2,7 @@ extends Reference
 class_name TableManager
 
 var _tables = []
+var _dirty_tables = []
 var _choped_tables = {}
 
 func _init() -> void:
@@ -17,6 +18,10 @@ func register_table(table : Table) -> void:
 func remove_table(table : Table) -> void:
 	if _tables.has(table):
 		_tables.erase(table)
+	if _choped_tables.has(table):
+		_choped_tables.erase(table)
+	if _dirty_tables.has(table):
+		_dirty_tables.erase(table)
 
 
 func chope_table(patron : Patron) -> Table:
@@ -61,6 +66,34 @@ func get_choped_table(patron : Patron) -> Table:
 	return null	
 
 
+func find_dirty_table(pos : Vector2) -> Table:
+	var closest_table = null
+	var closest_distance = 999999.0
+	for table in _dirty_tables:
+		var table_pos = table.global_position
+		var distance = pos.distance_to(table_pos)
+		if distance < closest_distance:
+			closest_distance = distance
+			closest_table = table
+	return closest_table
+
+
+func find_nearest_table(pos : Vector2, visited_tables : Array) -> Table:
+	var closest_table = null
+	var closest_distance = 999999.0
+	for table in _tables:
+		if visited_tables.has(table):
+			continue		
+		var table_pos = table.global_position
+		var distance = pos.distance_to(table_pos)
+		if distance < closest_distance:
+			closest_distance = distance
+			closest_table = table
+	if not closest_table:
+		return null
+	return closest_table
+
+
 func free_table(patron : Patron) -> void:
 	var group_id = patron.group_id
 	if not _choped_tables.has(group_id):
@@ -82,7 +115,15 @@ func _get_desired_seats_count(patron_counts : int) -> int:
 		return 8
 
 
+func notify_dirty_table(table : Table, is_dirty : bool) -> void:
+	if is_dirty:
+		_dirty_tables.append(table)
+	else:
+		_dirty_tables.erase(table)
+
+
 func clean_all() -> void:
 	_choped_tables.clear()
+	_dirty_tables.clear()
 	for table in _tables:
 		table.clean_table()

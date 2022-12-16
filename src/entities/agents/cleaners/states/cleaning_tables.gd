@@ -9,8 +9,12 @@ func exit() -> void:
 	pass
 
 
-func on_speed_changed(speed : int) -> void:
+func set_navigation_speed(speed : int) -> void:
 	_parent.set_navigation_speed(speed)
+
+
+func set_navigation_position(pos : Vector2) -> void:
+	_parent.set_navigation_position(pos)
 
 
 func physics_process(delta: float) -> void:

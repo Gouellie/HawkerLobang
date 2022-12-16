@@ -1,13 +1,15 @@
 extends State
 
+var table : Table
 
-func enter(_msg: Dictionary = {}) -> void:
-	var entrance = Global.entrance_manager.get_entrance()
-	owner.global_position = entrance
-	owner.skin.visible = true
-	_parent.set_navigation_speed(Global.current_speed)
+func enter(msg: Dictionary = {}) -> void:
+	if owner.label_state :
+		owner.label_state.text = "cleaning"	
+	table = msg["table"]
+	if is_instance_valid(table):
+		table.cleaner_clean_table()
 	_state_machine.transition_to("Moving/CleaningTables/FindTable")
-	
+
 
 func exit() -> void:
 	pass

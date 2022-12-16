@@ -3,10 +3,11 @@ class_name Cleaner
 
 var is_in_shift : bool
 var shift_start : TimeOnly = TimeOnly.new(6,0)
-var shift_end : TimeOnly = TimeOnly.new(11,00)
+var shift_end : TimeOnly = TimeOnly.new(22,00)
 
 onready var skin : Node2D = $Skin
 onready var state_machine : StateMachine = $States
+onready var label_state : Label = $Label_State 
 
 
 func _ready() -> void:
@@ -30,3 +31,7 @@ func _start_shift() -> void:
 func _end_shift() -> void:
 	if state_machine.state.has_method("end_shift"):
 		state_machine.state.end_shift()
+
+
+func _on_Area2D_area_shape_entered(_area_rid: RID, _area: Area2D, _area_shape_index: int, _local_shape_index: int) -> void:
+	pass

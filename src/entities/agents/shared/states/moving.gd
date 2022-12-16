@@ -32,8 +32,6 @@ func _ready() -> void:
 	nav_agent.radius = nav_agent_radius
 	nav_agent.avoidance_enabled = nav_avoidance_enabled
 
-	set_navigation_position(global_position)
-
 
 func enter(_msg: Dictionary = {}) -> void:
 	pass

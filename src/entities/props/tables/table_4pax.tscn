@@ -61,6 +61,9 @@ position = Vector2( 16, -16 )
 [node name="Position_04" type="Node2D" parent="Positions"]
 position = Vector2( 16, 16 )
 
+[node name="Position_Cleaner" type="Node2D" parent="."]
+position = Vector2( 0, -28 )
+
 [node name="Label_Shope" type="Label" parent="."]
 anchor_left = 0.5
 anchor_top = 0.5

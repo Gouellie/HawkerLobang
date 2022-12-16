@@ -2,6 +2,7 @@ extends Entity
 
 class_name Table
 
+var dirty_notified : bool
 var dirtiness : float
 var pax_count : int
 
@@ -12,13 +13,15 @@ onready var trays := []
 onready var positions : PoolVector2Array
 onready var seats_count : int
 
+onready var position_cleaner : Vector2 = $Position_Cleaner.global_position 
+
 
 func _ready() -> void:
 	Log.log_error(Events.connect("toggle_label_display", self, "_toggle_label_display"))
 	Log.log_error(Events.connect("time_ellapsed", self, "on_time_ellapsed"))
 	label_state.text = ""	
 	label_state.visible = Global.show_states
-	dirtiness_bar.visible = Global.show_states
+#	dirtiness_bar.visible = Global.show_states
 	for pos in $Positions.get_children():
 		positions.push_back(pos.global_position)
 	for tray in $Trays.get_children():
@@ -38,6 +41,9 @@ func on_time_ellapsed(_date) -> void:
 	if pax_count == 0:
 		return
 	dirtiness = min(100, dirtiness + 0.2 * pax_count)
+	if not dirty_notified and dirtiness > 40:
+		Global.table_manager.notify_dirty_table(self, true)
+		dirty_notified = true
 	if dirtiness_bar:
 		dirtiness_bar.value = dirtiness
 
@@ -64,16 +70,22 @@ func patron_leave_position(pos : int, with_tray : bool) -> void:
 
 func _toggle_label_display(show : bool) -> void:
 	label_state.visible = show
-	dirtiness_bar.visible = show
+#	dirtiness_bar.visible = show
 
 
 func register() -> void:
 	Global.table_manager.register_table(self)
 
 
+func cleaner_clean_table() -> void:
+	clean_table()
+	Global.table_manager.notify_dirty_table(self, false)	
+
+
 func clean_table() -> void:
 	pax_count = 0
 	dirtiness = 0.0
+	dirty_notified = false
 	if dirtiness_bar:
 		dirtiness_bar.value = dirtiness
 	for tray in trays:

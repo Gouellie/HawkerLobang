@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://src/libraries/state_machine/state_machine.gd" type="Script" id=1]
 [ext_resource path="res://src/entities/agents/cleaners/states/idle.gd" type="Script" id=2]
@@ -9,6 +9,9 @@
 [ext_resource path="res://src/entities/agents/cleaners/states/start_shift.gd" type="Script" id=7]
 [ext_resource path="res://src/entities/agents/cleaners/states/end_shift.gd" type="Script" id=8]
 [ext_resource path="res://src/entities/agents/cleaners/states/cleaning_tables.gd" type="Script" id=9]
+[ext_resource path="res://src/entities/agents/cleaners/clean_table.gd" type="Script" id=10]
+[ext_resource path="res://src/entities/agents/cleaners/find_table.gd" type="Script" id=11]
+[ext_resource path="res://src/entities/agents/cleaners/walk_to_table.gd" type="Script" id=12]
 
 [sub_resource type="CircleShape2D" id=1]
 radius = 5.0
@@ -53,6 +56,15 @@ script = ExtResource( 7 )
 
 [node name="CleaningTables" type="Node2D" parent="States/Moving"]
 script = ExtResource( 9 )
+
+[node name="FindTable" type="Node2D" parent="States/Moving/CleaningTables"]
+script = ExtResource( 11 )
+
+[node name="WalkToTable" type="Node2D" parent="States/Moving/CleaningTables"]
+script = ExtResource( 12 )
+
+[node name="CleanTable" type="Node2D" parent="States/Moving/CleaningTables"]
+script = ExtResource( 10 )
 
 [node name="End_Shift" type="Node2D" parent="States/Moving"]
 script = ExtResource( 8 )
