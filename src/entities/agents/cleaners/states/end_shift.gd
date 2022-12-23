@@ -2,6 +2,8 @@ extends State
 
 
 func enter(_msg: Dictionary = {}) -> void:
+	if owner.label_state :
+		owner.label_state.text = "end shift"	
 	var exit = Global.entrance_manager.get_entrance()
 	_parent.set_navigation_position(exit)
 

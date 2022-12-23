@@ -35,3 +35,20 @@ func _end_shift() -> void:
 
 func _on_Area2D_area_shape_entered(_area_rid: RID, _area: Area2D, _area_shape_index: int, _local_shape_index: int) -> void:
 	pass
+
+
+func can_track_entity() -> bool:
+	return true
+
+
+func on_entity_selected(entity) -> void:
+	if entity == self:
+		print(entity)
+
+
+func _on_Area2D_input_event(_viewport: Node, event: InputEvent, _shape_idx: int) -> void:
+	if Global.builder_mode_on:
+		return
+	if event is InputEventMouse	:
+		if event.is_action_pressed("left_click"):
+			Events.emit_signal("entity_selected", self)	

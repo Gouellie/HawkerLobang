@@ -12,6 +12,7 @@ onready var dirtiness_bar : ProgressBar = $ProgressBar_Dirtiness
 onready var trays := []
 onready var positions : PoolVector2Array
 onready var seats_count : int
+onready var positions_occupancy : Array
 
 onready var position_cleaner : Vector2 = $Position_Cleaner.global_position 
 
@@ -27,6 +28,8 @@ func _ready() -> void:
 	for tray in $Trays.get_children():
 		trays.push_back(tray)
 	seats_count = positions.size()
+	for seat in seats_count:
+		positions_occupancy.append(false)
 
 
 func serialize() -> Dictionary:
@@ -60,12 +63,14 @@ func get_sitting_position(pos : int) -> Vector2:
 func patron_sit_at_position(pos : int) -> void:
 	trays[pos].visible = true
 	pax_count += 1
+	positions_occupancy[pos] = true
 
 
 func patron_leave_position(pos : int, with_tray : bool) -> void:
 	if with_tray:
 		trays[pos].visible = false
 	pax_count -= 1
+	positions_occupancy[pos] = false	
 
 
 func _toggle_label_display(show : bool) -> void:
@@ -77,19 +82,30 @@ func register() -> void:
 	Global.table_manager.register_table(self)
 
 
-func cleaner_clean_table() -> void:
-	clean_table()
+func cleaner_clean_table() -> float:
+	var current_dirtiness = dirtiness
+	table_cleaned()
 	Global.table_manager.notify_dirty_table(self, false)	
+	return current_dirtiness
+
+
+func table_cleaned() -> void:
+	dirtiness = 0.0
+	dirty_notified = false	
+	if dirtiness_bar:
+		dirtiness_bar.value = dirtiness
+	var pos_numb := 0
+	for position_occupied in positions_occupancy:
+		if not position_occupied:
+			trays[pos_numb].visible = false
+		pos_numb += 1 
 
 
 func clean_table() -> void:
 	pax_count = 0
-	dirtiness = 0.0
-	dirty_notified = false
-	if dirtiness_bar:
-		dirtiness_bar.value = dirtiness
-	for tray in trays:
-		tray.visible = false
+	for i in range(positions_occupancy.size()):
+		positions_occupancy[i] = false
+	table_cleaned()
 
 
 func cleanup() -> void:

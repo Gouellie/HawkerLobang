@@ -10,7 +10,11 @@ func enter(msg: Dictionary = {}) -> void:
 		owner.label_state.text = "returning tray"
 	table = msg["table"]
 	station  = Global.tray_station_manager.get_nearest_station(owner.global_position)
-	table.patron_leave_position(owner.sit_index, station != null)
+
+	var return_tray = randi() % 100
+	var leaving_with_tray  = return_tray > 20
+
+	table.patron_leave_position(owner.sit_index, leaving_with_tray and station != null)
 	_parent.set_navigation_speed(Global.current_speed)		
 	if station:
 		owner.skin_tray.visible = true

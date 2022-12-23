@@ -19,7 +19,6 @@ onready var stall_detector : Area2D = $Stall_Dectection
 
 func _ready() -> void:
 	Log.log_error(Events.connect("toggle_label_display", self, "_toggle_label_display"))	
-	Log.log_error(Events.connect("entity_selected", self, "_on_entity_selected"), "patron.gd")
 	label_state.visible = Global.show_states
 	$Skin/Tray.visible = false
 	
@@ -37,7 +36,7 @@ func _on_Area2D_input_event(_viewport: Node, event: InputEvent, _shape_idx: int)
 			Events.emit_signal("entity_selected", self)	
 
 
-func _on_entity_selected(entity : Entity) -> void:
+func on_entity_selected(entity : Entity) -> void:
 	if selected and entity and not entity.can_track_entity():
 		return
 	set_selected(entity == self)
