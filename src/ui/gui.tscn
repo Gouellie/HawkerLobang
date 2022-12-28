@@ -20,7 +20,8 @@ margin_left = 10.0
 margin_top = 10.0
 
 [node name="TimeOfDayControl" parent="HBoxContainer" instance=ExtResource( 2 )]
-margin_right = 226.0
+margin_right = 176.0
+margin_bottom = 50.0
 mouse_filter = 2
 
 [node name="HBoxContainer_Options" type="HBoxContainer" parent="."]
@@ -31,10 +32,11 @@ margin_right = -10.0
 grow_horizontal = 0
 
 [node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer_Options"]
-margin_right = 66.0
-margin_bottom = 92.0
+margin_right = 59.0
+margin_bottom = 68.0
 
 [node name="Button_Options" type="Button" parent="HBoxContainer_Options/VBoxContainer"]
+visible = false
 margin_right = 66.0
 margin_bottom = 20.0
 rect_min_size = Vector2( 66, 20 )
@@ -43,12 +45,11 @@ size_flags_vertical = 0
 text = "Collapse"
 
 [node name="Container_Options" type="VBoxContainer" parent="HBoxContainer_Options/VBoxContainer"]
-margin_top = 24.0
-margin_right = 66.0
-margin_bottom = 92.0
+margin_right = 59.0
+margin_bottom = 68.0
 
 [node name="Button_Save" type="Button" parent="HBoxContainer_Options/VBoxContainer/Container_Options"]
-margin_right = 66.0
+margin_right = 59.0
 margin_bottom = 20.0
 rect_min_size = Vector2( 50, 20 )
 size_flags_vertical = 0
@@ -56,7 +57,7 @@ text = "Save"
 
 [node name="Button_SaveAs" type="Button" parent="HBoxContainer_Options/VBoxContainer/Container_Options"]
 margin_top = 24.0
-margin_right = 66.0
+margin_right = 59.0
 margin_bottom = 44.0
 rect_min_size = Vector2( 50, 20 )
 size_flags_vertical = 0
@@ -64,7 +65,7 @@ text = "Save as"
 
 [node name="Button_Exit" type="Button" parent="HBoxContainer_Options/VBoxContainer/Container_Options"]
 margin_top = 48.0
-margin_right = 66.0
+margin_right = 59.0
 margin_bottom = 68.0
 rect_min_size = Vector2( 50, 20 )
 size_flags_vertical = 0
