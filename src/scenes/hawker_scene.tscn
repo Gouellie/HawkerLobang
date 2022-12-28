@@ -65,7 +65,7 @@ position = Vector2( 624, 432 )
 [node name="TrayStationLarge" parent="HawkerCenter/EntityManager" instance=ExtResource( 13 )]
 position = Vector2( 624, 336 )
 
-[node name="PatronManager" type="Node2D" parent="HawkerCenter" groups=["Persist"]]
+[node name="PatronManager" type="Node2D" parent="HawkerCenter"]
 script = ExtResource( 9 )
 
 [node name="Cleaner" parent="HawkerCenter/PatronManager" instance=ExtResource( 15 )]

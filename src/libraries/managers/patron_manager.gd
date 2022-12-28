@@ -17,22 +17,7 @@ func _ready() -> void:
 	Log.log_error(Events.connect("patron_invoked", self, "invoke_patron"), "patron_manager.gd")
 	Log.log_error(Events.connect("clear_patrons_requested", self, "_on_clear_patrons_requested"), "patron_manager.gd")	
 	Log.log_error(Events.connect("patron_leaving", self, "_on_patron_leaving"), "patron_manager.gd")
-	_load()
 	Global.set_patrons_count(patrons.size())
-
-
-func save() -> Dictionary:
-	return {"patrons" : {}}
-
-
-func _load() -> void:
-	if not SaveFile.game_data.has("patrons"):
-		_register_children()
-		return
-#	_delete_all_children()
-	var patrons_data = SaveFile.game_data["patrons"]
-	for patron in patrons_data:
-		print(patron)
 
 
 func _register_children() -> void:

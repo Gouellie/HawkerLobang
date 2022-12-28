@@ -11,7 +11,9 @@ onready var label_state : Label = $Label_State
 
 
 func _ready() -> void:
+	label_state.visible = Global.show_states	
 	Log.log_error(Events.connect("time_ellapsed", self, "on_time_ellapsed"))
+	Log.log_error(Events.connect("toggle_label_display", self, "_toggle_label_display"))		
 
 
 func on_time_ellapsed(date : DateTime) -> void:
@@ -37,13 +39,17 @@ func _on_Area2D_area_shape_entered(_area_rid: RID, _area: Area2D, _area_shape_in
 	pass
 
 
+func _toggle_label_display(show : bool) -> void:
+	label_state.visible = show
+
+
 func can_track_entity() -> bool:
 	return true
 
 
-func on_entity_selected(entity) -> void:
-	if entity == self:
-		print(entity)
+func _entity_selected(entity : Entity) -> void:
+	var selected = entity == self
+	label_state.visible = selected or Global.show_states
 
 
 func _on_Area2D_input_event(_viewport: Node, event: InputEvent, _shape_idx: int) -> void:

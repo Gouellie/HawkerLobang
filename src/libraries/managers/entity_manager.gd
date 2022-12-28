@@ -122,14 +122,15 @@ func _validate_eraser_position(cellv: Vector2) -> void:
 
 
 func _unhandled_input(event: InputEvent) -> void:
-	if event.is_action_pressed("set_facing_left"):
-		_blueprint.set_facing(Enums.ORIENTATION.LEFT)
-	if event.is_action_pressed("set_facing_right"):
-		_blueprint.set_facing(Enums.ORIENTATION.RIGHT)
-	if event.is_action_pressed("set_facing_up"):
-		_blueprint.set_facing(Enums.ORIENTATION.UP)
-	if event.is_action_pressed("set_facing_down"):
-		_blueprint.set_facing(Enums.ORIENTATION.DOWN)
+	if _blueprint:
+		if event.is_action_pressed("set_facing_left"):
+			_blueprint.set_facing(Enums.ORIENTATION.LEFT)
+		if event.is_action_pressed("set_facing_right"):
+			_blueprint.set_facing(Enums.ORIENTATION.RIGHT)
+		if event.is_action_pressed("set_facing_up"):
+			_blueprint.set_facing(Enums.ORIENTATION.UP)
+		if event.is_action_pressed("set_facing_down"):
+			_blueprint.set_facing(Enums.ORIENTATION.DOWN)
 	if event is InputEventMouseButton and event.is_action_pressed("ui_select"):
 		if _placeable_blueprint:
 			_place_entity()

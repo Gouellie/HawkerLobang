@@ -28,7 +28,6 @@ func _process(_delta: float) -> void:
 
 func _on_Ticker_timeout() -> void:
 	if simulation_paused:
-#		Events.emit_signal("time_ellapsed", datetime)
 		return
 	_increment_date()
 

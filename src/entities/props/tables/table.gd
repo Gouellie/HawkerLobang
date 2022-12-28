@@ -22,7 +22,7 @@ func _ready() -> void:
 	Log.log_error(Events.connect("time_ellapsed", self, "on_time_ellapsed"))
 	label_state.text = ""	
 	label_state.visible = Global.show_states
-#	dirtiness_bar.visible = Global.show_states
+	dirtiness_bar.visible = Global.show_states
 	for pos in $Positions.get_children():
 		positions.push_back(pos.global_position)
 	for tray in $Trays.get_children():
@@ -69,13 +69,15 @@ func patron_sit_at_position(pos : int) -> void:
 func patron_leave_position(pos : int, with_tray : bool) -> void:
 	if with_tray:
 		trays[pos].visible = false
+	elif not dirty_notified:
+		Global.table_manager.notify_dirty_table(self, true)
 	pax_count -= 1
 	positions_occupancy[pos] = false	
 
 
 func _toggle_label_display(show : bool) -> void:
 	label_state.visible = show
-#	dirtiness_bar.visible = show
+	dirtiness_bar.visible = show
 
 
 func register() -> void:
@@ -101,11 +103,16 @@ func table_cleaned() -> void:
 		pos_numb += 1 
 
 
-func clean_table() -> void:
+# called by table_manager at the end of each day
+func reset() -> void:
 	pax_count = 0
+	dirtiness = 0.0
+	dirty_notified = false
+	if dirtiness_bar:
+		dirtiness_bar.value = dirtiness	
 	for i in range(positions_occupancy.size()):
 		positions_occupancy[i] = false
-	table_cleaned()
+		trays[i].visible = false
 
 
 func cleanup() -> void:

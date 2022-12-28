@@ -116,7 +116,7 @@ func _get_desired_seats_count(patron_counts : int) -> int:
 
 
 func notify_dirty_table(table : Table, is_dirty : bool) -> void:
-	if is_dirty:
+	if is_dirty and not _dirty_tables.has(table):
 		_dirty_tables.append(table)
 	else:
 		_dirty_tables.erase(table)
@@ -126,4 +126,4 @@ func clean_all() -> void:
 	_choped_tables.clear()
 	_dirty_tables.clear()
 	for table in _tables:
-		table.clean_table()
+		table.reset()

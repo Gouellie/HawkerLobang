@@ -36,13 +36,14 @@ func _on_Area2D_input_event(_viewport: Node, event: InputEvent, _shape_idx: int)
 			Events.emit_signal("entity_selected", self)	
 
 
-func on_entity_selected(entity : Entity) -> void:
+func _entity_selected(entity : Entity) -> void:
 	if selected and entity and not entity.can_track_entity():
 		return
 	set_selected(entity == self)
 
 
 func set_selected(p_selected : bool) -> void:
+	label_state.visible = p_selected or Global.show_states
 	selected = p_selected
 	update()
 

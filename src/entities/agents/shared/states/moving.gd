@@ -3,11 +3,11 @@ extends State
 var nav_agent : NavigationAgent2D
 var velocity : Vector2
 
-const nav_agent_max_speed : float = 200.0
+const nav_agent_max_speed : float = 600.0
 const nav_agent_radius : float = 1.0
 const nav_optimize_path : bool = false
 const nav_avoidance_enabled : bool = false
-const initial_character_speed_multiplier : float = 10.0
+const initial_character_speed_multiplier : float = 20.0
 
 var character_speed_multiplier : float = initial_character_speed_multiplier
 
@@ -26,7 +26,7 @@ func _ready() -> void:
 	# warning-ignore:return_value_discarded
 	nav_agent.connect("velocity_computed", self, "character_velocity_computed")
 	# config nav agent attributes
-	nav_agent.max_speed = 120
+	nav_agent.max_speed = nav_agent_max_speed
 	nav_agent.path_desired_distance = 2.0
 	nav_agent.target_desired_distance = 2.0
 	nav_agent.radius = nav_agent_radius
@@ -47,7 +47,7 @@ func set_navigation_position(nav_position_to_set : Vector2) -> void:
 
 func set_navigation_speed(speed : int) -> void:
 	character_speed_multiplier = initial_character_speed_multiplier * speed
-
+	
 
 func physics_process(_delta: float) -> void:
 	if nav_agent.is_navigation_finished():

@@ -1,9 +1,10 @@
 extends Control
 
 var _datetime : DateTime
-var _current_speed : int = 1
+var _current_speed : int = Global.current_speed
 
 var _previous_speed
+var _previous_button : TextureButton
 var _is_paused_by_key
 var simulation_paused : bool = true
 
@@ -12,24 +13,29 @@ onready var time_of_day_speed_label : Label = $HBoxContainer/VBoxContainer/TimeO
 onready var date_label : Label = $HBoxContainer/VBoxContainer/DateLabel
 onready var panel_set_date := $Panel_SetDate
 onready var datetime_control := $Panel_SetDate/CenterContainer/HBoxContainer/DateTimeControl
+onready var pause_button := $HBoxContainer/VBoxContainer/ButtonGroup/TextureButton_Pause
+onready var button_group : ButtonGroup
 
 func _ready() -> void:
 	Log.log_error(Events.connect("pause_simulation", self, "on_simulation_paused"))	
 	Log.log_error(Events.connect("time_updated", self, "on_time_updated"))
 	Log.log_error(Events.connect("time_ellapsed", self, "on_time_updated"))
 	_update_speed_text()
+	button_group = pause_button.group
+	_previous_button = button_group.get_pressed_button()
 
 
 func _input(event: InputEvent) -> void:
-
 	if event.is_action_pressed("pause"):
-		if not _is_paused_by_key:
-			_is_paused_by_key = true
+		var speed : int = 0
+		if not pause_button.pressed:
 			_previous_speed = _current_speed
-			_on_Button_Speed_pressed(0)
-		else:
-			_is_paused_by_key = false
-			_on_Button_Speed_pressed(_previous_speed)
+			_previous_button = button_group.get_pressed_button()
+			pause_button.pressed = true
+		elif _previous_button and _previous_button != pause_button:
+			speed = _previous_speed
+			_previous_button.pressed = true
+		_on_Button_Speed_pressed(speed)
 
 
 func on_time_updated(p_datetime : DateTime) -> void:

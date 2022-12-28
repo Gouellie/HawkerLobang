@@ -7,7 +7,7 @@ export (int) var tile_index
 
 
 func _ready() -> void:
-	Log.log_error(Events.connect("entity_selected", self, "on_entity_selected"))
+	Log.log_error(Events.connect("entity_selected", self, "_entity_selected"))
 
 
 func serialize() -> Dictionary:
@@ -51,5 +51,5 @@ func get_toolbox_display_name() -> String:
 	return ""
 
 
-func on_entity_selected(_entity) -> void:
+func _entity_selected(_entity) -> void:
 	pass

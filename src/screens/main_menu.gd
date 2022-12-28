@@ -5,6 +5,7 @@ onready var file_dialog : FileDialog = $FileDialog
 onready var button_load : Button = $VBoxContainer/Button_Load
 
 func _ready() -> void:
+	Engine.iterations_per_second = 240
 	button_load.disabled = not SaveFile.save_file_found()
 	if OS.get_name() == "HTML5":
 		$VBoxContainer/Button_Quit.visible = false

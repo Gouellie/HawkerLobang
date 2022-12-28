@@ -9,18 +9,18 @@ func enter(msg: Dictionary = {}) -> void:
 	if owner.label_state :
 		owner.label_state.text = "returning tray"
 	table = msg["table"]
-	station  = Global.tray_station_manager.get_nearest_station(owner.global_position)
 
 	var return_tray = randi() % 100
 	var leaving_with_tray  = return_tray > 20
 
+	if leaving_with_tray:
+		station  = Global.tray_station_manager.get_nearest_station(owner.global_position)	
+
 	table.patron_leave_position(owner.sit_index, leaving_with_tray and station != null)
-	_parent.set_navigation_speed(Global.current_speed)		
-	if station:
-		owner.skin_tray.visible = true
-		owner_area_2d = owner.stall_detector
-		_parent.set_navigation_position(station.global_position)	
-		_check_if_already_in_range()		
+	_parent.set_navigation_speed(Global.current_speed)
+
+	if leaving_with_tray and is_instance_valid(station):
+		_return_tray()
 	else:
 		_state_machine.transition_to("Moving/Leaving")
 
@@ -35,6 +35,13 @@ func on_speed_changed(speed : int) -> void:
 
 func physics_process(delta: float) -> void:
 	_parent.physics_process(delta)
+
+
+func _return_tray() -> void:
+	owner.skin_tray.visible = true
+	owner_area_2d = owner.stall_detector
+	_parent.set_navigation_position(station.global_position)	
+	_check_if_already_in_range()		
 
 
 func _check_if_already_in_range() -> void:

@@ -90,28 +90,6 @@ static func get_daily_ticks_from_date(datetime : DateTime) -> int:
 static func get_daily_ticks_from_timeonly(time : TimeOnly) -> int:
 	return get_ticks(1, 0, time.hour, time.minute)
 
-	
-static func to_dictionary(datetime : DateTime) -> Dictionary:
-	return {
-		"ticks" : datetime.ticks,
-		DateTime.DAY_KEY : datetime.day,
-		DateTime.HOUR_KEY : datetime.hour,
-		DateTime.MINUTE_KEY : datetime.minute,
-	}
-
-
-static func from_dictionary(date : Dictionary) -> DateTime:
-	var datetime = get_new_date()
-	if date.has("ticks"):
-		datetime.ticks = date["ticks"]
-	if date.has(DateTime.DAY_KEY):
-		datetime.day = date[DateTime.DAY_KEY]
-	if date.has(DateTime.HOUR_KEY):
-		datetime.hour = date[DateTime.HOUR_KEY]
-	if date.has(DateTime.MINUTE_KEY):
-		datetime.minute = date[DateTime.MINUTE_KEY]
-	return datetime
-
 
 static func in_time_only(date : DateTime, from: TimeOnly, to : TimeOnly) -> bool:
 	var date_ticks = get_daily_ticks_from_date(date)
