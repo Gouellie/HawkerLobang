@@ -7,6 +7,7 @@ onready var options_container := $HBoxContainer_Options/VBoxContainer/Container_
 
 
 func _ready() -> void:
+	assert(!hawker_center_path.is_empty(), "hawker center path cannot be empty")
 	$HawkerControl.hawker_center = get_node(hawker_center_path)
 
 
